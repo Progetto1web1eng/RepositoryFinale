@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="inserisciArtistaDiv">
+    <span id="inserisciArtistaSpan">
+        Aggiungi artista/i
+    </span>
+    <div id="inserisciArtistaDivB">
+        <button class="inserisciArtistaButton" style="border-top-left-radius: 20px;border-bottom-left-radius: 20px" onclick="singoloVisible()">inserisci Artista</button>
+        <button class="inserisciArtistaButton" style="border-top-right-radius: 20px;border-bottom-right-radius: 20px" onclick="gruppoVisible()">inserisci gruppo</button>
+    </div>
+
+    <div id="inserisciAristaDivSingolo">
+        <form method="get" action="servletDiProvaInserisciDisco">
+            <input type="text" value="Nome Artista" id="inserisciArtistaDivSingoloInput1">
+            <input type="submit" value="fine" id="inserisciArtistaDivSingoloSubmit">
+        </form>
+    </div>
+    
+    <div id="inserisciAristaDivGruppo">
+        <form>
+            <input type="text" value="Nome gruppo">
+            <span>Componenti</span>
+            <div>
+                
+                <div>
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

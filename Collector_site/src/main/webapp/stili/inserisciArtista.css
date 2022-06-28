@@ -1,0 +1,70 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 28 giu 2022, 17:15:32
+    Author     : fabri
+*/
+
+#inserisciArtistaDiv{
+     width: 86%;
+    height:985px;
+    border: 3px solid #979C98;
+    margin-top:8px;
+    background-color: #ACACBB;
+    border-top-left-radius: 38px;
+    border-bottom-left-radius:38px;
+    margin-left: 20px;
+    overflow-y: auto;
+}
+#inserisciArtistaSpan{
+    margin-left: 39%;
+    color: #303841;
+    font-size: 50px;
+}
+#inserisciArtistaDivB{
+    width: 20%;
+    height: 120px;
+    margin-left: 40%;
+    display: flex;
+    flex-direction: row;  
+}
+.inserisciArtistaButton{
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    color: #303841;
+    border: 2px solid #303841;
+}
+.inserisciArtistaButton:hover{
+    background-color: #303841;
+    color:white;
+    border-color: #303841;
+}
+#inserisciAristaDivSingolo{
+    display:none;
+}
+#inserisciAristaDivGruppo{
+    display:none;
+}
+#inserisciArtistaDivSingoloInput{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    width: 18%;
+    border: none;
+}
+#inserisciArtistaDivSingoloSubmit{
+    width: 140px;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+   
+}                                          

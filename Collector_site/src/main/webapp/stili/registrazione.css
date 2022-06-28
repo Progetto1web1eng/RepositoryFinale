@@ -1,0 +1,147 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23 mag 2022, 12:27:54
+    Author     : fabri
+*/
+
+
+
+
+#registrazioneFormDiv{
+    width: 50%;
+    height: 70%;
+    position: absolute;
+    top: 56%;
+    border-radius: 25px;
+    border: 3px solid #303841;
+    background-color: white;
+} 
+    
+#registrazioneForm{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+#registrazioneDivBottoni{
+    position: absolute;
+    top: 85%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 20%;
+}
+#registrazionetelefonoInput{
+    position: absolute;
+    top: 10%;
+    height: 10%;
+    width: 42%;
+    font-size: 23px;
+    padding-left: 15px;
+    border: none;
+    color: #303841;
+    background-color: white;
+    font-style: italic;
+}
+#registrazioneEmailInput{
+    position: absolute;
+    top: 30%;
+    height: 10%;
+    width: 42%;
+    font-size: 23px;
+    padding-left: 15px;
+    border: none;
+    color: #303841;
+    background-color: white;
+    font-style: italic;
+}
+#registrazioneUsernameInput{
+    position: absolute;
+    top: 50%;
+    height: 10%;
+    width: 42%;
+    font-size: 23px;
+    padding-left: 15px;
+    border: none;
+    color: #303841;
+    background-color: white;
+    font-style: italic;
+}
+#registrazionePasswordInput{
+    position: absolute;
+    top: 70%;
+    height: 10%;
+    width: 42%;
+    font-size: 23px;
+    padding-left: 15px;
+    border: none;
+    color: #303841;
+    background-color: white;
+    font-style: italic;
+}
+
+#registrazioneLinea1{
+    background-color: #303841;
+    position: absolute;
+    top: 18%;
+    width: 50%;
+    height: 2px;
+}
+#registrazioneLinea2{
+    background-color: #303841;
+    position: absolute;
+    top: 38%;
+    width: 50%;
+    height: 2px;
+}
+#registrazioneLinea3{
+    background-color: #303841;
+    position: absolute;
+    top: 58%;
+    width: 50%;
+    height: 2px;
+}
+#registrazioneLinea4{
+    background-color: #303841;
+    position: absolute;
+    top: 78%;
+    width: 50%;
+    height: 2px;
+}
+#registrazioneAncora{
+    font-size: 23px;
+    color:#303841;
+}
+#registrazioneSubmitInput{
+    width:30%;
+    border-radius: 16px;
+    border: 2px solid #303841;
+    height: 32%;
+    color:#303841;
+    background-color: white;
+    font-size: 16px;
+    font-weight: bolder;
+}
+#registrazioneSubmitInput:hover{
+    background-color: #303841;
+    color:white;
+}
+#registrazioneUsernameInput:focus-visible{
+    outline: none;
+}
+#registrazionePasswordInput:focus-visible{
+    outline: none;
+}
+#registrazioneTelefonoInput:focus-visible{
+    outline: none;
+}
+#registrazioneEmailInput:focus-visible{
+    outline: none;
+}
+#registrazioneAncora:hover{
+    color: #ACACBB;
+    text-decoration: underline;
+}

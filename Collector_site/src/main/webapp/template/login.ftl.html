@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!-- il numero serve solo per la visualizzazione. andrà levato -->
+<html lang="it">
+    <head>
+        <title>login page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="stili/login.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/registrazione.css" type="text/css"/>
+        <script type="text/javascript" src="script/resetInput.js"></script>
+    </head>
+    <body id="loginBody">
+        <div id="loginDiv1">
+            <img id="loginLogo" alt="logo"/>
+            <#if (numero==0)> 
+                <div id="loginFormDiv">
+                    <form id="loginForm" action="servletDiProvaLogin" method="get">
+                        <input type="text" id="loginUsernameInput" name="fname" value="Username" onclick="resetLoginUsernameInput()">
+                        <input type="text" id="loginPasswordInput" name="lname" value="Password" onclick="resetLoginPasswordInput()">
+                        <#if (errore==1)>
+                            <label style="color: red;position: absolute;top: 65%;"> username e/o password errata</label>
+                        </#if>
+                        <div id="loginDivBottoni">
+                            <a id="loginAncora" href="servletDiProvaRegistrazione"> Registrati </a>
+                            <input id="loginSubmitInput" type="submit" name="login" value="Login">
+                        </div>
+                        <div id="loginLinea1"></div>
+                        <div id="loginLinea2"></div>
+                    </form>
+                </div>
+            </#if>
+            <#if (numero==1)>
+                <#include "registrazione.ftl.html">
+            </#if>
+        </div>
+    </body>
+</html>

@@ -45,8 +45,11 @@ create table disco (
     genere varchar(50) not null,
     anno smallint not null,
     etichetta varchar(50) not null,
+	IDtipo smallint not null,
+    tipo varchar(50) not null,
     fulltext (nomeDisco, barcode), # necessario per la ricerca globale
-	foreign key (IDgenere) references genere(ID)
+	foreign key (IDgenere) references genere(ID),
+	foreign key (IDtipo) references tipo(ID)
 );
 
 create table immagine(
@@ -112,13 +115,10 @@ create table colleziona (
     statoDisco varchar(50) not null,
     IDcollezionista smallint not null,
     IDdisco smallint not null,
-    IDtipo smallint not null,
-    tipo varchar(50) not null,
     primary key (IDcollezionista, IDdisco, statoDisco),
     foreign key (IDcollezionista) references collezionista(ID) on delete cascade,
     foreign key (IDdisco) references disco(ID) on delete cascade,
-	foreign key (IDstatoDisco) references statoDisco(ID),
-	foreign key (IDtipo) references tipo(ID)
+	foreign key (IDstatoDisco) references statoDisco(ID)
 );
 
 create table incide (
@@ -194,9 +194,10 @@ insert into collezione values (3, "anni 90", 1, true);
 insert into collezione values (4, "chill music", 1, true);
 insert into collezione values (5, "heavy", 2, true);
 
-insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio");
-insert into disco values (2, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio");
-insert into disco values (3, "bianco", "47956", 11, "Metal", 1978, "Metal Studio");
+insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio", 1, "CD");
+insert into disco values (2, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 2, "vinile");
+insert into disco values (3, "bianco", "47956", 11, "Metal", 1978, "Metal Studio", 1, "CD");
+insert into disco values (4, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 4, "audiocassetta");
 
 insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
@@ -207,7 +208,7 @@ insert into racchiude values (1, 1);
 insert into racchiude values (2, 2);
 insert into racchiude values (5, 2);
 
-insert into colleziona values (2, 1, "Nuovo", 1, 1, 1, "CD");
+insert into colleziona values (2, 1, "Nuovo", 1, 1);
 
 insert into crea values (1, 1);
 

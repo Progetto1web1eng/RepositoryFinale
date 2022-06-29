@@ -31,5 +31,7 @@ public interface CollezionistaDAO {
     
     public List<Collezionista> getCollezionisti() throws collector_site.framework.data.DataException;
     
+    public Collezionista getCollezionistaByNickname(String nickname) throws DataException;
+
     
 }

@@ -21,7 +21,6 @@ public interface CollezioneDAO {
     Collezione createCollezione();
     CollezioneProxy createCollezione(ResultSet rs)throws DataException;
     void deleteCollezione(Collezione collezione);
-    Collezione updateCollezione(String nomeCollezione);
     
     //controllare bene tutti insieme
     void updateCondivisione(Collezionista collezionista)throws DataException;

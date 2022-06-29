@@ -123,8 +123,7 @@ create table colleziona (
     foreign key (IDcollezionista) references collezionista(ID) on delete cascade,
     foreign key (IDdisco) references disco(ID) on delete cascade,
 	foreign key (IDstatoDisco) references statoDisco(ID),
-	foreign key (IDtipo) references tipo(ID),
-
+	foreign key (IDtipo) references tipo(ID)
 );
 
 create table incide (
@@ -212,9 +211,6 @@ insert into racchiude values (3, 1);
 insert into racchiude values (1, 1);
 insert into racchiude values (2, 2);
 insert into racchiude values (5, 2);
-insert into racchiude values (3, 1);
-
-
 
 insert into colleziona values (2, 1, "Nuovo", 1, 1, 1, "CD");
 

@@ -5,6 +5,7 @@
 package collector_site.data.proxy;
 
 import collector_site.data.DAO.CollezionistaDAO;
+import collector_site.data.DAO.DiscoDao;
 import collector_site.data.impl.CollezioneImpl;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
@@ -51,6 +52,28 @@ public class CollezioneProxy extends CollezioneImpl implements DataItemProxy {
         return super.getCreatore();
     }
     @Override
+    public List<Collezionista> getCondivisioni(){
+        if(super.getCondivisioni()==null){
+            try{
+                super.setCondivisioni((List<Collezionista>) ((CollezionistaDAO)dataLayer.getDAO(Collezionista.class)).getCollezionistaByCollezione(this));
+            }catch (DataException ex) {
+                Logger.getLogger(CollezionistaProxy.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+         return super.getCondivisioni();
+    }
+    @Override
+    public List<Disco> getDischi(){
+        if(super.getDischi()==null){
+            try{
+                super.setDischi(((DiscoDao)dataLayer.getDAO(Disco.class)).getDiscoByCollezione(this));
+            }catch (DataException ex) {
+                Logger.getLogger(CollezionistaProxy.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        return super.getDischi();
+    }
+    @Override
     public void setCreatore(Collezionista collezionista) throws DataException{
         super.setCreatore(collezionista);
         this.collezionista_key = collezionista.getKey();
@@ -71,6 +94,11 @@ public class CollezioneProxy extends CollezioneImpl implements DataItemProxy {
         super.setDischi(dischi);
         this.modified = true;
         
+    }
+    @Override
+    public void setCondivisioni(List<Collezionista>condivisioni){
+        super.setCondivisioni(condivisioni);
+        this.modified = true;
     }
 
     @Override

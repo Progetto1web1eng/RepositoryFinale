@@ -7,11 +7,14 @@ package collector_site.data.proxy;
 import collector_site.data.DAO.ArtistaDao;
 import collector_site.data.DAO.CollezionistaDAO;
 import collector_site.data.DAO.ImmagineDAO;
+import collector_site.data.DAO.TracciaDAO;
 import collector_site.data.impl.DiscoImpl;
 import collector_site.data.impl.Genere;
+import collector_site.data.impl.Tipo;
 import collector_site.data.model.Artista;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Immagine;
+import collector_site.data.model.Traccia;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
@@ -65,11 +68,34 @@ public class DiscoProxy extends DiscoImpl implements  DataItemProxy{
             super.setGenere(genere);
             this.modified = true;
         }    
-    
+    @Override
+    public void setTipo(Tipo tipo){
+        super.setTipo(tipo);
+        this.modified = true;
+        
+    }
+    @Override
+    public void setCollezionista(Collezionista collezionista){
+        super.setCollezionista(collezionista);
+        this.modified = true;
+    }
+    @Override
+    public void setCompositori(List<Artista> compositori){
+        super.setCompositori(compositori);
+        this.modified = true;
+    }
+    @Override
+    public void setImmagini(List<Immagine> immagini){
+        super.setImmagini(immagini);
+        this.modified = true;
+    }
+    @Override
+    public void setTracce(List<Traccia> tracce){
+        super.setTracce(tracce);
+        this.modified = true;
+    }
         @Override
     public Collezionista getCollezionista() {
-        //notare come l'autore in relazione venga caricato solo su richiesta
-        //note how the related author is loaded only after it is requested
         if (super.getCollezionista() == null && collezionista_key > 0) {
             try {
                 super.setCollezionista(((CollezionistaDAO) dataLayer.getDAO(Collezionista.class)).getCollezionistaById(collezionista_key));
@@ -80,28 +106,37 @@ public class DiscoProxy extends DiscoImpl implements  DataItemProxy{
         return super.getCollezionista();
     }
     @Override
-    public List<Immagine> getImmagini() {
-        if (super.getImmagini() == null) {
-            try {
-                super.setImmagini(((ImmagineDAO) dataLayer.getDAO(Immagine.class)).getImmagini());
-            } catch (DataException ex) {
-                Logger.getLogger(DiscoProxy.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return super.getImmagini();
-    }
-    @Override
     public List<Artista> getCompositori() {
         
         if (super.getCompositori() == null) {
             try {
-                super.setCompositori(((ArtistaDao) dataLayer.getDAO(Artista.class)).getCompositori());
+                super.setCompositori(((ArtistaDao) dataLayer.getDAO(Artista.class)).getArtisti(artista_key));
+            } catch (DataException ex) {
+                Logger.getLogger(DiscoProxy.class.getName()).log(Level.SEVERE, null, ex);            }
+        }  
+        return super.getCompositori();
+    }
+    @Override
+    public List<Immagine> getImmagini(){
+        if(super.getImmagini()==null){
+        try{
+            super.setImmagini(((ImmagineDAO)dataLayer.getDAO(Immagine.class)).getImmaginiByDisco(this));
+        } catch (DataException ex) {
+                Logger.getLogger(DiscoProxy.class.getName()).log(Level.SEVERE, null, ex);            }
+        }  
+        return super.getImmagini();
+    }
+    @Override
+    public List<Traccia> getTracce(){
+        if(super.getTracce()== null){
+            try{
+                super.setTracce(((TracciaDAO)dataLayer.getDAO(Traccia.class)).getTracceByDisco(this));
             } catch (DataException ex) {
                 Logger.getLogger(DiscoProxy.class.getName()).log(Level.SEVERE, null, ex);            }
         }
-        
-        return super.getCompositori();
-    }
+        return super.getTracce();
+        }
+    
 
     
     @Override

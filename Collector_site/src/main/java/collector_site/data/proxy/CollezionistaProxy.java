@@ -33,28 +33,6 @@ public class CollezionistaProxy extends CollezionistaImpl implements DataItemPro
         super.setKey(key);
         this.modified = true;
     }
-    @Override 
-    public void setCollezioniCondivise(List<Collezione> collezioniCondivise){
-        super.setCollezioniCondivise(collezioniCondivise);
-        this.modified = true;
-    }
-    @Override
-    public void setNickname(String nickname){
-        super.setUsername(nickname);
-        this.modified = true;
-    }
-
-    @Override
-    public boolean isModified() {
-        return modified;
-    }
-
-    @Override
-    public void setModified(boolean dirty) {
-        this.modified = dirty;
-    }
-    
-     
     @Override
     public List<Collezione> getCollezioni() {
     if (super.getCollezioni() == null) {
@@ -66,6 +44,64 @@ public class CollezionistaProxy extends CollezionistaImpl implements DataItemPro
         }
         return super.getCollezioni();
     }
+    @Override
+    public List<Collezione> getCollezioniCondivise(){
+        if(super.getCollezioniCondivise()==null){
+            try{
+                super.setCollezioniCondivise(((CollezioneDAO)dataLayer.getDAO(Collezione.class)).getCollezioniCondiviseByCollezionista(this));
+            }catch (DataException ex) {
+                Logger.getLogger(CollezionistaProxy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return super.getCollezioniCondivise();
+    }
+    @Override
+    public void setCollezioni(List<Collezione> collezioni){
+        super.setCollezioni(collezioni);
+        this.modified = true;
+    }
+    @Override
+    public void setUsername(String username){
+        super.setUsername(username);
+        this.modified = true;
+    }
+    @Override
+    public void setNickname(String nickname){
+        super.setNickname(nickname);
+        this.modified = true;
+    }
+    @Override
+    public void setEmail(String email){
+        super.setEmail(email);
+        this.modified = true;
+    }
+    @Override
+    public void setPassword(String password){
+        super.setPassword(password);
+        this.modified = true;
+    }
+    @Override
+    public void setCellulare(String cellulare){
+        super.setCellulare(cellulare);
+        this.modified = true;
+    }
+    @Override 
+    public void setCollezioniCondivise(List<Collezione> collezioniCondivise){
+        super.setCollezioniCondivise(collezioniCondivise);
+        this.modified = true;
+    }
+    @Override
+    public boolean isModified() {
+        return modified;
+    }
+
+    @Override
+    public void setModified(boolean dirty) {
+        this.modified = dirty;
+    }
+    
+     
+    
 }
 
 

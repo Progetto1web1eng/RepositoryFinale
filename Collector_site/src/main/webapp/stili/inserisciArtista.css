@@ -141,8 +141,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border: none;
 }
 #inserisciArtistaDivGruppoInserisci{
-    text-align: center;
-    width: 105px;
+    width: 120px;
     height: 25px;
     border-radius: 20px;
     border: 2px solid #303841;
@@ -150,8 +149,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-weight: bolder;
     color: #303841;
     position: absolute;
-    top: 600px;
-    left: 39%;
+    top: 758px;
+    left: 53%;
+    text-align: center;
 }
 #inserisciArtistaDivGruppoContainerArtisti{
     width: 21%;
@@ -178,14 +178,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
 }
 #inserisciArtistaDivGruppoSubmit{
-    width: 140px;
-    height: 50px;
+     text-align: center;
+    width: 105px;
+    height: 25px;
     border-radius: 20px;
     border: 2px solid #303841;
     background-color: white;
     font-weight: bolder;
     color: #303841;
     position: absolute;
-    top: 755px;
-    left: 77%;
+    top: 600px;
+    left: 39%;
+
 }

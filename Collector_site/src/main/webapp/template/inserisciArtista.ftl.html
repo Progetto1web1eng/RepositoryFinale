@@ -7,6 +7,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <span id="inserisciArtistaSpan">
         Aggiungi artista/i
     </span>
+    <#if (ripetizioni==0)>
     <div id="inserisciArtistaDivB">
         <button class="inserisciArtistaButton" style="border-top-left-radius: 20px;border-bottom-left-radius: 20px" onclick="singoloVisible()">inserisci Artista</button>
         <button class="inserisciArtistaButton" style="border-top-right-radius: 20px;border-bottom-right-radius: 20px" onclick="gruppoVisible()">inserisci gruppo</button>
@@ -14,33 +15,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
     <div id="inserisciAristaDivSingolo">
         <form method="get" action="servletDiProvaInserisciDisco">
-            <input type="text" value="Nome Artista" id="inserisciArtistaDivSingoloInput1">
+            <input type="text" value="Nome Artista" name="singoloAPar" id="inserisciArtistaDivSingoloInput1">
             <input type="submit" value="fine" id="inserisciArtistaDivSingoloSubmit">
         </form>
     </div>
     
     <div id="inserisciAristaDivGruppo">
-        <form>
-            <input type="text" value="Nome gruppo" id="inserisciArtistaDivGruppoInput1">
+        <form method="get" action="servletDiProvaInserisciDisco">
+            <input type="text" value="Nome gruppo" id="inserisciArtistaDivGruppoInput1" name="nomeGruppoPar">
             <div >
-                <input type="text" value="Nome Artista" id="inserisciArtistaDivGruppoInput2">
-                <select id="inserisciArtistaDivGruppoSelect">
+                <input type="text" value="Nome Artista" id="inserisciArtistaDivGruppoInput2" name="nomeArtistaPar">
+                <select id="inserisciArtistaDivGruppoSelect" name="ruoloPar">
                     <option value="Voce">Voce</option>
                     <option value="Chitarra">Chitarra</option>
                     <option value="Basso">Basso</option>
                 </select>
                 <a id="inserisciArtistaDivGruppoInserisci">
-                    inserisci <!-- deve chiamare la servlet e passare il nome del gruppo e l'artista, così lo inserisce nella tabella -->
+                    fine <!-- deve chiamare la servlet e passare il nome del gruppo e l'artista, così lo inserisce nella tabella -->
                 </a>
             </div>
             <span style="position: absolute;left: 77%;top: 280px;font-size: 26px;color: #303841;">Componenti</span>
             <div id="inserisciArtistaDivGruppoContainerArtisti">
                 
-                <div class="inserisciArtistaDivGruppoObjArtista">
-                    nomeArtista
-                </div>
             </div>
-            <input type="submit" value="fine" id="inserisciArtistaDivGruppoSubmit">
+            <input type="submit" value="inserisci" id="inserisciArtistaDivGruppoSubmit">
         </form>
     </div>
     <div>
@@ -59,4 +57,63 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             </a>
         </div>
     </div>
+    <#else>
+    <div id="inserisciAristaDivGruppo" style="display: block">
+        <form method="get" action="servletDiProvaInserisciDisco">
+           
+            <div >
+                <input type="text" value="Nome Artista" id="inserisciArtistaDivGruppoInput2" name="nomeArtistaPar">
+                <select id="inserisciArtistaDivGruppoSelect" name="ruoloPar">
+                    <option value="Voce">Voce</option>
+                    <option value="Chitarra">Chitarra</option>
+                    <option value="Basso">Basso</option>
+                </select>
+                <a id="inserisciArtistaDivGruppoInserisci">
+                    fine <!-- deve chiamare la servlet e passare il nome del gruppo e l'artista, così lo inserisce nella tabella -->
+                </a>
+            </div>
+            <span style="position: absolute;left: 77%;top: 280px;font-size: 26px;color: #303841;">Componenti</span>
+            <div id="inserisciArtistaDivGruppoContainerArtisti">
+                <#list listaArtisti as lart>
+                <div class="inserisciArtistaDivGruppoObjArtista">
+                    ${lart.nomeDarte}
+                </div>
+                </#list>
+            </div>
+            <input type="submit" value="inserisci" id="inserisciArtistaDivGruppoSubmit">
+        </form>
+    </div>
+
+    </#if>
+    
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

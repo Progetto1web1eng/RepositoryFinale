@@ -55,7 +55,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement increaseQuantitaDisco;
     private PreparedStatement updateQuantitaDisco;
     private PreparedStatement addDiscoToCollezione;
-
+    private PreparedStatement removeDiscoFromCollezione;
 
 
 
@@ -83,6 +83,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             // query che modificano le quantità di Disco
             updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE ID=?");
             addDiscoToCollezione = connection.prepareStatement("INSERT INTO racchiude (IDcollezione,IDdisco) VALUES(?,?)"); 
+            removeDiscoFromCollezione = connection.prepareStatement("DELETE FROM racchiude WHERE IDcollezione=? and IDdisco=?;");
             
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
@@ -101,6 +102,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getDiscoByTraccia.close();
             updateQuantitaDisco.close();
             addDiscoToCollezione.close();
+            removeDiscoFromCollezione.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -361,6 +363,18 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         }
     }
 
-    
-     
+    @Override
+    public void removeDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
+         try {
+           
+            removeDiscoFromCollezione.setInt(1, collezione.getKey());
+            removeDiscoFromCollezione.setInt(2, disco.getKey());
+
+            if (removeDiscoFromCollezione.executeUpdate() != 1) {
+                // solleva eccezione
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to remove Disco from Collezione", ex);
+        }
+    }    
 }

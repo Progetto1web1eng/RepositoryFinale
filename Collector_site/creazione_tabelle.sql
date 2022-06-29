@@ -34,8 +34,7 @@ create table collezionista (
     email varchar(50) unique not null, 
     username varchar(50) not null, 
     `password` varchar(50) not null ,
-    cellulare varchar(15) unique,
-    `version` int unsigned NOT NULL DEFAULT 1
+    cellulare varchar(15) unique
 );
 
 create table disco (
@@ -46,16 +45,16 @@ create table disco (
     genere varchar(50) not null,
     anno smallint not null,
     etichetta varchar(50) not null,
-    `version` int unsigned NOT NULL DEFAULT 1,
     fulltext (nomeDisco, barcode), # necessario per la ricerca globale
 	foreign key (IDgenere) references genere(ID)
 );
 
 create table immagine(
 	ID smallint primary key auto_increment,
-	nomeImmagine varchar(255) not null, 
+	# nome che il client ha assegnato all'immagine
+    nomeImmagine varchar(255) not null, 
     dimensioneImmagine int(11) not null, 
-    # CHECK
+    # nome con il quale viene effettivamente salvata l'immagine nel server
     filename varchar(255) not null, 
     # le immagini devono avere formato .jpeg o .png 
     imgType varchar(10) not null, 
@@ -65,7 +64,6 @@ create table immagine(
     IDdisco smallint not null,
 	`digest` varchar(255) not null,
     `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `version` int unsigned NOT NULL DEFAULT 1,
     foreign key (IDdisco) references disco(ID) on delete cascade,
     constraint pathUnivoco unique (filename, nomeImmagine)
 ); 
@@ -75,7 +73,6 @@ create table collezione (
     nomeCollezione varchar(50) not null, 
     IDcollezionista smallint not null,
     pubblico bool not null default false,
-	`version` int unsigned NOT NULL DEFAULT 1,
     fulltext(nomeCollezione),
     foreign key (IDcollezionista) references collezionista(ID) on delete cascade,
     # uno stesso collezionista non può creare più di una collezione con il medesimo nome
@@ -87,7 +84,6 @@ create table traccia (
     titolo varchar(50) not null, 
     durata time not null, 
     IDdisco smallint not null,
-	`version` int unsigned NOT NULL DEFAULT 1,
     foreign key (IDdisco) references disco(ID) on delete cascade
 );
 
@@ -98,7 +94,6 @@ create table artista (
     IDruolo smallint,
     ruolo varchar(50),
     IDgruppoMusicale smallint,
-	`version` int unsigned NOT NULL DEFAULT 1,
     foreign key (IDgruppoMusicale) references artista(ID),
 	foreign key (IDruolo) references ruolo(ID)
 );
@@ -186,26 +181,26 @@ insert into tipo values(4,"audiocassetta");
 
 
 # INSERIMENTO DATI DI PROVA
-insert into artista values (1, "Metallica", null, null, null, 1);
-insert into artista values (2,"James Hetfield", 1, "Voce", 1, 1);
+insert into artista values (1, "Metallica", null, null, null);
+insert into artista values (2,"James Hetfield", 1, "Voce", 1);
 
-insert into collezionista values (1, "Stefano", "stefano@gmail.com", "stefa", "stefa", "3880581680", 1);
-insert into collezionista values (2, "Fabrizio", "fabrizio@gmail.com", "fabri", "fabri", "3880581670", 1);
-insert into collezionista values (3, "Maurizio", "maurizio@gmail.com", "mauri", "mauri", "3880581660", 1);
+insert into collezionista values (1, "Stefano", "stefano@gmail.com", "stefa", "stefa", "3880581680");
+insert into collezionista values (2, "Fabrizio", "fabrizio@gmail.com", "fabri", "fabri", "3880581670");
+insert into collezionista values (3, "Maurizio", "maurizio@gmail.com", "mauri", "mauri", "3880581660");
 
-insert into collezione values (1, "anni 80", 1, true, 1); 
-insert into collezione values (2, "euro disco", 1, true, 1);
-insert into collezione values (3, "anni 90", 1, true, 1);
-insert into collezione values (4, "chill music", 1, true, 1);
-insert into collezione values (5, "heavy", 2, true, 1);
+insert into collezione values (1, "anni 80", 1, true); 
+insert into collezione values (2, "euro disco", 1, true);
+insert into collezione values (3, "anni 90", 1, true);
+insert into collezione values (4, "chill music", 1, true);
+insert into collezione values (5, "heavy", 2, true);
 
-insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio", 1);
-insert into disco values (2, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 1);
-insert into disco values (3, "bianco", "47956", 11, "Metal", 1978, "Metal Studio", 1);
+insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio");
+insert into disco values (2, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio");
+insert into disco values (3, "bianco", "47956", 11, "Metal", 1978, "Metal Studio");
 
 insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
-insert into traccia values (1, "Enter Sandman", 0, 1, 1); 
+insert into traccia values (1, "Enter Sandman", 0, 1); 
 
 insert into racchiude values (3, 1);
 insert into racchiude values (1, 1);

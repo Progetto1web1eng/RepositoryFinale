@@ -9,6 +9,7 @@ package collector_site.data.DAO;
  * @author stefa
  */
 import collector_site.data.impl.Genere;
+import collector_site.data.impl.Ruolo;
 import collector_site.data.impl.Tipo;
 import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
@@ -56,7 +57,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement updateQuantitaDisco;
     private PreparedStatement addDiscoToCollezione;
     private PreparedStatement removeDiscoFromCollezione;
-
+    private PreparedStatement setArtistaOfDisco;
 
 
     public DiscoDAO_MySQL(DataLayer d) {
@@ -84,7 +85,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE ID=?");
             addDiscoToCollezione = connection.prepareStatement("INSERT INTO racchiude (IDcollezione,IDdisco) VALUES(?,?)"); 
             removeDiscoFromCollezione = connection.prepareStatement("DELETE FROM racchiude WHERE IDcollezione=? and IDdisco=?;");
-            
+            setArtistaOfDisco = connection.prepareStatement("INSERT INTO incide (IDdisco,IDartista) VALUES(?,?)"); 
+
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
         }
@@ -103,6 +105,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             updateQuantitaDisco.close();
             addDiscoToCollezione.close();
             removeDiscoFromCollezione.close();
+            setArtistaOfDisco.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -377,4 +380,22 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             throw new DataException("Unable to remove Disco from Collezione", ex);
         }
     }    
+
+    @Override
+    public void setArtistaOfDisco(Disco disco, Artista artista) throws DataException {
+        // in questo metodo è possibile passare come valore del parametro "artista" un gruppo musicale oppure
+        // un'Artista
+        
+        try {
+            
+            setArtistaOfDisco.setInt(1, disco.getKey());
+            setArtistaOfDisco.setInt(2, artista.getKey());
+            
+            if (setArtistaOfDisco.executeUpdate() != 1) {
+                //solleva eccezione
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to set Artista of Disco", ex);
+        }
+    }
 }

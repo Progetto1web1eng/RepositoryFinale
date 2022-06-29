@@ -11,5 +11,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <input type="image" name="image" src="immagini/icons8-add-white-24.png" width="50"> 
             </form>
         </div>
+        <#if immagini??>
+            <#list immagini as i>
+            <div id="provaListaImmagini">
+                <img class="inserisciDiscoImmagineNuovaImg" src="immaginiDischi/${i.filename}">
+            </div>
+            </#list>
+            <#else>
+            <div class="inserisciDiscoImmagineNuovaImg">
+                <img src="immaginiDischi/defaultIMG.png" id="provaimmagine" height="170" width="300" >
+            </div>
+                    </#if> 
     </div>
 </div>

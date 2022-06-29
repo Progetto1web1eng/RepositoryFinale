@@ -7,6 +7,8 @@ package prova.pac;
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
+import collector_site.data.model.Disco;
+import collector_site.data.model.Immagine;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
 import freemarker.core.ParseException;
@@ -44,6 +46,13 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO();
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
             dataM.put("collezioni",collezioni);
+            //inserimento immagini
+            Disco disco =((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco((int)s.getAttribute("id"));  
+            List<Immagine> immagini = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(disco);
+            if(immagini.isEmpty()){
+                immagini=null;
+            }
+            dataM.put("immagini",immagini);
             
             t.process(dataM, response.getWriter());
         } catch (ParseException ex) {

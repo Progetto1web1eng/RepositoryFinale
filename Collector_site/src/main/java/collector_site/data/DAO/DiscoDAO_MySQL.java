@@ -54,6 +54,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement getDischiByNome;
     private PreparedStatement increaseQuantitaDisco;
     private PreparedStatement updateQuantitaDisco;
+    private PreparedStatement addDiscoToCollezione;
 
 
 
@@ -81,7 +82,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getDischiByNome = connection.prepareStatement("SELECT * FROM disco WHERE nomeDisco=?");
             // query che modificano le quantità di Disco
             updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE ID=?");
-
+            addDiscoToCollezione = connection.prepareStatement("INSERT INTO racchiude (IDcollezione,IDdisco) VALUES(?,?)"); 
             
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
@@ -99,6 +100,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getDiscoByCollezione.close();
             getDiscoByTraccia.close();
             updateQuantitaDisco.close();
+            addDiscoToCollezione.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -334,6 +336,29 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public List<Disco> getDischiIncisi() throws DataException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
+        try {
+            
+            // controllo che il disco non sia già presente nella collezione in questione
+            for (Disco d : getDiscoByCollezione(collezione)) {
+                if (d.getKey() == disco.getKey()) {
+                    // disco già presente all'interno della collezione
+                    return; //solleva eccezione
+                 }
+            }
+           
+            addDiscoToCollezione.setInt(1, collezione.getKey());
+            addDiscoToCollezione.setInt(2, disco.getKey());
+
+            if (addDiscoToCollezione.executeUpdate() != 1) {
+                // solleva eccezione
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to add Disco to Collezione", ex);
+        }
     }
 
     

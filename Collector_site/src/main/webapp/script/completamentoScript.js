@@ -12,7 +12,6 @@ async function printJSON(input) {
     const json = await response.json();
     const l = input.length;
     let i = 0;
-    alert(json.length);
     for(var index=0;index<3;index++){
         if(input.toUpperCase()===(json[index].nomeDisco.substring(0,l)).toUpperCase()){
             if(i===0){

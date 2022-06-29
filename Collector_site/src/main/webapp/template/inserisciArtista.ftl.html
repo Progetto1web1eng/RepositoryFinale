@@ -21,14 +21,42 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     
     <div id="inserisciAristaDivGruppo">
         <form>
-            <input type="text" value="Nome gruppo">
-            <span>Componenti</span>
-            <div>
+            <input type="text" value="Nome gruppo" id="inserisciArtistaDivGruppoInput1">
+            <div >
+                <input type="text" value="Nome Artista" id="inserisciArtistaDivGruppoInput2">
+                <select id="inserisciArtistaDivGruppoSelect">
+                    <option value="Voce">Voce</option>
+                    <option value="Chitarra">Chitarra</option>
+                    <option value="Basso">Basso</option>
+                </select>
+                <a id="inserisciArtistaDivGruppoInserisci">
+                    inserisci <!-- deve chiamare la servlet e passare il nome del gruppo e l'artista, così lo inserisce nella tabella -->
+                </a>
+            </div>
+            <span style="position: absolute;left: 77%;top: 280px;font-size: 26px;color: #303841;">Componenti</span>
+            <div id="inserisciArtistaDivGruppoContainerArtisti">
                 
-                <div>
-                    
+                <div class="inserisciArtistaDivGruppoObjArtista">
+                    nomeArtista
                 </div>
             </div>
+            <input type="submit" value="fine" id="inserisciArtistaDivGruppoSubmit">
         </form>
+    </div>
+    <div>
+        <span style="font-size: 30px;color: #303841;position: absolute;top: 860px;left: 52%;">
+            Forse cercavi
+        </span>
+        <div id="inserisciArtistaHiddenDivContainer">
+            <a href="servletDiProvaHome" class="inserisciArtistaHiddenASuggerimento" id="inserisciArtistaHASJS1">
+                <span style="font-style: italic;font-size: 20px;color: #303841;" id="inserisciArtistaHASJSpan1">Disco: something</span>
+            </a>
+            <a href="servletDiProvaHome" class="inserisciArtistaHiddenASuggerimento" id="inserisciArtistaHASJS2">
+                <span style="font-style: italic;font-size: 20px;color: #303841;" id="inserisciArtistaHASJSpan2">Disco: something</span>
+            </a>
+            <a href="servletDiProvaHome" class="inserisciArtistaHiddenASuggerimento" id="inserisciArtistaHASJS3">
+                <span style="font-style: italic;font-size: 20px;color: #303841;" id="inserisciArtistaHASJSpan3">Disco: something</span>
+            </a>
+        </div>
     </div>
 </div>

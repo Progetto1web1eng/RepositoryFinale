@@ -6,13 +6,13 @@
 
 function singoloVisible(){
      const inserisciAristaDivSingolo = document.getElementById("inserisciAristaDivSingolo");
-     const inserisciArtistaDivB = documento.getElementById("inserisciArtistaDivB");
-     inserisciArtistaDivB.style.display=none;
-     inserisciAristaDivSingolo.style.display=block;
+     const inserisciArtistaDivB = document.getElementById("inserisciArtistaDivB");
+     inserisciArtistaDivB.style.display="none";
+     inserisciAristaDivSingolo.style.display="block";
 }
 function gruppoVisible(){
     const inserisciAristaDivGruppo = document.getElementById("inserisciAristaDivGruppo");
-    const inserisciArtistaDivB = documento.getElementById("inserisciArtistaDivB");
-    inserisciArtistaDivB.style.display=none;
-    inserisciAristaDivGruppo.style.display=block;
+    const inserisciArtistaDivB = document.getElementById("inserisciArtistaDivB");
+    inserisciArtistaDivB.style.display="none";
+    inserisciAristaDivGruppo.style.display="block";
 }

@@ -19,16 +19,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     overflow-y: auto;
 }
 #inserisciArtistaSpan{
-    margin-left: 39%;
     color: #303841;
     font-size: 50px;
+    position: absolute;
+    top: 130px;
+    left: 48%;
 }
 #inserisciArtistaDivB{
     width: 20%;
     height: 120px;
     margin-left: 40%;
     display: flex;
-    flex-direction: row;  
+    flex-direction: row; 
+    margin-top: 100px
 }
 .inserisciArtistaButton{
     box-sizing: border-box;
@@ -49,12 +52,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #inserisciAristaDivGruppo{
     display:none;
 }
-#inserisciArtistaDivSingoloInput{
+#inserisciArtistaDivSingoloInput1{
     height: 40px;
     font-style: italic;
     font-size: 20px;
     background-color: #ACACBB;
     color: #303841;
+    position: absolute;
+    left: 49%;
+    top: 500px;
     width: 18%;
     border: none;
 }
@@ -66,5 +72,120 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: white;
     font-weight: bolder;
     color: #303841;
+    position: absolute;
+    top: 500px;
+    left: 79%;
    
-}                                          
+}
+#inserisciArtistaHiddenDivContainer{
+    width: 70%;
+    height: 170px;
+    position: absolute;
+    top: 83%;
+    border-radius: 25px;
+    border: 3px solid #303841;
+    margin-left: 7%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+}
+.inserisciArtistaHiddenASuggerimento{
+    height: 80%;
+    width: 20%;
+    margin-left: 15px;
+    border-radius: 10px;
+    border: 3px solid #303841;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+}
+#inserisciArtistaDivGruppoInput1{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 28%;
+    top: 380px;
+    width: 18%;
+    border: none;
+}
+#inserisciArtistaDivGruppoInput2{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 28%;
+    top: 500px;
+    width: 18%;
+    border: none;
+}
+#inserisciArtistaDivGruppoSelect{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 49%;
+    top: 500px;
+    width: 8%;
+    border: none;
+}
+#inserisciArtistaDivGruppoInserisci{
+    text-align: center;
+    width: 105px;
+    height: 25px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+    position: absolute;
+    top: 600px;
+    left: 39%;
+}
+#inserisciArtistaDivGruppoContainerArtisti{
+    width: 21%;
+    height: 34%;
+    background-color: greenyellow;
+    position: absolute;
+    top: 322px;
+    left: 70%;
+    border-radius: 25px;
+    border: 3px solid #303841;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.inserisciArtistaDivGruppoObjArtista{
+    width: 80%;
+    border-radius: 10px;
+    border: 3px solid #303841;
+    background-color: white;
+    margin-top: 10px;
+    height: 7%;
+    text-align: center;
+}
+#inserisciArtistaDivGruppoSubmit{
+    width: 140px;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+    position: absolute;
+    top: 755px;
+    left: 77%;
+}

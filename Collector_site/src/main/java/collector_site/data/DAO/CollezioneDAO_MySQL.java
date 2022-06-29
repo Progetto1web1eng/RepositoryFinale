@@ -135,19 +135,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
         
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public Collezione updateCollezione(String nomeCollezione) {
-        // DA COMPLETARE
-        
-        
-        
-        
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
-    
-
     @Override
     public void updateCondivisione(Collezionista collezionista) throws collector_site.framework.data.DataException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

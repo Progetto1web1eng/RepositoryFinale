@@ -69,7 +69,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         try {
             super.init();
 
-            storeDisco = connection.prepareStatement("INSERT INTO disco (nomeDisco,barcode,IDgenere,genere,anno,etichetta) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            storeDisco = connection.prepareStatement("INSERT INTO disco (nomeDisco,barcode,IDgenere,genere,anno,etichetta,IDtipo,tipo) VALUES(?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             deleteDisco = connection.prepareStatement("DELETE FROM disco WHERE ID=?"); 
             updateDisco = connection.prepareStatement("UPDATE disco SET nomeDisco=?,barcode=?,IDgenere=?,genere=?,anno=?,etichetta=? WHERE ID=?");
             getDisco = connection.prepareStatement("SELECT * FROM disco WHERE ID=?");
@@ -127,7 +127,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             // Genere è un ENUMERAZIONE
             disco.setGenere(Genere.values()[rs.getInt("IDgenere")]);
             // Tipo è un enumerazione
-            // disco.setTipo(Tipo.values()[rs.getInt("IDtipo")]);
+            disco.setTipo(Tipo.values()[rs.getInt("IDtipo")]);
             disco.setAnno(rs.getInt("anno"));
             disco.setEtichetta(rs.getString("etichetta"));
         } catch (SQLException ex) {
@@ -281,6 +281,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             if ("".equals(disco.getNomeDisco()) ||
                     disco.getGenere() == null ||
                     disco.getAnno() == 0  ||      
+                    disco.getTipo() == null ||
                     "".equals(disco.getEtichetta())) {
                 return;
             }
@@ -299,6 +300,10 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             storeDisco.setString(4, genere);
             storeDisco.setInt(5, disco.getAnno());
             storeDisco.setString(6, disco.getEtichetta());
+            
+            String tipo =  disco.getTipo().toString(); 
+            storeDisco.setInt(7, Tipo.valueOf(tipo).ordinal());
+            storeDisco.setString(8, tipo);
             
             if (storeDisco.executeUpdate() == 1) {
                 //per leggere la chiave generata dal database per il record appena inserito

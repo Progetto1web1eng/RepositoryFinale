@@ -48,6 +48,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
     private PreparedStatement getCollezionistaByCollezione;
     private PreparedStatement getCollezionistaByUandP;
     private PreparedStatement getCollezionisti;
+    private PreparedStatement getCollezionistaByNickname;
    
 
 
@@ -67,6 +68,8 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionistaByCollezione = connection.prepareStatement("SELECT ca.ID, ca.nickname, ca.email, ca.username, ca.`password`, ca.cellulare FROM collezionista ca join collezione ce on(ca.ID = ce.IDcollezionista) WHERE (ce.ID = ?)");
             getCollezionistaByUandP = connection.prepareStatement("SELECT * FROM collezionista WHERE username=? AND password=?");
             getCollezionisti = connection.prepareStatement("SELECT ID FROM collezionista");
+            getCollezionistaByNickname = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=?");
+
 
             
         } catch (SQLException ex) {
@@ -84,6 +87,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionistaByCollezione.close();
             getCollezionistaByUandP.close();
             getCollezionisti.close();
+            getCollezionistaByNickname.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -264,7 +268,26 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
         }   
     }
 
-
-
+    @Override
+    public Collezionista getCollezionistaByNickname(String nickname) throws DataException {
+       Collezionista collezionista = null;
+        
+        try {
+            getCollezionistaByNickname.setString(1, nickname);
+            try (ResultSet rs = getCollezionistaByNickname.executeQuery()) {
+                // il nickname di un Collezionista è univoco
+                if (rs.next()) {
+                    try {
+                        collezionista = getCollezionistaById(rs.getInt("ID"));
+                    } catch (DataException ex) {
+                        Logger.getLogger(CollezionistaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezionista by nickname", ex);
+        }
+        return collezionista;
+    }
 }
 

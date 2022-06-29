@@ -41,6 +41,7 @@ public interface DiscoDao {
     List<Disco> getDischiByNome(String nome) throws DataException;
     void storeDisco(Disco disco)throws DataException;
     public void updateQuantitaDisco(Disco disco, int quantitaDisco) throws DataException;
+    void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException;
 
     public List<Disco> getDischiIncisi()throws DataException;
 }

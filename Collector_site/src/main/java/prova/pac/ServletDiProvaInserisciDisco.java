@@ -56,24 +56,21 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
             Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
             dataM.put("collezioni",collezioni);
-            out.println("porco e fagioli");
-            out.println("porco e fagioli");
-            out.println("porco e fagioli");
-            out.println("porco e fagioli");
-            out.println("porco e fagioli");
-            out.println("porco e fagioli");
-            out.println("porco e fagioli");
-            out.println("porco e fagioli");
+            
             
             if(request.getParameter("singoloAPar")!=null){
-                out.println("porco il cristo0");
+               out.println("porco e fagioli");
                 // caso in cui stiamo inserendo un singolo artista
                 String nomeArt = request.getParameter("singoloAPar");
+                out.println("porco e fagioli1");
                 Disco d = (Disco) s.getAttribute("discoSessione");
+                out.println("porco e fagioli2");
                 int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
-                
+                out.println("porco e fagioli3");
                 List<Disco> listaTempD = new ArrayList();
+                out.println("porco e fagioli4");
                 List<Artista> listaTempA = new ArrayList();
+                out.println("porco e fagioli5");
                 Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().createDisco();
                  out.println("porco il cristo1");
                 disco.setTipo(d.getTipo());
@@ -244,11 +241,6 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
          try {
             
              HttpSession s = request.getSession(false);
-             // rimuovo eventuali attributi di sessione
-             s.removeAttribute("gruppoSessione");
-             s.removeAttribute("ListaArtisti");
-             s.removeAttribute("discoSessione");
-             s.removeAttribute("IDCollezioneSessione");
              
              
              int IDcollezionista = (int)s.getAttribute("id");
@@ -256,6 +248,14 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
              Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
              Map<String,Object> dataM = new HashMap();
              if(request.getParameter("collezioneKey")!=null){
+                 
+                 // rimuovo eventuali attributi di sessione
+                s.removeAttribute("gruppoSessione");
+                s.removeAttribute("ListaArtisti");
+                s.removeAttribute("discoSessione");
+                s.removeAttribute("IDCollezioneSessione");
+                 
+                 out.println("chiave della collezione selezionata: "+request.getParameter("collezioneKey"));
                  //significa che ho chiamato la servlet per l'inserimento di un nuovo disco dalla vista di una collezione
                  s.setAttribute("IDCollezioneSessione", request.getParameter("collezioneKey"));
                  //completo la sideBar con la lista di collezioni

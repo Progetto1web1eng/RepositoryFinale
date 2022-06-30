@@ -86,7 +86,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 artista.setNomeDarte(nomeArt);
                 artista.setDischiIncisi(listaTempD);
                 listaTempA.add(artista);
-                disco.setCompositori(listaTempA);
+               // disco.setCompositori(listaTempA);
                 out.println("porco il cristo3");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
                 out.println("porco il cristo4");

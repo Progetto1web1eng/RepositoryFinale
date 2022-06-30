@@ -103,6 +103,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     justify-content: space-around;
     align-items: center;
     text-decoration: none;
+    visibility: hidden;
 }
 #inserisciArtistaDivGruppoInput1{
     height: 40px;

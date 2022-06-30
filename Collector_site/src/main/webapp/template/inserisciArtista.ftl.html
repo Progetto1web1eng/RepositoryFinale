@@ -15,14 +15,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
     <div id="inserisciAristaDivSingolo">
         <form method="get" action="servletDiProvaInserisciDisco">
-            <input type="text" value="Nome Artista" name="singoloAPar" id="inserisciArtistaDivSingoloInput1">
+            <input type="text" value="Nome Artista" name="singoloAPar" id="inserisciArtistaDivSingoloInput1" onkeyup="completamentoArtistaSingolo()" onclick="resetInserisciArtistaSingoloInput()">
             <input type="submit" value="fine" id="inserisciArtistaDivSingoloSubmit">
         </form>
     </div>
     
     <div id="inserisciAristaDivGruppo">
         <form method="get" action="servletDiProvaInserisciDisco">
-            <input type="text" value="Nome gruppo" id="inserisciArtistaDivGruppoInput1" name="nomeGruppoPar">
+            <input type="text" value="Nome gruppo" id="inserisciArtistaDivGruppoInput1" name="nomeGruppoPar" onkeyup="completamentoGruppo()" onclick="resetInserisciGruppoInput()">
             <div >
                 <input type="text" value="Nome Artista" id="inserisciArtistaDivGruppoInput2" name="nomeArtistaPar">
                 <select id="inserisciArtistaDivGruppoSelect" name="ruoloPar">
@@ -41,7 +41,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <input type="submit" value="inserisci" id="inserisciArtistaDivGruppoSubmit">
         </form>
     </div>
-    <div>
+    <div id="inserisciArtistaHidden" style="visibility: hidden;">
         <span style="font-size: 30px;color: #303841;position: absolute;top: 860px;left: 52%;">
             Forse cercavi
         </span>

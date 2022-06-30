@@ -16,3 +16,15 @@ function gruppoVisible(){
     inserisciArtistaDivB.style.display="none";
     inserisciAristaDivGruppo.style.display="block";
 }
+function resetInserisciArtistaSingoloInput(){
+    const inserisciArtistaDivSingoloInput1 = document.getElementById("inserisciArtistaDivSingoloInput1");
+    if(inserisciArtistaDivSingoloInput1.value==="Nome Artista"){
+        inserisciArtistaDivSingoloInput1.value="";
+    }
+}
+function resetInserisciGruppoInput(){
+    const inserisciArtistaDivGruppoInput1 = document.getElementById("inserisciArtistaDivGruppoInput1");
+    if(inserisciArtistaDivGruppoInput1.value==="Nome gruppo"){
+        inserisciArtistaDivGruppoInput1.value="";
+    }
+}

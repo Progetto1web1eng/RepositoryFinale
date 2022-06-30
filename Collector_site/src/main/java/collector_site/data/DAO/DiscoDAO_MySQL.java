@@ -150,7 +150,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         try {
             if (deleteDisco.executeUpdate() == 0) {
-                System.out.println("l'eliminazione del disco non è andata a buon fine");
                 // qui si deve sollevare eccezione
             }
         } catch (SQLException ex) {
@@ -296,13 +295,14 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             
             String genere = disco.getGenere().toString();
             
-            storeDisco.setInt(3, Genere.valueOf(genere).ordinal());
+            storeDisco.setInt(3, Genere.valueOf(genere).ordinal() + 1);
             storeDisco.setString(4, genere);
             storeDisco.setInt(5, disco.getAnno());
             storeDisco.setString(6, disco.getEtichetta());
             
             String tipo =  disco.getTipo().toString(); 
-            storeDisco.setInt(7, Tipo.valueOf(tipo).ordinal());
+            // MODIFICATO
+            storeDisco.setInt(7, Tipo.valueOf(tipo).ordinal() + 1);
             storeDisco.setString(8, tipo);
             
             if (storeDisco.executeUpdate() == 1) {

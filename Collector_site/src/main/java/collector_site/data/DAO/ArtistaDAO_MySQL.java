@@ -147,7 +147,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
     }
 
     @Override
-    public void storeArtista(Artista artista, Integer idGruppoMusicale) throws DataException {
+    public void storeArtista(Artista artista) throws DataException {
         // si assume che il sistema permetta soltanto lo store e non l'update dell'Artista
         
         try {
@@ -157,37 +157,12 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             }
             
             storeArtista.setString(1, artista.getNomeDarte());
-            
-            if ((artista.getComponenti() != null && artista.getComponenti().size() > 1) || artista.getComponenti() == null) {
-                // caso in cui si crea un gruppo musicale oppure un singolo Artista
-                
-                // inserimento valore nullo nell'attributo IDRuolo in tabella Artista
-                storeArtista.setNull(2, java.sql.Types.SMALLINT);
-                // inserimento valore nullo nell'attributo ruolo in tabella Artista
-                storeArtista.setNull(3, java.sql.Types.VARCHAR);
-                // inserimento valore nullo nell'attributo IDgruppoMusicale in tabella Artista
-                storeArtista.setNull(4, java.sql.Types.SMALLINT);
-               
-                if (artista.getComponenti() != null && artista.getComponenti().size() > 1) {
-                    // caso in cui si crea un gruppo musicale
-                    for (Artista a : artista.getComponenti()) {
-                        Integer idGruppo = artista.getKey();
-                        // ricorsione che permette di aggiungere uno ad uno ciascun componente del gruppo 
-                        // musicale
-                        storeArtista(a,idGruppo);
-                    } 
-                }
-                
-            } else {
-                // caso in cui si inserisce un componente di un gruppo musicale
-                
-                String ruolo = artista.getRuolo().toString();
-                // per inserire i valori degli attributi IDruolo e ruolo nella tabella Artista
-                storeArtista.setInt(2, Ruolo.valueOf(ruolo).ordinal());
-                storeArtista.setString(3, ruolo);
-                
-                storeArtista.setInt(4, idGruppoMusicale);
-            }
+             // inserimento valore nullo nell'attributo IDRuolo in tabella Artista
+            storeArtista.setNull(2, java.sql.Types.SMALLINT);
+            // inserimento valore nullo nell'attributo ruolo in tabella Artista
+            storeArtista.setNull(3, java.sql.Types.VARCHAR);
+            // inserimento valore nullo nell'attributo IDgruppoMusicale in tabella Artista
+            storeArtista.setNull(4, java.sql.Types.SMALLINT);
             
             if (storeArtista.executeUpdate() == 1) {
                 //per leggere la chiave generata dal database per il record appena inserito
@@ -201,8 +176,18 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                             dataLayer.getCache().add(Artista.class, artista);
                         }
                     }
-                }
+            }
             
+            if (artista.getComponenti() != null && artista.getComponenti().size() > 1) {
+                // caso in cui si fa lo store di un gruppo musicale
+                
+                for (Artista a : artista.getComponenti()) {
+                    // store di ciascun componente del gruppo musicale
+                    storeComponenteGruppo(a);
+                    
+                } 
+            }   
+
             // questo "if" deve essere eseguto sia quando si fa la create che l'update dell'Artista 
             if (artista instanceof DataItemProxy) {
                 ((DataItemProxy) artista).setModified(false);
@@ -240,7 +225,8 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                 while (rs.next()){
                     Artista componente = getArtistaById(rs.getInt("ID"));
 
-                    componente.setRuolo(Ruolo.values()[rs.getInt("IDruolo")]);
+                    // CHECK
+                    componente.setRuolo(Ruolo.values()[rs.getInt("IDruolo") - 1]);
                     componenti.add(componente);
                 }
             }
@@ -258,6 +244,53 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         return artista; // caso in cui l'oggetto passato come parametro non è un gruppo musicale ==> non è 
                         // necessario aggiungere ad {0} i componenti del gruppo musicale in quanto {o} 
                         // rappresenta un singolo artista e non un gruppo musicale
+    }
+
+    @Override
+    public void storeComponenteGruppo(Artista artista) throws DataException {
+        try {
+            
+            // si dovrebbero fare più controlli
+            if ("".equals(artista.getNomeDarte())) {
+                return;
+            }
+            
+            storeArtista.setString(1, artista.getNomeDarte());
+            
+            String ruolo = artista.getRuolo().toString();
+            
+            storeArtista.setInt(2, Ruolo.valueOf(ruolo).ordinal() + 1);
+            storeArtista.setString(3, ruolo);
+            
+            // estraggo l'ID del gruppo musicale al quale appartiene il componente in questione e lo inserisco
+            // nel record che si sta creando
+            storeArtista.setInt(4, artista.getComponenti().get(0).getKey());
+            
+            //REMOVE 
+            System.out.println(artista.getComponenti().get(0).getKey());
+            
+            if (storeArtista.executeUpdate() == 1) {
+                //per leggere la chiave generata dal database per il record appena inserito
+                try (ResultSet keys = storeArtista.getGeneratedKeys()) {
+                       
+                        if (keys.next()) {
+                            int key = keys.getInt(1);
+                            //aggiornaimo la chiave anche nell oggetto di Collezione
+                            artista.setKey(key);
+                            //inseriamo il nuovo oggetto nella cache
+                            dataLayer.getCache().add(Artista.class, artista);
+                        }
+                    }
+                }
+            
+            // questo "if" deve essere eseguto sia quando si fa la create che l'update della Collezione 
+            if (artista instanceof DataItemProxy) {
+                ((DataItemProxy) artista).setModified(false);
+            }
+           
+        } catch (SQLException ex) {
+            throw new DataException("Unable to store Artista", ex);
+        }
     }
 }
 

@@ -151,15 +151,16 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         // si assume che il sistema permetta soltanto lo store e non l'update dell'Artista
         
         try {
+            
             if ("".equals(artista.getNomeDarte())) {
                 return;
             }
             
             storeArtista.setString(1, artista.getNomeDarte());
             
-            if (artista.getComponenti().size() > 1 || artista.getComponenti() == null) {
+            if ((artista.getComponenti() != null && artista.getComponenti().size() > 1) || artista.getComponenti() == null) {
                 // caso in cui si crea un gruppo musicale oppure un singolo Artista
-
+                
                 // inserimento valore nullo nell'attributo IDRuolo in tabella Artista
                 storeArtista.setNull(2, java.sql.Types.SMALLINT);
                 // inserimento valore nullo nell'attributo ruolo in tabella Artista
@@ -167,7 +168,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                 // inserimento valore nullo nell'attributo IDgruppoMusicale in tabella Artista
                 storeArtista.setNull(4, java.sql.Types.SMALLINT);
                
-                if (artista.getComponenti().size() > 1) {
+                if (artista.getComponenti() != null && artista.getComponenti().size() > 1) {
                     // caso in cui si crea un gruppo musicale
                     for (Artista a : artista.getComponenti()) {
                         Integer idGruppo = artista.getKey();

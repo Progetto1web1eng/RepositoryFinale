@@ -23,8 +23,8 @@ public interface ArtistaDao {
     Artista getArtistaById(int id) throws DataException;
     List<Artista> getArtisti(int artista_key) throws DataException;
     List<Artista> getCompositori()throws DataException;
-    public void storeArtista (Artista artista, Integer idGruppoMusicale)throws DataException;
-    
+    public void storeArtista (Artista artista)throws DataException;
+    public void storeComponenteGruppo (Artista artista) throws DataException;
     Artista getArtistaByDisco (Disco disco)throws DataException;
     Artista getArtistiByGruppoMusicale (Artista gruppoMusicale) throws DataException;
 

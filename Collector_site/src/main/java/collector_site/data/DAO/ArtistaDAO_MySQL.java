@@ -152,8 +152,11 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         
         try {
             
+            // REMOVE
+            System.out.println(artista.getNomeDarte());
+            
             if ("".equals(artista.getNomeDarte())) {
-                return;
+                return;  
             }
             
             storeArtista.setString(1, artista.getNomeDarte());
@@ -178,16 +181,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                     }
             }
             
-            if (artista.getComponenti() != null && artista.getComponenti().size() > 1) {
-                // caso in cui si fa lo store di un gruppo musicale
-                
-                for (Artista a : artista.getComponenti()) {
-                    // store di ciascun componente del gruppo musicale
-                    storeComponenteGruppo(a);
-                    
-                } 
-            }   
-
+           
             // questo "if" deve essere eseguto sia quando si fa la create che l'update dell'Artista 
             if (artista instanceof DataItemProxy) {
                 ((DataItemProxy) artista).setModified(false);
@@ -196,6 +190,17 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         } catch (SQLException ex) {
             throw new DataException("Unable to store Artista", ex);
         }
+        
+        if (artista.getComponenti() != null && artista.getComponenti().size() > 1) {
+            // caso in cui si fa lo store di un gruppo musicale
+                
+            for (Artista a : artista.getComponenti()) {
+                // store di ciascun componente del gruppo musicale
+                Integer idGruppoMusicale = artista.getKey();
+                storeComponenteGruppo(a, idGruppoMusicale);
+                    
+                } 
+            }   
     } 
 
     @Override
@@ -247,9 +252,11 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
     }
 
     @Override
-    public void storeComponenteGruppo(Artista artista) throws DataException {
+    public void storeComponenteGruppo(Artista artista, Integer idGruppoMusicale) throws DataException {
         try {
             
+            // REMOVE
+            System.out.println("store di un componente");
             // si dovrebbero fare più controlli
             if ("".equals(artista.getNomeDarte())) {
                 return;
@@ -264,7 +271,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             
             // estraggo l'ID del gruppo musicale al quale appartiene il componente in questione e lo inserisco
             // nel record che si sta creando
-            storeArtista.setInt(4, artista.getComponenti().get(0).getKey());
+            storeArtista.setInt(4, idGruppoMusicale);
             
             //REMOVE 
             System.out.println(artista.getComponenti().get(0).getKey());

@@ -45,6 +45,40 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBaseController  {
 
+    
+    private void store_DG(HttpServletRequest request, HttpServletResponse response, Map<String,Object> dataM, int IDcollezionista,HttpSession s) throws DataException{
+        
+        int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
+        Disco d = (Disco) s.getAttribute("discoSessione");
+        Artista g = (Artista) s.getAttribute("gruppoSessione");
+        Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
+        List<Artista> listA = (List<Artista>) s.getAttribute("ListaArtisti");
+        
+        Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().createDisco();
+        disco.setTipo(d.getTipo());
+        disco.setGenere(d.getGenere());
+        disco.setAnno(d.getAnno());
+        disco.setBarcode(d.getBarcode());
+        disco.setCollezionista(collezionista);
+        disco.setEtichetta(d.getBarcode());
+        disco.setNomeDisco(d.getNomeDisco());
+        
+        Artista gruppo = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().createArtista();
+        gruppo.setComponenti(listA);
+        gruppo.setNomeDarte(g.getNomeDarte());
+                
+        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(gruppo, null);
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, gruppo);
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
+                    ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
+                            idCollezione));
+                //s.removeAttribute("ListaArtisti");
+        
+    }
+    
+    
+    
     private void create_artista(HttpServletRequest request, HttpServletResponse response, Map<String,Object> dataM, int IDcollezionista,HttpSession s){
         try {
             
@@ -59,20 +93,17 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
             
             
             if(request.getParameter("singoloAPar")!=null){
-               out.println("porco e fagioli");
                 // caso in cui stiamo inserendo un singolo artista
                 String nomeArt = request.getParameter("singoloAPar");
-                out.println("porco e fagioli1");
                 Disco d = (Disco) s.getAttribute("discoSessione");
-                out.println("porco e fagioli2");
                 int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
-                out.println("porco e fagioli3");
+                
+
                 List<Disco> listaTempD = new ArrayList();
-                out.println("porco e fagioli4");
                 List<Artista> listaTempA = new ArrayList();
-                out.println("porco e fagioli5");
+                
+
                 Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().createDisco();
-                 out.println("porco il cristo1");
                 disco.setTipo(d.getTipo());
                 disco.setGenere(d.getGenere());
                 disco.setAnno(d.getAnno());
@@ -81,26 +112,18 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 disco.setEtichetta(d.getBarcode());
                 disco.setNomeDisco(d.getNomeDisco());
                 listaTempD.add(d);
-                out.println("porco il cristo2");
+
                 Artista artista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().createArtista();
                 artista.setNomeDarte(nomeArt);
                 artista.setDischiIncisi(listaTempD);
                 listaTempA.add(artista);
-               // disco.setCompositori(listaTempA);
-                out.println("porco il cristo3");
+               
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
-                out.println("porco il cristo4");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(artista, null);
-                out.println("porco il cristo5");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);
-                out.println("porco il cristo6");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
                             idCollezione));
-                out.println("porco il cristo7");
-                
-                
-                // storage e create
                 
                 response.sendRedirect("servletDiProvaVistaCollezione?k="+idCollezione);
                 
@@ -113,7 +136,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 String[] ruoloPar = request.getParameterValues("ruoloPar");
                 out.println("brutta madonna1");
 
-                // se il gruppo esiste già fai una cosa
+                // se il gruppo esiste già 
                 if(s.getAttribute("gruppoSessione")!=null){
                     Artista gruppo = (Artista) s.getAttribute("gruppoSessione");
                     Artista art = new ArtistaImpl();
@@ -141,37 +164,29 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                      
                 // se il gruppo non esiste  
                 }else{
-                    out.println("brutta madonna2");
                     Artista gruppo = new ArtistaImpl();
                     Artista art = new ArtistaImpl();
                     
-                    out.println("brutta madonna3");
                     List<Artista> listaTempA = new ArrayList();
                     List<Artista> listaTempG = new ArrayList();
                     List<Disco>   listaTempD = new ArrayList();
                     
-                    out.println("brutta madonna4");
                     gruppo.setNomeDarte(nomeArtistaPar);
                     art.setNomeDarte(nomeArtistaPar);
                     art.setRuolo(Ruolo.valueOf(ruoloPar[0]));
                     
-                    out.println("brutta madonna5");
                     listaTempA.add(art);
                     gruppo.setComponenti(listaTempA);
                     
-                    out.println("brutta madonna6");
                     listaTempD.add(disco);
                     gruppo.setDischiIncisi(listaTempD);
                     
-                    out.println("brutta madonna7");
                     listaTempG.add(gruppo);
                     art.setComponenti(listaTempG);
-                    out.println("brutta madonna8");
                     
                     s.setAttribute("gruppoSessione", gruppo);
                     s.setAttribute("ListaArtisti", gruppo.getComponenti());
                     s.setAttribute("discoSessione", disco);
-                    out.println("brutta madonna9");
                     
                     dataM.put("numero",8);
                     dataM.put("nomeGruppo",gruppo.getNomeDarte());
@@ -268,8 +283,12 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
              }else if(request.getParameter("etichettaPar")!=null){
                 //significa che ho chiamato la servlet per l'inserimento di un artista dopo aver inserito un disco
                  add_disco(request,response,dataM,IDcollezionista,s);// chiama la funzione di storage di un disco
+             }else if(request.getParameter("insDG")!=null){
+                 //significa che chiamo la servlet per lo storage di un gruppo musicale e del disco che hanno inciso
+                 store_DG(request,response,dataM,IDcollezionista,s);
              }
              else{
+                 //significa che chiamo la servlet per l'inserimento e lo storage di un singolo artista/ per l'inserimento di un gruppo
                  create_artista(request,response,dataM,IDcollezionista,s);
              }} catch (ParseException ex) {
              Logger.getLogger(ServletDiProvaInserisciDisco.class.getName()).log(Level.SEVERE, null, ex);

@@ -157,7 +157,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #inserisciArtistaDivGruppoContainerArtisti{
     width: 21%;
     height: 34%;
-    background-color: greenyellow;
     position: absolute;
     top: 322px;
     left: 70%;
@@ -191,4 +190,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     top: 600px;
     left: 39%;
 
+}
+#inserisciArtistaDivSingoloSubmit:hover{
+    border-color: #303841;
+    background-color: #303841;
+    color: white
+}
+#inserisciArtistaDivSingoloInput1:focus-visible{
+    outline: none;
+}
+#inserisciArtistaDivGruppoInput1:focus-visible{
+    outline: none;
+}
+#inserisciArtistaDivGruppoInput2focus-visible{
+    outline: none;
+}
+#inserisciArtistaDivGruppoSubmit:hover{
+    border-color: #303841;
+    background-color: #303841;
+    color: white
+}
+#inserisciArtistaDivGruppoInserisci:hover{
+    border-color: #303841;
+    background-color: #303841;
+    color: white
 }

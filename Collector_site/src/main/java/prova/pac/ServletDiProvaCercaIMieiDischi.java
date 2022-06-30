@@ -7,6 +7,7 @@ package prova.pac;
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
+import collector_site.data.model.Disco;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
 import freemarker.core.HTMLOutputFormat;
@@ -45,15 +46,19 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
             dataM.put("collezioni",collezioni);
             
             String inputDaCercare = request.getParameter("cercaIMieiDischi");
+            
             if(  !(inputDaCercare.substring(inputDaCercare.length()-2).equals(":T"))&&
                     !(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A"))&&
                     !(inputDaCercare.substring(inputDaCercare.length()-2).equals(":G"))
                     ){
                 // assegno un tipo di ricerca di default nel caso in cui l'utente non abbia scelto i suggerimenti 
                 inputDaCercare = inputDaCercare+":T";
-                out.println("se non ci sono suggerimenti: "+inputDaCercare);
+               
+                
             }
+            String inputSenzaPlaceH = inputDaCercare.substring(0,inputDaCercare.length()-2);
                 if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":T")){ //ricerca per titolo
+                    
                     
                     //prova
                     dataM.put("numero",4);
@@ -63,6 +68,7 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     
                 }
                 if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){ //ricerca per artista
+                    
                     
                     //prova
                     dataM.put("numero",4);

@@ -27,7 +27,6 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
-import static java.lang.System.out;
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -78,7 +77,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
             storeDisco = connection.prepareStatement("INSERT INTO disco (nomeDisco,barcode,IDgenere,genere,anno,etichetta,IDtipo,tipo) VALUES(?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             deleteDisco = connection.prepareStatement("DELETE FROM disco WHERE ID=?"); 
-            updateDisco = connection.prepareStatement("UPDATE disco SET nomeDisco=?,barcode=?,IDgenere=?,genere=?,anno=?,etichetta=? WHERE ID=?");
+            updateDisco = connection.prepareStatement("UPDATE disco SET nomeDisco=?,barcode=?,IDgenere=?,genere=?,anno=?,etichetta=?,IDtipo=?,tipo=? WHERE ID=?");
             getDisco = connection.prepareStatement("SELECT * FROM disco WHERE ID=?");
             getDischi = connection.prepareStatement("SELECT ID AS IDdisco FROM disco");
             getDiscoByCollezione = connection.prepareStatement("SELECT * FROM racchiude WHERE IDcollezione=?");
@@ -146,11 +145,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             throw new DataException("Unable to create Disco object form ResultSet", ex);
         }
         return disco;
-    }
-
-    @Override
-    public void updateDisco(String nomeDisco, String barcode, int anno, String etichetta, Genere genere, Collezionista collezionista, List<Artista> compositori, List<Immagine> immagini, List<Traccia> tracce) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -285,42 +279,77 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     
     @Override
     public void storeDisco (Disco disco)throws DataException{
-       
-        try {
-            
-            // CREAZIONE DISCO
-            if ("".equals(disco.getNomeDisco()) ||
+        
+        if ("".equals(disco.getNomeDisco()) ||
                     disco.getGenere() == null ||
                     disco.getAnno() == 0  ||      
                     disco.getTipo() == null ||
                     "".equals(disco.getEtichetta())) {
                 return;
-            }
+        }
+        
+        try {
+            if (disco.getKey() != null && disco.getKey() > 0) {
+                // UPDATE DISCO
+                //non facciamo nulla se l'oggetto è un proxy e indica di non aver subito modifiche
+                if (disco instanceof DataItemProxy && !((DataItemProxy) disco).isModified()) {
+                    return;
+                }
             
-            storeDisco.setString(1, disco.getNomeDisco());
+                updateDisco.setString(1, disco.getNomeDisco());
             
-            if ("".equals(disco.getBarcode())) {
-                storeDisco.setNull(2, java.sql.Types.CHAR);
+                if ("".equals(disco.getBarcode())) {
+                    storeDisco.setNull(2, java.sql.Types.CHAR);
+                } else {
+                    storeDisco.setString(2, disco.getBarcode());
+                }
+
+                String genere = disco.getGenere().toString();
+            
+                storeDisco.setInt(3, Genere.valueOf(genere).ordinal() + 1);
+                storeDisco.setString(4, genere);
+                storeDisco.setInt(5, disco.getAnno());
+                storeDisco.setString(6, disco.getEtichetta());
+            
+                String tipo =  disco.getTipo().toString(); 
+                storeDisco.setInt(7, Tipo.valueOf(tipo).ordinal() + 1);
+                storeDisco.setString(8, tipo);
+            
+                long current_version = disco.getVersion();
+                long next_version = current_version + 1;
+
+                if (updateDisco.executeUpdate() == 0) {
+                    // CHECK
+                    // throw new OptimisticLockException(article);
+                    // solleva eccezione
+                }
+
             } else {
-                storeDisco.setString(2, disco.getBarcode());
-            }
             
-            String genere = disco.getGenere().toString();
+                // CREAZIONE DISCO
+                storeDisco.setString(1, disco.getNomeDisco());
             
-            storeDisco.setInt(3, Genere.valueOf(genere).ordinal() + 1);
-            storeDisco.setString(4, genere);
-            storeDisco.setInt(5, disco.getAnno());
-            storeDisco.setString(6, disco.getEtichetta());
+                if ("".equals(disco.getBarcode())) {
+                    storeDisco.setNull(2, java.sql.Types.CHAR);
+                } else {
+                    storeDisco.setString(2, disco.getBarcode());
+                }
             
-            String tipo =  disco.getTipo().toString(); 
-            // MODIFICATO
-            storeDisco.setInt(7, Tipo.valueOf(tipo).ordinal() + 1);
-            storeDisco.setString(8, tipo);
+                String genere = disco.getGenere().toString();
             
-            if (storeDisco.executeUpdate() == 1) {
-                //per leggere la chiave generata dal database per il record appena inserito
-                try (ResultSet keys = storeDisco.getGeneratedKeys()) {
-                       
+                storeDisco.setInt(3, Genere.valueOf(genere).ordinal() + 1);
+                storeDisco.setString(4, genere);
+                storeDisco.setInt(5, disco.getAnno());
+                storeDisco.setString(6, disco.getEtichetta());
+            
+                String tipo =  disco.getTipo().toString(); 
+                // MODIFICATO
+                storeDisco.setInt(7, Tipo.valueOf(tipo).ordinal() + 1);
+                storeDisco.setString(8, tipo);
+            
+                if (storeDisco.executeUpdate() == 1) {
+                    //per leggere la chiave generata dal database per il record appena inserito
+                    try (ResultSet keys = storeDisco.getGeneratedKeys()) {
                         if (keys.next()) {
                             int key = keys.getInt(1);
                             //aggiornaimo la chiave anche nell oggetto di Collezione
@@ -330,15 +359,17 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
                         }
                     }
                 }
-            
-            // questo "if" deve essere eseguto sia quando si fa la create che l'update della Collezione 
-            if (disco instanceof DataItemProxy) {
-                ((DataItemProxy) disco).setModified(false);
             }
+                
+        // questo "if" deve essere eseguto sia quando si fa la create che l'update della Collezione 
+        if (disco instanceof DataItemProxy) {
+            ((DataItemProxy) disco).setModified(false);
+        }
         } catch (SQLException ex) {
             throw new DataException("Unable to store Disco", ex);
         }
     }
+
         
 
     @Override
@@ -403,27 +434,26 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         // controllo che evita l'inserimento di tuple duplicate nella tabella Colleziona
         for(CopieStato copiaStato : disco.getCopieStati()) {
-        out.println("brutta madonna1");
+        
             String statoDisco = copiaStato.getStato().toString();
-        out.println("brutta madonna2");
+        
             try {
                 getQuantitaDisco.setInt(1, collezionista.getKey());
                 getQuantitaDisco.setInt(2, disco.getKey());
                 getQuantitaDisco.setInt(3, StatoDisco.valueOf(statoDisco).ordinal() + 1);
-                    out.println("brutta madonna3");
+
             try (ResultSet rs = getQuantitaDisco.executeQuery()) {
                 if (rs.next()) {
                     if(rs.getInt("count") == 0) {
                         // caso in cui la tupla è già presente nella tabella "colleziona"
-                        out.println("brutta madonna4");
                         storeQuantitaDisco.setInt(1, copiaStato.getNumCopieDisco());
             
                         storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statoDisco).ordinal() + 1);
                         storeQuantitaDisco.setString(3, statoDisco);
-                        out.println("brutta madonna5");
+        
                         storeQuantitaDisco.setInt(4, collezionista.getKey());
                         storeQuantitaDisco.setInt(5, disco.getKey());
-                        out.println("brutta madonna6");
+                        
                         if (storeQuantitaDisco.executeUpdate() != 1) {
                             // solleva eccezione
                         }

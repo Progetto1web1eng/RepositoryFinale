@@ -10,6 +10,7 @@ import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class DiscoImpl extends DataItemImpl<Integer> implements Disco{
 	private List<Artista> compositori;
 	private List<Immagine> immagini;
 	private List<Traccia> tracce;
-        private List<CopieStato> copieStati;
-	
+	private List<CopieStato> copieStati;
+
 	public DiscoImpl() {
             super();
             nomeDisco = "";
@@ -43,17 +44,12 @@ public class DiscoImpl extends DataItemImpl<Integer> implements Disco{
             immagini = null;
             tracce = null;
             tipo = null;
-            copieStati=null;
-        }
-
-        @Override
-        public List<CopieStato> getCopieStati() {
-        return copieStati;
-        }
-        
-        @Override
-        public void setCopieStati(List<CopieStato> copieStati) {
-        this.copieStati = copieStati;
+            copieStati = new ArrayList<CopieStato>();
+            
+            CopieStato nuovo = new CopieStato();
+            CopieStato usato = new CopieStato();
+            copieStati.add(nuovo);
+            copieStati.add(usato);
         }
         
         @Override
@@ -138,7 +134,17 @@ public class DiscoImpl extends DataItemImpl<Integer> implements Disco{
         public void setTipo(Tipo tipo) {
             this.tipo = tipo;
         }
-	
+        
+        @Override
+        public void setCopieStati(List<CopieStato> copieStati) {
+            this.copieStati = copieStati;
+        }
+
+        @Override
+        public List<CopieStato> getCopieStati() {
+            return copieStati;
+        }
+        
 	
     
 }

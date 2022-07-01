@@ -23,6 +23,14 @@ public class CopieStato {
         this.numCopieDisco=numCopieDisco;
         this.stato=stato;
     }
+
+    public void setNumCopieDisco(int numCopieDisco) {
+        this.numCopieDisco = numCopieDisco;
+    }
+
+    public void setStato(StatoDisco stato) {
+        this.stato = stato;
+    }
     public int getNumCopieDisco(){
         return this.numCopieDisco;
     }

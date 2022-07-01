@@ -6,9 +6,11 @@ package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.impl.ArtistaImpl;
+import collector_site.data.impl.CopieStato;
 import collector_site.data.impl.DiscoImpl;
 import collector_site.data.impl.Genere;
 import collector_site.data.impl.Ruolo;
+import collector_site.data.impl.StatoDisco;
 import collector_site.data.impl.Tipo;
 import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
@@ -66,16 +68,23 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
     }   
     
     
-    private void advice_disco(HttpServletRequest request, HttpServletResponse response, int IDcollezionista,HttpSession s,int IDdisco) throws DataException, IOException{
+    private void advice_disco(HttpServletRequest request, HttpServletResponse response, int IDcollezionista,HttpSession s,int IDdisco,Template t,Map<String,Object> dataM) throws DataException, IOException{
         
-        int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
-        Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
-        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
+        
+        try {
+            int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
+            Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco); 
+            ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco,
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
                             idCollezione));
-        
-         s.removeAttribute("IDCollezioneSessione");
-                response.sendRedirect("servletDiProvaVistaCollezione?k="+idCollezione);
+            
+            dataM.put("numero",9);
+            t.process(dataM, response.getWriter());
+            
+            //response.sendRedirect("servletDiProvaVistaCollezione?k="+idCollezione);
+        } catch (TemplateException ex) {
+            Logger.getLogger(ServletDiProvaInserisciDisco.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }
@@ -169,7 +178,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                             idCollezione));
                 
                 //storage dei dischi nel file json
-                try (FileWriter file = new FileWriter("dischi.json")){
+                try (FileWriter file = new FileWriter("script/dischi.json")){
                     out.println("bruttamadonna");
                     JSONParser jsonParser = new JSONParser();
                     out.println("bruttamadonna");
@@ -300,6 +309,13 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
             String datePar = request.getParameter("dataPar"); // 
             String etichettaPar = request.getParameter("etichettaPar");//
             String[] genereDiscoPar = request.getParameterValues("genereDiscoPar");//
+            String[] statoDiscoPar = request.getParameterValues("statoDiscoPar");
+            String numeroDiCopiePar = request.getParameter("numeroDiCopiePar");
+            
+            CopieStato copieStato = new CopieStato();
+            copieStato.setNumCopieDisco(Integer.parseInt(numeroDiCopiePar));
+            copieStato.setStato(StatoDisco.valueOf(statoDiscoPar[0]));
+            
             
             Disco disco = new DiscoImpl();
             disco.setTipo(Tipo.valueOf(tipoDiscoPar[0]));
@@ -311,7 +327,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
             disco.setNomeDisco(nomeDiscoPar);
             
             
-            
+            s.setAttribute("copieStato", copieStato);
             s.setAttribute("discoSessione", disco);
            
             dataM.put("ripetizioni",0);
@@ -350,6 +366,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                  //significa che ho chiamato la servlet per l'inserimento di un nuovo disco dalla vista di una collezione
                  s.setAttribute("IDCollezioneSessione", request.getParameter("collezioneKey"));
                  //completo la sideBar con la lista di collezioni
+                 
                  Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
                  List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
                  dataM.put("collezioni",collezioni);
@@ -365,12 +382,15 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
              }else if(request.getParameter("AdviceD")!=null){
                  //significa che ho selezionato un disco gi� esistente
                  int IDdisco = Integer.parseInt(request.getParameter("AdviceD"));
-                 advice_disco(request,response,IDcollezionista,s,IDdisco);
+                 advice_disco(request,response,IDcollezionista,s,IDdisco,t,dataM);
              }else if (request.getParameter("AdviceA")!=null){
                  // significa che sto selezionando un artista/gruppo gi� esistente
                  int IDartista = Integer.parseInt(request.getParameter("AdviceA"));
                  advice_artista(request,response,s,IDartista);
-             }
+             }/*else if(request.getParameter("settingCS")!=null){
+                 
+                 set_copieStato
+             }*/
              else{
                  //significa che chiamo la servlet per l'inserimento e lo storage di un singolo artista/ per l'inserimento di un gruppo
                  create_artista(request,response,dataM,IDcollezionista,s);

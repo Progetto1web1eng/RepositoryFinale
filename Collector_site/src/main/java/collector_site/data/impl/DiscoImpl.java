@@ -29,6 +29,7 @@ public class DiscoImpl extends DataItemImpl<Integer> implements Disco{
 	private List<Artista> compositori;
 	private List<Immagine> immagini;
 	private List<Traccia> tracce;
+        private List<CopieStato> copieStati;
 	
 	public DiscoImpl() {
             super();
@@ -42,6 +43,17 @@ public class DiscoImpl extends DataItemImpl<Integer> implements Disco{
             immagini = null;
             tracce = null;
             tipo = null;
+            copieStati=null;
+        }
+
+        @Override
+        public List<CopieStato> getCopieStati() {
+        return copieStati;
+        }
+        
+        @Override
+        public void setCopieStati(List<CopieStato> copieStati) {
+        this.copieStati = copieStati;
         }
         
         @Override

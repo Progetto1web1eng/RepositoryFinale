@@ -20,6 +20,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="stili/profilo.css" type="text/css"/>
         <link rel="stylesheet" href="stili/homeLogged.css" type="text/css"/>
         <link rel="stylesheet" href="stili/inserisciArtista.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/setCopieStatoFromAdv.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/modificaDisco.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/inserisciTraccia.css" type="text/css"/>
         <script src="script/resetInput.js"></script>
         <script src="script/inserimentoArtistiScript.js"></script>
         <script src="script/inputAdvice.js"></script>
@@ -60,6 +63,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             </#if>
             <#if (numero==8)>
              <#include "inserisciArtista.ftl.html">
+            </#if>
+            <#if (numero==9)>
+             <#include "setCopieStatoFromAdv.ftl.html">
+            </#if>
+            <#if (numero==10)>
+             <#include "modificaDisco.ftl.html">
+            </#if>
+            <#if (numero==11)>
+             <#include "inserisciTraccia.ftl.html">
             </#if>
         </div>
     </body>

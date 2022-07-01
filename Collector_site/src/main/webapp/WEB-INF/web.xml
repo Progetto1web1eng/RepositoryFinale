@@ -3,7 +3,7 @@
     <context-param>
         <!-- aggiungo questo parametro per definire in quale directory salvare le IMMAGINI che vengono UPLOADATE dai COLLEZIONISTI -->
         <param-name>uploads.directory</param-name>
-        <param-value>C:\Users\mauri\OneDrive\Desktop</param-value>
+        <param-value>C:\Users\fabri</param-value>
     </context-param>
     <servlet>
         <servlet-name>ServletDiProvaHome</servlet-name>
@@ -65,6 +65,10 @@
         <servlet-name>ServletBotEmailDiProva</servlet-name>
         <servlet-class>prova.pac.ServletBotEmailDiProva</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletDiProvaModificaDisco</servlet-name>
+        <servlet-class>prova.pac.ServletDiProvaModificaDisco</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDiProvaInserisciImmagine</servlet-name>
         <url-pattern>/servletDiProvaInserisciImmagine</url-pattern>
@@ -124,6 +128,10 @@
     <servlet-mapping>
         <servlet-name>ServletBotEmailDiProva</servlet-name>
         <url-pattern>/servletBotEmailDiProva</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDiProvaModificaDisco</servlet-name>
+        <url-pattern>/servletDiProvaModificaDisco</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

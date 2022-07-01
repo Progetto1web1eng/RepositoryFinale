@@ -4,6 +4,7 @@
  */
 package collector_site.data.model;
 
+import collector_site.data.impl.CopieStato;
 import collector_site.data.impl.Genere;
 import collector_site.data.impl.StatoDisco;
 import collector_site.data.impl.Tipo;
@@ -48,5 +49,8 @@ public interface Disco extends DataItem<Integer>{
     
     Collezionista getCollezionista();
     void setCollezionista(Collezionista collezionista);
+    
+    List<CopieStato> getCopieStati();
+    void setCopieStati(List<CopieStato> copieStati);
     
 }

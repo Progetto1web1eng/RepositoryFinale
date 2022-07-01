@@ -87,11 +87,12 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getDischiByArtista = connection.prepareStatement("SELECT * FROM incide WHERE IDartista=?");
             //stefano deve controllare
             getDischiByNome = connection.prepareStatement("SELECT * FROM disco WHERE nomeDisco=?");
-            // query che modificano le quantità di Disco
-            updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE ID=?");
             addDiscoToCollezione = connection.prepareStatement("INSERT INTO racchiude (IDcollezione,IDdisco) VALUES(?,?)"); 
             removeDiscoFromCollezione = connection.prepareStatement("DELETE FROM racchiude WHERE IDcollezione=? and IDdisco=?;");
             setArtistaOfDisco = connection.prepareStatement("INSERT INTO incide (IDdisco,IDartista) VALUES(?,?)"); 
+            
+            // query che manipolano le quantità dei dischi
+            updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?");
             storeQuantitaDisco = connection.prepareStatement("INSERT INTO colleziona (numCopieDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco) VALUES(?,?,?,?,?)");
             getQuantitaDisco = connection.prepareStatement("SELECT * FROM colleziona WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?;");
 
@@ -340,43 +341,26 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
 
     @Override
-    public void updateQuantitaDisco(Disco disco, int quantitaDisco) throws DataException {
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-    
-    //aggiunto per fare il push di artistaProxy (DA COMPLETARE LUNEDI)
-    @Override
-    public List<Disco> getDischiIncisi() throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
-        try {
-            
-            // controllo che il disco non sia già presente nella collezione in questione
-            for (Disco d : getDiscoByCollezione(collezione)) {
-                if (d.getKey() == disco.getKey()) {
-                    // disco già presente all'interno della collezione
-                    return; //solleva eccezione
-                 }
-            }
+    public void updateQuantitaDisco(Disco disco, Collezionista collezionista, StatoDisco statoDisco, int nuovaQuantita) throws DataException {
            
-            addDiscoToCollezione.setInt(1, collezione.getKey());
-            addDiscoToCollezione.setInt(2, disco.getKey());
-
-            if (addDiscoToCollezione.executeUpdate() != 1) {
+        if (nuovaQuantita < 0) {
+                return;
+        }
+        
+         try {
+        
+            updateQuantitaDisco.setInt(1, nuovaQuantita);
+            
+            updateQuantitaDisco.setInt(2, collezionista.getKey());
+            updateQuantitaDisco.setInt(3, disco.getKey());
+            updateQuantitaDisco.setInt(4, StatoDisco.valueOf(statoDisco.toString()).ordinal() + 1);
+           
+            if (storeQuantitaDisco.executeUpdate() != 1) {
                 // solleva eccezione
             }
+
         } catch (SQLException ex) {
-            throw new DataException("Unable to add Disco to Collezione", ex);
+            throw new DataException("Unable to update quantità del disco", ex);
         }
     }
 
@@ -449,6 +433,10 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
             storeQuantitaDisco.setInt(4, collezionista.getKey());
             storeQuantitaDisco.setInt(5, disco.getKey());
+            
+            if (storeQuantitaDisco.executeUpdate() != 1) {
+                // solleva eccezione
+            }
 
         } catch (SQLException ex) {
             throw new DataException("Unable to add Disco to Collezionista", ex);
@@ -457,5 +445,15 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
                 Logger.getLogger(DiscoDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    @Override
+    public void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Disco> getDischiIncisi() throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -170,6 +170,17 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 artista.setDischiIncisi(listaTempD);
                 listaTempA.add(artista);
                
+                
+                CopieStato cp = (CopieStato) s.getAttribute("copieStato");
+                out.println(cp.getStato().toString());
+                out.println(cp.getNumCopieDisco());
+                
+                
+                
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
+                out.println("porco e fagioli1");
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().updateQuantitaDisco(disco, collezionista,cp.getStato(),cp.getNumCopieDisco());
+                out.println("porco e fagioli2");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(artista);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);
@@ -177,7 +188,9 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
                             idCollezione));
                 
+                
                 //storage dei dischi nel file json
+                /*
                 try (FileWriter file = new FileWriter("script/dischi.json")){
                     out.println("bruttamadonna");
                     JSONParser jsonParser = new JSONParser();
@@ -204,7 +217,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                     }
                     file.write(newJSON.toJSONString());
                     file.flush();
-                }
+                }*/
                 
                 
                 s.removeAttribute("gruppoSessione");

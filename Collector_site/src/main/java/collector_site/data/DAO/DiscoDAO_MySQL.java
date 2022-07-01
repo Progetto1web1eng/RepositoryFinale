@@ -18,6 +18,9 @@ import collector_site.data.model.Disco;
 import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.DiscoProxy;
+import collector_site.data.impl.CopieStato;
+import collector_site.data.impl.StatoDisco;
+
 
 // import riguardanti il framework
 import collector_site.framework.data.DAO;
@@ -58,6 +61,9 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement addDiscoToCollezione;
     private PreparedStatement removeDiscoFromCollezione;
     private PreparedStatement setArtistaOfDisco;
+    private PreparedStatement storeQuantitaDisco;
+    private PreparedStatement getQuantitaDisco;
+
 
 
     public DiscoDAO_MySQL(DataLayer d) {
@@ -81,11 +87,14 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getDischiByArtista = connection.prepareStatement("SELECT * FROM incide WHERE IDartista=?");
             //stefano deve controllare
             getDischiByNome = connection.prepareStatement("SELECT * FROM disco WHERE nomeDisco=?");
-            // query che modificano le quantità di Disco
-            updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE ID=?");
             addDiscoToCollezione = connection.prepareStatement("INSERT INTO racchiude (IDcollezione,IDdisco) VALUES(?,?)"); 
             removeDiscoFromCollezione = connection.prepareStatement("DELETE FROM racchiude WHERE IDcollezione=? and IDdisco=?;");
             setArtistaOfDisco = connection.prepareStatement("INSERT INTO incide (IDdisco,IDartista) VALUES(?,?)"); 
+            
+            // query che manipolano le quantità dei dischi
+            updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?");
+            storeQuantitaDisco = connection.prepareStatement("INSERT INTO colleziona (numCopieDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco) VALUES(?,?,?,?,?)");
+            getQuantitaDisco = connection.prepareStatement("SELECT * FROM colleziona WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?;");
 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
@@ -106,6 +115,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             addDiscoToCollezione.close();
             removeDiscoFromCollezione.close();
             setArtistaOfDisco.close();
+            storeQuantitaDisco.close();
+            getQuantitaDisco.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -323,7 +334,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             if (disco instanceof DataItemProxy) {
                 ((DataItemProxy) disco).setModified(false);
             }
-           
         } catch (SQLException ex) {
             throw new DataException("Unable to store Disco", ex);
         }
@@ -331,43 +341,26 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
 
     @Override
-    public void updateQuantitaDisco(Disco disco, int quantitaDisco) throws DataException {
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-    
-    //aggiunto per fare il push di artistaProxy (DA COMPLETARE LUNEDI)
-    @Override
-    public List<Disco> getDischiIncisi() throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
-        try {
-            
-            // controllo che il disco non sia già presente nella collezione in questione
-            for (Disco d : getDiscoByCollezione(collezione)) {
-                if (d.getKey() == disco.getKey()) {
-                    // disco già presente all'interno della collezione
-                    return; //solleva eccezione
-                 }
-            }
+    public void updateQuantitaDisco(Disco disco, Collezionista collezionista, StatoDisco statoDisco, int nuovaQuantita) throws DataException {
            
-            addDiscoToCollezione.setInt(1, collezione.getKey());
-            addDiscoToCollezione.setInt(2, disco.getKey());
-
-            if (addDiscoToCollezione.executeUpdate() != 1) {
+        if (nuovaQuantita < 0) {
+                return;
+        }
+        
+         try {
+        
+            updateQuantitaDisco.setInt(1, nuovaQuantita);
+            
+            updateQuantitaDisco.setInt(2, collezionista.getKey());
+            updateQuantitaDisco.setInt(3, disco.getKey());
+            updateQuantitaDisco.setInt(4, StatoDisco.valueOf(statoDisco.toString()).ordinal() + 1);
+           
+            if (storeQuantitaDisco.executeUpdate() != 1) {
                 // solleva eccezione
             }
+
         } catch (SQLException ex) {
-            throw new DataException("Unable to add Disco to Collezione", ex);
+            throw new DataException("Unable to update quantità del disco", ex);
         }
     }
 
@@ -402,5 +395,65 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         } catch (SQLException ex) {
             throw new DataException("Unable to set Artista of Disco", ex);
         }
+    }
+
+    @Override
+    public void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException {
+        
+        for(CopieStato copiaStato : disco.getCopieStati()) {
+        // controllo che evita l'inserimento di tuple duplicate nella tabella Colleziona
+        String statoDisco = copiaStato.getStato().toString();
+        
+        try {
+
+            getQuantitaDisco.setInt(1, collezionista.getKey());
+            getQuantitaDisco.setInt(2, disco.getKey());
+            getQuantitaDisco.setInt(3, StatoDisco.valueOf(statoDisco).ordinal() + 1);
+
+            try (ResultSet rs = getQuantitaDisco.executeQuery()) {
+                while (rs.next()) {
+                    if(rs.getInt("IDcollezionista") == collezionista.getKey() &&
+                       rs.getInt("IDdisco") == disco.getKey() &&
+                       rs.getInt("IDstatoDisco") == StatoDisco.valueOf(statoDisco).ordinal() + 1 ) {
+                        
+                        // salta l'inserimento della tupla perché già presente nella tabella "colleziona"
+                        continue;
+                    }
+                }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load  'colleziona' table from the DB", ex);
+        }
+        
+        try {
+        
+            storeQuantitaDisco.setInt(1, copiaStato.getNumCopieDisco());
+            
+            storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statoDisco).ordinal() + 1);
+            storeQuantitaDisco.setString(3, statoDisco);
+        
+            storeQuantitaDisco.setInt(4, collezionista.getKey());
+            storeQuantitaDisco.setInt(5, disco.getKey());
+            
+            if (storeQuantitaDisco.executeUpdate() != 1) {
+                // solleva eccezione
+            }
+
+        } catch (SQLException ex) {
+            throw new DataException("Unable to add Disco to Collezionista", ex);
+        }
+        }   catch (SQLException ex) {
+                Logger.getLogger(DiscoDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    @Override
+    public void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Disco> getDischiIncisi() throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

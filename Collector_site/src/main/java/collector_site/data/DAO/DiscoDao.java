@@ -13,6 +13,7 @@ import collector_site.data.model.Disco;
 import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.DiscoProxy;
+import collector_site.data.impl.StatoDisco;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
@@ -40,9 +41,10 @@ public interface DiscoDao {
     //prendiamo una lista di dischi cercando il nome
     List<Disco> getDischiByNome(String nome) throws DataException;
     void storeDisco(Disco disco)throws DataException;
-    public void updateQuantitaDisco(Disco disco, int quantitaDisco) throws DataException;
+    public void updateQuantitaDisco(Disco disco, Collezionista collezionista, StatoDisco statoDisco, int quantitaDisco) throws DataException;
     void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException;
     void removeDiscoToCollezione(Disco disco, Collezione collezione) throws DataException;
     public List<Disco> getDischiIncisi()throws DataException;
-    void setArtistaOfDisco(Disco disco, Artista artista) throws DataException; 
+    void setArtistaOfDisco(Disco disco, Artista artista) throws DataException;
+    void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException;
 }

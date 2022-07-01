@@ -25,9 +25,6 @@ import java.util.List;
 public interface DiscoDao {
     Disco createDisco();
     DiscoProxy createDisco(ResultSet rs) throws DataException;
-    void updateDisco(String nomeDisco,String barcode,int anno,String etichetta,
-                     Genere genere,Collezionista collezionista,List<Artista>compositori,
-                     List<Immagine>immagini,List<Traccia>tracce);
     void deleteDisco(Disco disco);
     Disco getDisco(int id) throws DataException;
     List<Disco> getDischi() throws DataException;

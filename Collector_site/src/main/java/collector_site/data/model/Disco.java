@@ -49,8 +49,7 @@ public interface Disco extends DataItem<Integer>{
     
     Collezionista getCollezionista();
     void setCollezionista(Collezionista collezionista);
-    
-    List<CopieStato> getCopieStati();
-    void setCopieStati(List<CopieStato> copieStati);
+    public List<CopieStato> getCopieStati();
+    public void setCopieStati(List<CopieStato> copieStati);
     
 }

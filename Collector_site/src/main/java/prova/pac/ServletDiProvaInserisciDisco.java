@@ -172,6 +172,10 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                
                 
                 CopieStato cp = (CopieStato) s.getAttribute("copieStato");
+                List<CopieStato> listcp = new ArrayList();
+                listcp.add(cp);
+                disco.setCopieStati(listcp);
+                
                 out.println(cp.getStato().toString());
                 out.println(cp.getNumCopieDisco());
                 

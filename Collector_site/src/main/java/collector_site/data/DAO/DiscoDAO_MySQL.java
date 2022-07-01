@@ -27,6 +27,7 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
+import static java.lang.System.out;
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -402,26 +403,27 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         // controllo che evita l'inserimento di tuple duplicate nella tabella Colleziona
         for(CopieStato copiaStato : disco.getCopieStati()) {
-        
+        out.println("brutta madonna1");
             String statoDisco = copiaStato.getStato().toString();
-        
+        out.println("brutta madonna2");
             try {
                 getQuantitaDisco.setInt(1, collezionista.getKey());
                 getQuantitaDisco.setInt(2, disco.getKey());
                 getQuantitaDisco.setInt(3, StatoDisco.valueOf(statoDisco).ordinal() + 1);
-
+                    out.println("brutta madonna3");
             try (ResultSet rs = getQuantitaDisco.executeQuery()) {
                 if (rs.next()) {
                     if(rs.getInt("count") == 0) {
                         // caso in cui la tupla è già presente nella tabella "colleziona"
+                        out.println("brutta madonna4");
                         storeQuantitaDisco.setInt(1, copiaStato.getNumCopieDisco());
             
                         storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statoDisco).ordinal() + 1);
                         storeQuantitaDisco.setString(3, statoDisco);
-        
+                        out.println("brutta madonna5");
                         storeQuantitaDisco.setInt(4, collezionista.getKey());
                         storeQuantitaDisco.setInt(5, disco.getKey());
-                        
+                        out.println("brutta madonna6");
                         if (storeQuantitaDisco.executeUpdate() != 1) {
                             // solleva eccezione
                         }

@@ -29,10 +29,4 @@ public class CopieStato {
     public StatoDisco getStato(){
         return this.stato;
     }
-    public void setNumCopieDisco(int numCopieDisco){
-        this.numCopieDisco=numCopieDisco;
-    }
-    public void setStato(StatoDisco stato){
-        this.stato=stato;
-    }
 }

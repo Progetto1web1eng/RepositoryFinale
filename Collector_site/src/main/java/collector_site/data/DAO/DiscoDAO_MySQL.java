@@ -18,6 +18,9 @@ import collector_site.data.model.Disco;
 import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.DiscoProxy;
+import collector_site.data.impl.CopieStato;
+import collector_site.data.impl.StatoDisco;
+
 
 // import riguardanti il framework
 import collector_site.framework.data.DAO;
@@ -58,6 +61,9 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement addDiscoToCollezione;
     private PreparedStatement removeDiscoFromCollezione;
     private PreparedStatement setArtistaOfDisco;
+    private PreparedStatement storeQuantitaDisco;
+    private PreparedStatement getQuantitaDisco;
+
 
 
     public DiscoDAO_MySQL(DataLayer d) {
@@ -86,6 +92,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             addDiscoToCollezione = connection.prepareStatement("INSERT INTO racchiude (IDcollezione,IDdisco) VALUES(?,?)"); 
             removeDiscoFromCollezione = connection.prepareStatement("DELETE FROM racchiude WHERE IDcollezione=? and IDdisco=?;");
             setArtistaOfDisco = connection.prepareStatement("INSERT INTO incide (IDdisco,IDartista) VALUES(?,?)"); 
+            storeQuantitaDisco = connection.prepareStatement("INSERT INTO colleziona (numCopieDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco) VALUES(?,?,?,?,?)");
+            getQuantitaDisco = connection.prepareStatement("SELECT * FROM colleziona WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?;");
 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
@@ -106,6 +114,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             addDiscoToCollezione.close();
             removeDiscoFromCollezione.close();
             setArtistaOfDisco.close();
+            storeQuantitaDisco.close();
+            getQuantitaDisco.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -323,7 +333,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             if (disco instanceof DataItemProxy) {
                 ((DataItemProxy) disco).setModified(false);
             }
-           
         } catch (SQLException ex) {
             throw new DataException("Unable to store Disco", ex);
         }
@@ -401,6 +410,52 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             }
         } catch (SQLException ex) {
             throw new DataException("Unable to set Artista of Disco", ex);
+        }
+    }
+
+    @Override
+    public void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException {
+        
+        for(CopieStato copiaStato : disco.getCopieStati()) {
+        // controllo che evita l'inserimento di tuple duplicate nella tabella Colleziona
+        String statoDisco = copiaStato.getStato().toString();
+        
+        try {
+
+            getQuantitaDisco.setInt(1, collezionista.getKey());
+            getQuantitaDisco.setInt(2, disco.getKey());
+            getQuantitaDisco.setInt(3, StatoDisco.valueOf(statoDisco).ordinal() + 1);
+
+            try (ResultSet rs = getQuantitaDisco.executeQuery()) {
+                while (rs.next()) {
+                    if(rs.getInt("IDcollezionista") == collezionista.getKey() &&
+                       rs.getInt("IDdisco") == disco.getKey() &&
+                       rs.getInt("IDstatoDisco") == StatoDisco.valueOf(statoDisco).ordinal() + 1 ) {
+                        
+                        // salta l'inserimento della tupla perché già presente nella tabella "colleziona"
+                        continue;
+                    }
+                }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load  'colleziona' table from the DB", ex);
+        }
+        
+        try {
+        
+            storeQuantitaDisco.setInt(1, copiaStato.getNumCopieDisco());
+            
+            storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statoDisco).ordinal() + 1);
+            storeQuantitaDisco.setString(3, statoDisco);
+        
+            storeQuantitaDisco.setInt(4, collezionista.getKey());
+            storeQuantitaDisco.setInt(5, disco.getKey());
+
+        } catch (SQLException ex) {
+            throw new DataException("Unable to add Disco to Collezionista", ex);
+        }
+        }   catch (SQLException ex) {
+                Logger.getLogger(DiscoDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

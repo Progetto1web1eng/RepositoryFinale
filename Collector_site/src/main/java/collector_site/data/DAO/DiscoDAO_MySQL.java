@@ -63,6 +63,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement setArtistaOfDisco;
     private PreparedStatement storeQuantitaDisco;
     private PreparedStatement getQuantitaDisco;
+    private PreparedStatement getStatiDischi;
 
 
 
@@ -95,6 +96,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             updateQuantitaDisco = connection.prepareStatement("UPDATE colleziona SET numCopieDisco=? WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?");
             storeQuantitaDisco = connection.prepareStatement("INSERT INTO colleziona (numCopieDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco) VALUES(?,?,?,?,?)");
             getQuantitaDisco = connection.prepareStatement("SELECT count(*) as count FROM colleziona WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?;");
+            getStatiDischi = connection.prepareStatement("SELECT nome FROM statoDisco");
 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
@@ -117,6 +119,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             setArtistaOfDisco.close();
             storeQuantitaDisco.close();
             getQuantitaDisco.close();
+            getStatiDischi.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -433,37 +436,55 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     public void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException {
         
         // controllo che evita l'inserimento di tuple duplicate nella tabella Colleziona
-        for(CopieStato copiaStato : disco.getCopieStati()) {
+        // lista contente tutti gli stati presenti nella webapp che possono essere associati ai dischi 
+        List<String> statiDischi = new ArrayList<String>();
         
-            String statoDisco = copiaStato.getStato().toString();
+        try {
+            try (ResultSet rs = getStatiDischi.executeQuery()) {
+                while (rs.next()) {
+                    statiDischi.add(rs.getString("nome"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load stati dei dischi", ex);
+        }
         
-            try {
-                getQuantitaDisco.setInt(1, collezionista.getKey());
-                getQuantitaDisco.setInt(2, disco.getKey());
-                getQuantitaDisco.setInt(3, StatoDisco.valueOf(statoDisco).ordinal() + 1);
-
-            try (ResultSet rs = getQuantitaDisco.executeQuery()) {
-                if (rs.next()) {
-                    if(rs.getInt("count") == 0) {
-                        // caso in cui la tupla è già presente nella tabella "colleziona"
-                        storeQuantitaDisco.setInt(1, copiaStato.getNumCopieDisco());
+        
+        for(String statoDisco : statiDischi) {
+            // per ciascun stato di disco si aggiunge una tupla alla tabella "colleziona"
+            CopieStato cs = null; 
             
-                        storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statoDisco).ordinal() + 1);
-                        storeQuantitaDisco.setString(3, statoDisco);
+            for (CopieStato c : disco.getCopieStati()) {
+                // per ogni specifico stato è associato il rispettivo oggetto della classe CopiaStato
+                if(statoDisco.equals(c.getStato().toString())) {
+                    cs = c;
+                }
+            }
+            
+            try {
+                
+                try (ResultSet rs = getQuantitaDisco.executeQuery()) {
+                    if (rs.next()) {
+                        if(rs.getInt("count") == 0) {
+                            // caso in cui la tupla non è già presente nella tabella "colleziona"
+                            storeQuantitaDisco.setInt(1, cs.getNumCopieDisco());
+            
+                            storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statoDisco).ordinal() + 1);
+                            storeQuantitaDisco.setString(3, statoDisco);
         
-                        storeQuantitaDisco.setInt(4, collezionista.getKey());
-                        storeQuantitaDisco.setInt(5, disco.getKey());
+                            storeQuantitaDisco.setInt(4, collezionista.getKey());
+                            storeQuantitaDisco.setInt(5, disco.getKey());
                         
-                        if (storeQuantitaDisco.executeUpdate() != 1) {
-                            // solleva eccezione
+                            if (storeQuantitaDisco.executeUpdate() != 1) {
+                               // solleva eccezione
+                            }
                         }
                     }
-                }                
+                }
+            } catch (SQLException ex) {
+                throw new DataException("Unable to add Disco to Collezionista", ex);
             }
-       
-        }   catch (SQLException ex) {
-                Logger.getLogger(DiscoDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        
         }
     }
 

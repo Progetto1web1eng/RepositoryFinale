@@ -64,8 +64,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement storeQuantitaDisco;
     private PreparedStatement getQuantitaDisco;
     private PreparedStatement getStatiDischi;
-
-
+    private PreparedStatement getDischiByCollezionista;
+    private PreparedStatement getDischiByGenere;
 
     public DiscoDAO_MySQL(DataLayer d) {
         super(d);
@@ -97,7 +97,9 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             storeQuantitaDisco = connection.prepareStatement("INSERT INTO colleziona (numCopieDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco) VALUES(?,?,?,?,?)");
             getQuantitaDisco = connection.prepareStatement("SELECT count(*) as count FROM colleziona WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?;");
             getStatiDischi = connection.prepareStatement("SELECT nome FROM statoDisco");
-
+            getDischiByCollezionista = connection.prepareStatement("SELECT c.IDdisco FROM colleziona WHERE (c.IDcollezionista=?);");
+            getDischiByGenere = connection.prepareStatement("SELECT * FROM disco d where (d.IDgenere = ?);");
+            
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
         }
@@ -120,6 +122,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             storeQuantitaDisco.close();
             getQuantitaDisco.close();
             getStatiDischi.close();
+            getDischiByCollezionista.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -490,11 +493,116 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
     @Override
     public void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        try {
+            getDiscoByCollezione.setInt(1, collezione.getKey());
+
+            try (ResultSet rs = getDiscoByCollezione.executeQuery()) {
+                while (rs.next()) {
+                    if (rs.getInt("IDdisco") == disco.getKey()) {
+                        // caso in cui il Disco in questione è stato già associato alla collezione
+                        return;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Disco by Collezione", ex);
+        }
+        
+        try {
+            
+            addDiscoToCollezione.setInt(1, collezione.getKey());
+            addDiscoToCollezione.setInt(2, disco.getKey());
+ 
+            if (addDiscoToCollezione.executeUpdate() != 1) {
+                // solleva eccezione
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to add Disco to Collezione", ex);
+        }
     }
 
     @Override
     public List<Disco> getDischiIncisi() throws DataException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Disco> getDischiByNome(String nomeDisco, Collezionista collezionista) throws DataException {
+        List<Disco> result = null;
+        
+        for(Disco disco : getDischiByCollezionista(collezionista)) {
+            if(nomeDisco.equals(disco.getNomeDisco())) {
+                result.add(disco);
+            }
+        }
+        return result; 
+    }
+
+    @Override
+    public List<Disco> getDischiByCollezionista(Collezionista collezionista) throws DataException {
+        List<Disco> result = new ArrayList();
+        
+        try{
+            getDischiByCollezionista.setInt(1, collezionista.getKey());
+            
+            try(ResultSet rs = getDischiByCollezionista.executeQuery()){
+                result.add(getDisco(rs.getInt("c.IDdisco")));
+            }
+            
+        }catch(SQLException ex){
+            throw new DataException("Unable to load Disco by Collezionista");
+        }
+        return result;
+    }
+
+    @Override
+    public List<Disco> getDischiByArtista(Artista artista, Collezionista collezionista) throws DataException {
+        List<Disco> result = new ArrayList<Disco>();
+        
+        for(Disco d : getDischiByCollezionista(collezionista)) {
+            
+            for(Artista a : d.getCompositori()) {
+                if(artista.getKey().equals(a.getKey())) {
+                    result.add(d);
+                }
+            }
+        }
+        
+        return result;
+    }
+
+    @Override
+    public List<Disco> getDischiByGenere(Genere genere) throws DataException {
+        List<Disco> result = new ArrayList();
+        
+        try{
+            Integer idGenere = Genere.valueOf(genere.toString()).ordinal() + 1;
+            getDischiByGenere.setInt(1, idGenere);
+            
+            try(ResultSet rs = getDischiByGenere.executeQuery()){
+                result.add(getDisco(rs.getInt("d.ID")));
+            }
+            
+        }catch(SQLException ex){
+            throw new DataException("Unable to load Disco by Genere");
+        }
+        return result;
+    }
+
+    @Override
+    public List<Disco> getDischiByGenere(Genere genere, Collezionista collezionista) throws DataException {
+        List<Disco> result = new ArrayList<Disco>();
+        
+        for(Disco disco : getDischiByCollezionista(collezionista)) {
+            // contiene l'ID del genere per il quale si effettua la ricerca tra i dischi
+            Integer idGenere1 = Genere.valueOf(genere.toString()).ordinal() + 1; 
+            Integer idGenere2 = Genere.valueOf(disco.getGenere().toString()).ordinal() + 1; 
+
+            if(idGenere1 == idGenere2 ) {
+                result.add(disco);
+            }   
+        }
+        return result;
     }
 }

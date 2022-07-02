@@ -439,58 +439,50 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     public void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException {
         
         // controllo che evita l'inserimento di tuple duplicate nella tabella Colleziona
-        // lista contente tutti gli stati presenti nella webapp che possono essere associati ai dischi 
-        List<String> statiDischi = new ArrayList<String>();
+        String[] statiDischi = new String[2];
+        statiDischi[0] = "Nuovo";
+        statiDischi[1] = "Usato";
         
-        try {
-            try (ResultSet rs = getStatiDischi.executeQuery()) {
-                while (rs.next()) {
-                    statiDischi.add(rs.getString("nome"));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new DataException("Unable to load stati dei dischi", ex);
-        }
-        
-        
-        for(String statoDisco : statiDischi) {
-            // per ciascun stato di disco si aggiunge una tupla alla tabella "colleziona"
-            CopieStato cs = null; 
+        for (CopieStato c : disco.getCopieStati()) {
+            CopieStato cs = null;
             
-            for (CopieStato c : disco.getCopieStati()) {
-                // per ogni specifico stato è associato il rispettivo oggetto della classe CopiaStato
-                if(statoDisco.equals(c.getStato().toString())) {
+            for(int i=0;i<=statiDischi.length;i++) {
+                if(c.getStato().toString().equals(statiDischi[i])) {
                     cs = c;
-                }
-            }
-            
-            try {
-                
-                try (ResultSet rs = getQuantitaDisco.executeQuery()) {
-                    if (rs.next()) {
-                        if(rs.getInt("count") == 0) {
-                            // caso in cui la tupla non è già presente nella tabella "colleziona"
-                            storeQuantitaDisco.setInt(1, cs.getNumCopieDisco());
-            
-                            storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statoDisco).ordinal() + 1);
-                            storeQuantitaDisco.setString(3, statoDisco);
-        
-                            storeQuantitaDisco.setInt(4, collezionista.getKey());
-                            storeQuantitaDisco.setInt(5, disco.getKey());
+                    
+                    try{
+                        getQuantitaDisco.setInt(1, collezionista.getKey());
+                        getQuantitaDisco.setInt(2, disco.getKey());
+                        getQuantitaDisco.setInt(3, StatoDisco.valueOf(statiDischi[i]).ordinal() + 1);
                         
-                            if (storeQuantitaDisco.executeUpdate() != 1) {
-                               // solleva eccezione
-                            }
-                        }
-                    }
-                }
-            } catch (SQLException ex) {
-                throw new DataException("Unable to add Disco to Collezionista", ex);
-            }
+                        try (ResultSet rs = getQuantitaDisco.executeQuery()) {
+                            if (rs.next()) {
+                                if(rs.getInt("count") == 0) {
+                                        // caso in cui la tupla non è già presente nella tabella "colleziona"
+                                        storeQuantitaDisco.setInt(1, cs.getNumCopieDisco());
+            
+                                        storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statiDischi[i]).ordinal() + 1);
+                                        storeQuantitaDisco.setString(3, statiDischi[i]);
         
+                                        storeQuantitaDisco.setInt(4, collezionista.getKey());
+                                        storeQuantitaDisco.setInt(5, disco.getKey());
+                        
+                                        if (storeQuantitaDisco.executeUpdate() != 1) {
+                                                // solleva eccezione
+                                        }
+                                    }           
+                                }
+                            }
+                        } catch (SQLException ex) {
+                            throw new DataException("Unable to add Disco to Collezionista", ex);
+                        }
+                }
+            }
         }
     }
-
+        
+        
+      
     @Override
     public void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException {
         

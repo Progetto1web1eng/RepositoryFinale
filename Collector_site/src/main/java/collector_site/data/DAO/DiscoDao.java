@@ -31,12 +31,17 @@ public interface DiscoDao {
     //possiamo prendere un insieme di dischi dalla collezione in cui si trovano
     //il nome andrebbe modificato in getDischiByCollezione andando a modificare a cascata tutto il codice già scritto
     List<Disco> getDiscoByCollezione(Collezione collezione) throws DataException;
+    List<Disco> getDischiByCollezionista(Collezionista collezionista) throws DataException;
     //possiamo prendere un disco da una traccia contenuta in esso
     Disco getDiscoByTraccia (Traccia traccia) throws DataException;
     //possiamo prendere un insieme di dischi selezionando l'artista
     List<Disco> getDischiByArtista(Artista artista)throws DataException;
+    List<Disco> getDischiByArtista(Artista artista, Collezionista collezionista)throws DataException;
     //prendiamo una lista di dischi cercando il nome
     List<Disco> getDischiByNome(String nome) throws DataException;
+    List<Disco> getDischiByNome(String nomeDisco, Collezionista collezionista) throws DataException;
+    List<Disco> getDischiByGenere(Genere genere) throws DataException;
+    List<Disco> getDischiByGenere(Genere genere, Collezionista collezionista) throws DataException;
     void storeDisco(Disco disco)throws DataException;
     public void updateQuantitaDisco(Disco disco, Collezionista collezionista, StatoDisco statoDisco, int quantitaDisco) throws DataException;
     void addDiscoToCollezione(Disco disco, Collezione collezione) throws DataException;

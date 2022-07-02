@@ -205,7 +205,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
         try (ResultSet rs = getDischi.executeQuery()) {
             while (rs.next()) {
-                result.add((Disco) getDisco(rs.getInt("ID")));
+                result.add((Disco) getDisco(rs.getInt("IDdisco")));
             }
         } catch (SQLException ex) {
             throw new DataException("Unable to load Dischi", ex);

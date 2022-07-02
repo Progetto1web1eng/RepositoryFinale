@@ -6,6 +6,7 @@ package collector_site.data.DAO;
 
 import collector_site.framework.data.DataException;
 import collector_site.data.model.Artista;
+import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.data.proxy.ArtistaProxy;
 import collector_site.data.proxy.DiscoProxy;
@@ -27,6 +28,8 @@ public interface ArtistaDao {
     public void storeComponenteGruppo (Artista artista, Integer idGruppoMusicale) throws DataException;
     Artista getArtistaByDisco (Disco disco)throws DataException;
     Artista getArtistiByGruppoMusicale (Artista gruppoMusicale) throws DataException;
+    List<Artista> getArtistiPreferiti(Collezionista collezionista) throws DataException;
+
 
     
 }

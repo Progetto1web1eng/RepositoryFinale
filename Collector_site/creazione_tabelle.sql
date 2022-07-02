@@ -162,7 +162,7 @@ insert into genere values(12,"Pop");
 
 insert into statoDisco values(1,"Nuovo");
 insert into statoDisco values(2,"Usato");
-insert into statoDisco values(3,"Aperto - mai usato");
+# insert into statoDisco values(3,"Aperto - mai usato");
 
 insert into ruolo values(1,"Voce");
 insert into ruolo values(2,"Chitarra");
@@ -183,6 +183,7 @@ insert into tipo values(4,"audiocassetta");
 # INSERIMENTO DATI DI PROVA
 insert into artista values (1, "Metallica", null, null, null);
 insert into artista values (2,"James Hetfield", 1, "Voce", 1);
+insert into artista values (3,"Pink Floyd", null, null, null);
 
 insert into collezionista values (1, "Stefano", "stefano@gmail.com", "stefa", "stefa", "3880581680");
 insert into collezionista values (2, "Fabrizio", "fabrizio@gmail.com", "fabri", "fabri", "3880581670");
@@ -196,8 +197,9 @@ insert into collezione values (5, "heavy", 2, true);
 
 insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio", 1, "CD");
 insert into disco values (2, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 2, "vinile");
-insert into disco values (3, "bianco", "47956", 11, "Metal", 1978, "Metal Studio", 1, "CD");
+insert into disco values (3, "bianco", "47956", 1, "Metal", 1978, "Metal Studio", 1, "CD");
 insert into disco values (4, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 4, "audiocassetta");
+insert into disco values (5, "The Dark Side of the Moon", "3282", 6, "Rock", 1970, "Rock Studio", 2, "vinile"); 
 
 insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
@@ -208,9 +210,22 @@ insert into racchiude values (1, 1);
 insert into racchiude values (2, 2);
 insert into racchiude values (5, 2);
 
-insert into colleziona values (2, 1, "Nuovo", 1, 1);
+# dischi di Stefano
+insert into colleziona values (1, 1, "Nuovo", 1, 1);
+insert into colleziona values (2, 2, "Usato", 1, 2);
+insert into colleziona values (5, 1, "Nuovo", 1, 5);
+insert into colleziona values (1, 1, "Nuovo", 1, 4);
+
+
+insert into colleziona values (2, 2, "Usato", 2, 3); 
 
 insert into crea values (1, 1);
+
+insert into incide values(1, 1);
+insert into incide values(2, 1);
+insert into incide values(4, 1);
+insert into incide values(5, 3);
+
 
 
 # GESTIONE UTENZA

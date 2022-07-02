@@ -49,4 +49,5 @@ public interface DiscoDao {
     public List<Disco> getDischiIncisi()throws DataException;
     void setArtistaOfDisco(Disco disco, Artista artista) throws DataException;
     void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException;
+    List<Integer> getArtistiPreferiti(Collezionista collezionista) throws DataException;
 }

@@ -19,6 +19,7 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataLayer;
 import collector_site.data.model.Artista;
+import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.data.proxy.ArtistaProxy;
 import collector_site.data.proxy.DiscoProxy;
@@ -46,6 +47,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
     private PreparedStatement getArtisti;
     private PreparedStatement getArtistaByDisco;
     private PreparedStatement getArtistiByGruppoMusicale;
+    private PreparedStatement getArtistiPreferiti;
 
     public ArtistaDAO_MySQL(DataLayer d) {
         super(d);
@@ -62,6 +64,8 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             getArtisti = connection.prepareStatement("SELECT ID AS IDartista FROM artista");
             getArtistaByDisco = connection.prepareStatement("SELECT IDartista FROM incide WHERE IDdisco=?");
             getArtistiByGruppoMusicale = connection.prepareStatement("SELECT ID, IDruolo FROM artista WHERE IDgruppoMusicale=?");
+            getArtistiPreferiti = connection.prepareStatement("SELECT count(i.IDartista), i.IDartista FROM colleziona c join incide i on(c.IDdisco = i.IDdisco) WHERE (c.IDcollezionista = ?) GROUP BY i.IDartista ORDER BY count(i.IDartista) desc;");
+
         } catch (SQLException ex) {
             throw new DataException("Error initializing Artista data layer", ex);
         }
@@ -76,6 +80,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             getArtisti.close();
             getArtistaByDisco.close();
             getArtistiByGruppoMusicale.close();
+            getArtistiPreferiti.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -298,6 +303,33 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         } catch (SQLException ex) {
             throw new DataException("Unable to store Artista", ex);
         }
+    }
+    
+    @Override
+    public List<Artista> getArtistiPreferiti(Collezionista collezionista) throws DataException {
+        // in questa lista verrano salvati gli ID degli artisti preferiti
+        List<Artista> result = new ArrayList<Artista>();
+        
+        try{
+            getArtistiPreferiti.setInt(1, collezionista.getKey());
+            
+            try(ResultSet rs = getArtistiPreferiti.executeQuery()){
+                int count = 0;
+                
+                while (rs.next()){
+                    result.add(getArtistaById(rs.getInt("i.IDartista")));
+                    count++;
+                    
+                    if(count >= 3) {
+                        break;
+                    }
+                }
+            }
+        }catch(SQLException ex){
+            throw new DataException("Unable to load artisti preferiti");
+        }
+        
+        return result;
     }
 }
 

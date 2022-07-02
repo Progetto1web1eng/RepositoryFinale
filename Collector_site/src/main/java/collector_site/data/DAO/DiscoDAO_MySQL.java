@@ -66,6 +66,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement getStatiDischi;
     private PreparedStatement getDischiByCollezionista;
     private PreparedStatement getDischiByGenere;
+    private PreparedStatement getArtistiPreferiti;
 
     public DiscoDAO_MySQL(DataLayer d) {
         super(d);
@@ -99,7 +100,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getStatiDischi = connection.prepareStatement("SELECT nome FROM statoDisco");
             getDischiByCollezionista = connection.prepareStatement("SELECT c.IDdisco FROM colleziona WHERE (c.IDcollezionista=?);");
             getDischiByGenere = connection.prepareStatement("SELECT * FROM disco d where (d.IDgenere = ?);");
-            
+            getArtistiPreferiti = connection.prepareStatement("SELECT count(i.IDartista), i.IDartista FROM colleziona c join incide i on(c.IDdisco = i.IDdisco) WHERE (c.IDcollezionista = ?) GROUP BY i.IDartista ORDER BY count(i.IDartista) desc;");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
         }
@@ -123,6 +124,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getQuantitaDisco.close();
             getStatiDischi.close();
             getDischiByCollezionista.close();
+            getArtistiPreferiti.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -595,6 +597,33 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
                 result.add(disco);
             }   
         }
+        return result;
+    }
+
+    @Override
+    public List<Integer> getArtistiPreferiti(Collezionista collezionista) throws DataException {
+        // in questa lista verrano salvati gli ID degli artisti preferiti
+        List<Integer> result = new ArrayList<Integer>();
+        
+        try{
+            getArtistiPreferiti.setInt(1, collezionista.getKey());
+            
+            try(ResultSet rs = getArtistiPreferiti.executeQuery()){
+                int count = 0;
+                
+                while (rs.next()){
+                    result.add(rs.getInt("i.IDartista"));
+                    count++;
+                    
+                    if(count >= 3) {
+                        break;
+                    }
+                }
+            }
+        }catch(SQLException ex){
+            throw new DataException("Unable to load artisti preferiti");
+        }
+        
         return result;
     }
 }

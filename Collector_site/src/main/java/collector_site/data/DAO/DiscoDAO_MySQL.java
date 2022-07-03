@@ -97,7 +97,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             storeQuantitaDisco = connection.prepareStatement("INSERT INTO colleziona (numCopieDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco) VALUES(?,?,?,?,?)");
             getQuantitaDisco = connection.prepareStatement("SELECT count(*) as count FROM colleziona WHERE IDcollezionista=? and IDdisco=? and IDstatoDisco=?;");
             getStatiDischi = connection.prepareStatement("SELECT nome FROM statoDisco");
-            getDischiByCollezionista = connection.prepareStatement("SELECT c.IDdisco FROM colleziona WHERE (c.IDcollezionista=?);");
+            getDischiByCollezionista = connection.prepareStatement("SELECT c.IDdisco FROM colleziona c WHERE (c.IDcollezionista=?);");
             getDischiByGenere = connection.prepareStatement("SELECT * FROM disco d where (d.IDgenere = ?);");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);

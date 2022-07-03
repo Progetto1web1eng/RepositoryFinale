@@ -21,9 +21,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     justify-content: flex-start;
     overflow-y: auto;
 }
+
+#modificaDiscoDiv1{
+    width: 90%;
+    height: 460px;
+    margin-top: 20px;
+    background-color: #DBDBDB;
+    border-radius: 38px;
+    border: 3px solid #979C98;
+}
+
 #modificaDiscoDiv2{
     width: 90%;
-    height: 715px;
+    height: 460px;
     background-color: #DBDBDB;
     overflow: auto;
     margin-top: 20px;
@@ -33,10 +43,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    overflow-y: auto;
-    
-    
+    overflow-y: auto; 
 }
+
 .modificaDiscoDivTracce{
     width: 90%;
     height: 100px;

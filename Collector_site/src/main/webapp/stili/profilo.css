@@ -17,3 +17,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-bottom-left-radius:38px;
     margin-left: 20px;
 }
+#profiloDivPrimoPosto{
+    width: 50px;
+    height: 20px;
+    background-color: yellow;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+}
+#profiloDivSecondoPosto{
+     width: 50px;
+    height: 20px;
+    background-color: gray;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+}
+#profiloDivTerzoPosto{
+     width: 50px;
+    height: 20px;
+    background-color: brown;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+}
+#profiloContainerArtistiStat:hover #profiloDivPrimoPosto{
+    height: 80px;
+}
+#profiloContainerArtistiStat:hover #profiloDivSecondoPosto{
+    height: 60px;
+}
+#profiloContainerArtistiStat:hover #profiloDivTerzoPosto{
+    height: 40px;
+}

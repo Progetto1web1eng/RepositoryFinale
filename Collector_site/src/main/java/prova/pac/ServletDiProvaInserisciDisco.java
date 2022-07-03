@@ -157,7 +157,6 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 
 
                 Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().createDisco();
-                out.println("chiave nuovo disco: "+disco.getKey());
                 disco.setTipo(d.getTipo());
                 disco.setGenere(d.getGenere());
                 disco.setAnno(d.getAnno());
@@ -186,7 +185,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 disco.setCopieStati(listcp);
                 
                 
-                
+                out.println("porco e fagioli0");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
                 out.println("porco e fagioli1");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().updateQuantitaDisco(disco, collezionista,cp.getStato(),cp.getNumCopieDisco());
@@ -198,7 +197,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
                             idCollezione));
                 
-                
+                /*
                 //storage dei dischi nel file json
                     FileWriter file = new FileWriter("dischi.json");
                     BufferedWriter filebuf = new BufferedWriter(file);
@@ -223,7 +222,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                     printout.print("]");
                 }
                 //fine storage sul json
-                
+                */
                 
                 s.removeAttribute("gruppoSessione");
                 s.removeAttribute("ListaArtisti");

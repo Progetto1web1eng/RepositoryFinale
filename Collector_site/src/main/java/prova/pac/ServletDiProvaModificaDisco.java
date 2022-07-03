@@ -7,6 +7,7 @@ package prova.pac;
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
+import collector_site.data.model.Disco;
 import collector_site.data.model.Traccia;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
@@ -52,6 +53,7 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
             Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
             Map<String,Object> dataM = new HashMap();
             if(request.getParameter("discoKey")!=null){
+                //significa che ho cliccato il tasto modifica
                 int IDdisco = Integer.parseInt(request.getParameter("discoKey"));
                 s.setAttribute("discoID", IDdisco);
                 
@@ -59,12 +61,11 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
                 Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
                 List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
                 dataM.put("collezioni",collezioni);
-                
-                List<Traccia> tracce = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().getTracceByDisco
-                                           (((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco));
-
+                Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
+                List<Traccia> tracce = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().getTracceByDisco(disco);
+                                           
                 dataM.put("tracceList",tracce);
-                dataM.put("discoID",IDdisco);
+                dataM.put("disco",disco);
                 dataM.put("numero", 10);
                 t.process(dataM, response.getWriter());
             }else if(request.getParameter("aggiungiTraccia")!=null){

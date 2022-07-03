@@ -4,8 +4,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
 <div id="modificaDiscoDiv">
-    <div id="modificaDiscoDiv1" style="width: 300px;height: 300px;background-color: greenyellow">
+    <div id="modificaDiscoDiv1">
         <!-- questo è il primo div con le caratteristiche del disco-->
+        <form method="get" action=""> 
+        <!-- inizio inserimento caratteristiche disco -->
+            <input type="text" value="${disco.nomeDisco}" name="nomeDiscoPar" id="modificaDiscoNomeDisco">
+            <input type="text" value="${disco.barcode}" name="barcodePar" id="modificaDiscoBarcode">
+            <input type="number" value="${disco.anno}" name="dataPar" id="modificaDiscoData">
+            <input type="text" value="${disco.etichetta}" name="etichettaPar" id="modificaDiscoEtichetta">
+            <input type="submit" value="continua" id="modificaDiscoSubmit">   
+        </form>
+        
     </div>
     <div id="modificaDiscoDiv2">
         <!-- ciclo di ripetizione per ogni disco della collezione -->

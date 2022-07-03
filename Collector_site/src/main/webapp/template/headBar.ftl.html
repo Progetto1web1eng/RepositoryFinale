@@ -14,9 +14,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <div class="headBarDiv1_1" id="headBarDivDiRicerca">
                 <img class="headBarImg" id="headBarImg1"/>
                 <form>
-                   <input id="headBarInput" type="text" value="cerca" onclick="resetHeadBarInput()">
+                   <input id="headBarInput" type="text" value="cerca" onclick="resetHeadBarInput()" onkeydown="adviceHeadBarVisible()" onkeyup="adviceHeadBar()">
                    <button type="submit" id="headBarButton"><img class="headBarImg" id="headBarImg2"></button>
-                </form>   
+                </form> 
+                <div id="headBarSuggerimenti">
+                    <div  style="background-color: white;height: 40px;">
+                    </div>
+                    <div class="headBarDivSuggerimenti" onclick="adviceHeadBarUsername()">
+                        <span class="headBarSuggerimentiSpan" id="hBSS1">
+                        </span>
+                        <span class="headBarSuggerimentiSpan">Username</span>
+                    </div>
+                    <div class="headBarDivSuggerimenti" onclick="adviceHeadBarCollezione()">
+                        <span class="headBarSuggerimentiSpan" id="hBSS2">
+                        </span>
+                        <span class="headBarSuggerimentiSpan">Collezione</span>
+                    </div>
+                    <div class="headBarDivSuggerimenti" onclick="adviceHeadBarDisco()">
+                        <span class="headBarSuggerimentiSpan" id="hBSS3">
+                        </span>
+                        <span class="headBarSuggerimentiSpan">Disco</span>
+                    </div>
+                    <div class="headBarDivSuggerimenti" style="margin-bottom: 10px;" onclick="adviceHeadBarArtista()">
+                        <span class="headBarSuggerimentiSpan" id="hBSS4">
+                        </span>
+                        <span class="headBarSuggerimentiSpan">Artista</span>
+                    </div>
+                </div>
             </div>
             <div class="headBarDiv1_1" id="headBarDivLog">
                 <a class="headBarAncora" href="servletDiProvaLogin">login</a>

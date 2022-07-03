@@ -4,6 +4,7 @@
  */
 package prova.pac;
 
+import java.io.*;
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.impl.ArtistaImpl;
 import collector_site.data.impl.CopieStato;
@@ -156,6 +157,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 
 
                 Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().createDisco();
+                out.println("chiave nuovo disco: "+disco.getKey());
                 disco.setTipo(d.getTipo());
                 disco.setGenere(d.getGenere());
                 disco.setAnno(d.getAnno());
@@ -169,15 +171,19 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 artista.setNomeDarte(nomeArt);
                 artista.setDischiIncisi(listaTempD);
                 listaTempA.add(artista);
+                disco.setCompositori(listaTempA);
                
                 
                 CopieStato cp = (CopieStato) s.getAttribute("copieStato");
                 List<CopieStato> listcp = new ArrayList();
-                listcp.add(cp);
+                if(cp.getStato().toString().equals("NUOVO")){
+                    listcp.add(cp);
+                    listcp.add(new CopieStato());
+                }else{
+                    listcp.add(new CopieStato());
+                    listcp.add(cp);
+                }
                 disco.setCopieStati(listcp);
-                
-                out.println(cp.getStato().toString());
-                out.println(cp.getNumCopieDisco());
                 
                 
                 
@@ -194,34 +200,29 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 
                 
                 //storage dei dischi nel file json
-                /*
-                try (FileWriter file = new FileWriter("script/dischi.json")){
-                    out.println("bruttamadonna");
-                    JSONParser jsonParser = new JSONParser();
-                    out.println("bruttamadonna");
-                    try (FileReader reader = new FileReader("dischi.json")){
-                        out.println("bruttamadonna");
-                    Object obj = jsonParser.parse(reader);
-                            out.println("bruttamadonna");
-                        JSONArray dischiList = (JSONArray) obj;
-                        out.println("bruttamadonna");
-                        for(Object j : dischiList){
-                            out.println("porco e fagioli");
-                        }
-                    }
-                    
+                    FileWriter file = new FileWriter("dischi.json");
+                    BufferedWriter filebuf = new BufferedWriter(file);
+                try (PrintWriter printout = new PrintWriter(filebuf)) {
                     String nomeDisco;
                     int ID;
                     JSONObject newJSON = new JSONObject();
-                    for(Disco disk : ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischi()){
+                    int position = 0;
+                    printout.print("[");
+                    List<Disco> diskList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischi();
+                    for(Disco disk : diskList){
                         nomeDisco = disk.getNomeDisco();
                         ID = disk.getKey();
                         newJSON.put("nomeDisco", nomeDisco);
                         newJSON.put("ID",ID);
+                        if(position!=0){
+                            printout.print(",");
+                        }
+                        printout.println(newJSON.toJSONString());
+                        position++;
                     }
-                    file.write(newJSON.toJSONString());
-                    file.flush();
-                }*/
+                    printout.print("]");
+                }
+                //fine storage sul json
                 
                 
                 s.removeAttribute("gruppoSessione");

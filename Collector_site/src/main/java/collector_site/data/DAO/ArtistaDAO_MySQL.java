@@ -44,6 +44,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
     private PreparedStatement storeArtista;
     private PreparedStatement deleteArtista;
     private PreparedStatement getArtistaById;
+    private PreparedStatement getArtistaByNomeDarte;
     private PreparedStatement getArtisti;
     private PreparedStatement getArtistaByDisco;
     private PreparedStatement getArtistiByGruppoMusicale;
@@ -65,6 +66,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             getArtistaByDisco = connection.prepareStatement("SELECT IDartista FROM incide WHERE IDdisco=?");
             getArtistiByGruppoMusicale = connection.prepareStatement("SELECT ID, IDruolo FROM artista WHERE IDgruppoMusicale=?");
             getArtistiPreferiti = connection.prepareStatement("SELECT count(i.IDartista), i.IDartista FROM colleziona c join incide i on(c.IDdisco = i.IDdisco) WHERE (c.IDcollezionista = ?) GROUP BY i.IDartista ORDER BY count(i.IDartista) desc;");
+            getArtistaByNomeDarte = connection.prepareStatement("SELECT * FROM artista WHERE nomeDarte=? LIMIT 1");
 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Artista data layer", ex);
@@ -141,6 +143,26 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         return artista;
     }
 
+    
+    @Override
+    public Artista getArtistaNomeDarte(String nomeDarte) throws DataException {
+        Artista artista = null;
+            try {
+                getArtistaByNomeDarte.setString(1, nomeDarte);
+                try (ResultSet rs = getArtistaByNomeDarte.executeQuery()) {
+                    if (rs.next()) {
+                        artista = createArtista(rs);
+                        // si controlla se l'artista in questione è un gruppo musicale e se sì, si aggiungono
+                        // i suoi componenti
+                        artista = getArtistiByGruppoMusicale(artista);
+                    }
+                }
+            } catch (SQLException ex) {
+                throw new DataException("Unable to load Artista by ID", ex);
+            }
+        return artista;
+    }
+   
     @Override
     public List<Artista> getArtisti(int artista_key) throws DataException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

@@ -29,6 +29,7 @@ public interface ArtistaDao {
     Artista getArtistaByDisco (Disco disco)throws DataException;
     Artista getArtistiByGruppoMusicale (Artista gruppoMusicale) throws DataException;
     List<Artista> getArtistiPreferiti(Collezionista collezionista) throws DataException;
+    public Artista getArtistaNomeDarte(String nomeDarte) throws DataException;
 
 
     

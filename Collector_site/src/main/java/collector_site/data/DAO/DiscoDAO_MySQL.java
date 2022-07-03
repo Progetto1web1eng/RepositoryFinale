@@ -520,7 +520,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
     @Override
     public List<Disco> getDischiByNome(String nomeDisco, Collezionista collezionista) throws DataException {
-        List<Disco> result = null;
+        List<Disco> result = new ArrayList();
         
         for(Disco disco : getDischiByCollezionista(collezionista)) {
             if(nomeDisco.equals(disco.getNomeDisco())) {
@@ -549,7 +549,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
     @Override
     public List<Disco> getDischiByArtista(Artista artista, Collezionista collezionista) throws DataException {
-        List<Disco> result = new ArrayList<Disco>();
+        List<Disco> result = new ArrayList<>();
         
         for(Disco d : getDischiByCollezionista(collezionista)) {
             
@@ -583,14 +583,14 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
     @Override
     public List<Disco> getDischiByGenere(Genere genere, Collezionista collezionista) throws DataException {
-        List<Disco> result = new ArrayList<Disco>();
+        List<Disco> result = new ArrayList<>();
         
         for(Disco disco : getDischiByCollezionista(collezionista)) {
             // contiene l'ID del genere per il quale si effettua la ricerca tra i dischi
             Integer idGenere1 = Genere.valueOf(genere.toString()).ordinal() + 1; 
             Integer idGenere2 = Genere.valueOf(disco.getGenere().toString()).ordinal() + 1; 
 
-            if(idGenere1 == idGenere2 ) {
+            if(idGenere1.intValue() == idGenere2.intValue() ) {
                 result.add(disco);
             }   
         }

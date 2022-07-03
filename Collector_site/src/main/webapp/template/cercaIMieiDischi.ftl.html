@@ -33,18 +33,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <#if (hidden==1)>
     <div id="cercaIMieiDischiDiv2">
         <!-- ciclo di ripetizione per ogni disco della collezione -->
+        <#list dischiList as d>
         <div class="cercaIMieiDischiDivDischi">
             <div>
                 <img src="immaginiDischi/giggino.PNG"  alt="immagine disco" class="cercaIMieiDischiImmagineDisco">
             </div>
             <div>
-                <h3 style="color: white">NOME DEL DISCO</h3>
+                <h3 style="color: white">${d.nomeDisco}</h3>
             </div>
             <div>
                 <img id="cercaIMieiDischiCestinoImg" alt="cancella" style="margin-right: 20px;">
                 <img id="cercaIMieiDischiModificaImg" alt="modifica" style="margin-right: 20px;">
             </div>   
         </div>
+        </#list>
     </div>
     </#if>
     <#if (hidden==2)>

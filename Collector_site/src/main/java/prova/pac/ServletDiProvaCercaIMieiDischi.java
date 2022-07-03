@@ -5,6 +5,8 @@
 package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
+import collector_site.data.impl.Genere;
+import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
@@ -36,7 +38,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_siteBaseController {
    
-    private void cerca_InputAction(HttpServletRequest request, HttpServletResponse response,Map<String,Object> dataM, int IDcollezionista){
+    private void cerca_InputAction(HttpServletRequest request, HttpServletResponse response,Map<String,Object> dataM, int IDcollezionista) throws DataException{
         try {
             ProvaConfig pcg = new ProvaConfig(getServletContext());
             Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
@@ -57,35 +59,48 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                 
             }
             String inputSenzaPlaceH = inputDaCercare.substring(0,inputDaCercare.length()-2);
-                if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":T")){ //ricerca per titolo
-                    
-                    
-                    //prova
-                    dataM.put("numero",4);
-                    dataM.put("hidden",0); //non verrà visualizzato il div con la lista di dichi
-                    t.process(dataM, response.getWriter());
-                    out.println("normale: "+inputDaCercare);
-                    
+                
+            if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":T")){ //ricerca per titolo
+                dataM.put("numero",4);
+                List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH, collezionista);
+                if(listD.isEmpty()){
+                        // caso in cui non abbiamo trovato nulla
+                    dataM.put("hidden", 2);
+                }else{
+                        // caso in cui abbiamo un riscontro
+                    dataM.put("hidden", 1);
+                    dataM.put("dischiList",listD);
                 }
-                if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){ //ricerca per artista
-                    
-                    
-                    //prova
-                    dataM.put("numero",4);
-                    dataM.put("hidden",0); //non verrà visualizzato il div con la lista di dichi
-                    t.process(dataM, response.getWriter());
-                    out.println("normale: "+inputDaCercare);
-                    
+                t.process(dataM, response.getWriter());
+            }
+                
+            if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){ //ricerca per artista
+                dataM.put("numero",4);
+                Artista artista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
+                List<Disco> listDisk = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(artista, collezionista);
+                if(listDisk.isEmpty()){
+                        // caso in cui non abbiamo trovato nulla
+                    dataM.put("hidden", 2);
+                }else{
+                        // caso in cui abbiamo un riscontro
+                    dataM.put("hidden", 1);
+                    dataM.put("dischiList",listDisk);
                 }
-                if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":G")){ //ricerca per genere
-                   
-                    //prova
-                    dataM.put("numero",4);
-                    dataM.put("hidden",0); //non verrà visualizzato il div con la lista di dichi
-                    t.process(dataM, response.getWriter());
-                    out.println("normale: "+inputDaCercare);
-                    
+                t.process(dataM, response.getWriter());
+            }
+            if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":G")){ //ricerca per genere
+                dataM.put("numero",4);
+                List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByGenere(Genere.valueOf(inputSenzaPlaceH), collezionista);
+                if(listD.isEmpty()){
+                        // caso in cui non abbiamo trovato nulla
+                    dataM.put("hidden", 2);
+                }else{
+                        // caso in cui abbiamo un riscontro
+                    dataM.put("hidden", 1);
+                    dataM.put("dischiList",listD);
                 }
+                t.process(dataM, response.getWriter());
+            }
             
         } catch (ParseException ex) {
             Logger.getLogger(ServletDiProvaCercaIMieiDischi.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,42 +138,6 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
         }
     }
     
-    
-    
-    
-    /* vecchia
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Configuration cfg= new Configuration(Configuration.VERSION_2_3_0);
-        cfg.setDefaultEncoding("utf-8");
-        cfg.setOutputFormat(HTMLOutputFormat.INSTANCE);
-        cfg.setServletContextForTemplateLoading(getServletContext(),"template");
-        DefaultObjectWrapperBuilder ob = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_0);
-        cfg.setObjectWrapper(ob.build());
-        if(request.getParameter("cercaIMieiDischi")==null){
-            Template t = cfg.getTemplate("dispatcherDiProva.ftl.html");
-                Map<String,Object> dataM = new HashMap();
-                dataM.put("numero",4);
-                dataM.put("hidden",false);
-            try {
-                t.process(dataM, response.getWriter());
-            } catch (TemplateException ex) {
-                Logger.getLogger(ServletDiProvaCollezioniCondivise.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            Template t = cfg.getTemplate("dispatcherDiProva.ftl.html");
-                Map<String,Object> dataM = new HashMap();
-                dataM.put("numero",4);
-                dataM.put("hidden",true);
-            try {
-                t.process(dataM, response.getWriter());
-            } catch (TemplateException ex) {
-                Logger.getLogger(ServletDiProvaCollezioniCondivise.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-            
-    }*/
 }
 
   

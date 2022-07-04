@@ -248,6 +248,7 @@ insert into colleziona values (1, 1, "Nuovo", 1, 9);
 insert into colleziona values (1, 1, "Nuovo", 1, 10);
 insert into colleziona values (1, 1, "Nuovo", 1, 11);
 
+
 insert into crea values (1, 1);
 
 insert into incide values(1, 1);

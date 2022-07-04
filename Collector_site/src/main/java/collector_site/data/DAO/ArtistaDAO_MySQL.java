@@ -19,6 +19,7 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataLayer;
 import collector_site.data.model.Artista;
+import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.data.proxy.ArtistaProxy;
@@ -27,6 +28,7 @@ import collector_site.data.proxy.DiscoProxy;
 // import riguardanti il framework
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.OptimisticLockException;
+import static java.lang.System.out;
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -64,7 +66,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             getArtistaById = connection.prepareStatement("SELECT * FROM artista WHERE ID=?");
             getArtisti = connection.prepareStatement("SELECT ID AS IDartista FROM artista");
             getArtistaByDisco = connection.prepareStatement("SELECT IDartista FROM incide WHERE IDdisco=?");
-            getArtistiByGruppoMusicale = connection.prepareStatement("SELECT ID, IDruolo FROM artista WHERE IDgruppoMusicale=?");
+            getArtistiByGruppoMusicale = connection.prepareStatement("SELECT * FROM artista WHERE IDgruppoMusicale=?");
             getArtistiPreferiti = connection.prepareStatement("SELECT count(i.IDartista), i.IDartista FROM colleziona c join incide i on(c.IDdisco = i.IDdisco) WHERE (c.IDcollezionista = ?) GROUP BY i.IDartista ORDER BY count(i.IDartista) desc;");
             getArtistaByNomeDarte = connection.prepareStatement("SELECT * FROM artista WHERE nomeDarte=? LIMIT 1");
 
@@ -101,9 +103,11 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         try {
             artista.setKey(rs.getInt("ID"));
             artista.setNomeDarte(rs.getString("nomeDarte"));
+            System.out.println(rs.getInt("ID"));
+            System.out.println(rs.getString("nomeDarte"));
             // Ruolo è un enumerazione
             // CHECK
-            artista.setRuolo(Ruolo.values()[rs.getInt("IDruolo") - 1]);
+            // artista.setRuolo(Ruolo.values()[rs.getInt("IDruolo") - 1]);
         } catch (SQLException ex) {
             throw new DataException("Unable to create Artista object form ResultSet", ex);
         }
@@ -118,6 +122,61 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
     @Override
     public Artista getArtistaById(int id) throws DataException {
         Artista artista = null;
+         
+        //prima vediamo se l'oggetto è già stato caricato
+        //first look for this object in the cache
+        if (dataLayer.getCache().has(Artista.class, id)) {
+            // caso in cui la Collezione è già presente nella CACHE
+            artista = dataLayer.getCache().get(Artista.class, id);
+        } else {
+            //altrimenti lo carichiamo dal database
+            //otherwise load it from database
+            try {
+                getArtistaById.setInt(1,id);
+                
+                int IDgruppoMusicale = 0;
+                try (ResultSet rs = getArtistaById.executeQuery()) {
+                    if (rs.next()) {
+                        // IDgruppoMusicale = rs.getInt("IDgruppoMusicale"); 
+                        
+                        artista = createArtista(rs);
+                        out.println(artista.getKey());
+                        out.println(artista.getNomeDarte());
+                        
+                        artista = getArtistiByGruppoMusicale(artista);
+                        
+                        //out.println(artista.getComponenti().get(0).getNomeDarte());
+
+                        
+                        /*
+                        if (rs.wasNull()) {
+                            // caso in cui l'artista in questione è un gruppo musicale oppure un singolo 
+                            // Artista
+                            artista = createArtista(rs); 
+                            
+        
+                        } */
+                    }
+                }
+            
+            } catch (SQLException ex) {
+                throw new DataException("Unable to load Collezione by its ID", ex);
+            }
+        }
+        //e lo mettiamo anche nella cache
+        dataLayer.getCache().add(Artista.class, artista);
+        
+        return artista;
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
+        Artista artista = null;
         
         //prima vediamo se l'oggetto è già stato caricato
         if (dataLayer.getCache().has(Artista.class, id)) {
@@ -128,7 +187,9 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                 getArtistaById.setInt(1, id);
                 try (ResultSet rs = getArtistaById.executeQuery()) {
                     if (rs.next()) {
+                        System.out.println("prima createArtista");
                         artista = createArtista(rs);
+                        System.out.println("dopo createArtista");
                         // si controlla se l'artista in questione è un gruppo musicale e se sì, si aggiungono
                         // i suoi componenti
                         artista = getArtistiByGruppoMusicale(artista);
@@ -140,7 +201,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                 throw new DataException("Unable to load Artista by ID", ex);
             }
         }
-        return artista;
+        return artista; */
     }
 
     
@@ -248,7 +309,37 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
     }
 
     @Override
-    public Artista getArtistiByGruppoMusicale(Artista artista) throws DataException {
+    public Artista getArtistiByGruppoMusicale(Artista gruppoMusicale) throws DataException {
+        List<Artista> componenti = new ArrayList<Artista>();
+        
+        try {
+            getArtistiByGruppoMusicale.setInt(1, gruppoMusicale.getKey() );
+            
+            try (ResultSet rs = getArtistiByGruppoMusicale.executeQuery()) {
+                while (rs.next()) {
+                    Artista componente = null;
+                    
+                    componente = createArtista(rs);
+                    
+                    componente.setRuolo(Ruolo.values()[rs.getInt("IDruolo") - 1]);
+                    
+                    componenti.add(componente);
+                }
+                
+                if(componenti.size() > 0) {
+                    gruppoMusicale.setComponenti(componenti);
+                    
+                    return gruppoMusicale;
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Artista by Disco", ex);
+        }
+        
+        return gruppoMusicale;
+        
+        /*
+        
         List<Artista> componenti = new ArrayList<Artista>();
         
         try{
@@ -276,6 +367,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         return artista; // caso in cui l'oggetto passato come parametro non è un gruppo musicale ==> non è 
                         // necessario aggiungere ad {0} i componenti del gruppo musicale in quanto {o} 
                         // rappresenta un singolo artista e non un gruppo musicale
+*/
     }
 
     @Override
@@ -339,7 +431,9 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                 int count = 0;
                 
                 while (rs.next()){
+                    System.out.println("entra nel while");
                     result.add(getArtistaById(rs.getInt("i.IDartista")));
+                    System.out.println("dopo getArtistaById");
                     count++;
                     
                     if(count >= 3) {

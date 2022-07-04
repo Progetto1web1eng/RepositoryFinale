@@ -74,21 +74,21 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                 t.process(dataM, response.getWriter());
             }
                 
-            if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){ //ricerca per artista
+            else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){ //ricerca per artista
                 dataM.put("numero",4);
                 Artista artista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
-                List<Disco> listDisk = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(artista, collezionista);
-                if(listDisk.isEmpty()){
+                List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(artista, collezionista);
+                if(listD.isEmpty()){
                         // caso in cui non abbiamo trovato nulla
                     dataM.put("hidden", 2);
                 }else{
                         // caso in cui abbiamo un riscontro
                     dataM.put("hidden", 1);
-                    dataM.put("dischiList",listDisk);
+                    dataM.put("dischiList",listD);
                 }
                 t.process(dataM, response.getWriter());
             }
-            if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":G")){ //ricerca per genere
+            else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":G")){ //ricerca per genere
                 dataM.put("numero",4);
                 List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByGenere(Genere.valueOf(inputSenzaPlaceH), collezionista);
                 if(listD.isEmpty()){

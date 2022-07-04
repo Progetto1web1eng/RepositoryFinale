@@ -117,9 +117,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #headBarSuggerimenti{
     position: absolute;
     height: 245px;
-    width: 30%;
+    width: 89%;
     background-color: white;
-    top: 86px;
+    top: 72px;
     z-index: 1;
     overflow-y: auto;
     display: flex;
@@ -128,7 +128,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     align-items: center;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
-    visibility: hidden
+    visibility: hidden;
 }
 .headBarDivSuggerimenti{
     height: 50px;
@@ -139,6 +139,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-radius: 22px;
     border: 2px solid #DBDBDB;
     justify-content: center;
+    margin-top: 10px;
+}
+.headBarDivSuggerimenti:hover{
+    box-shadow: 2px 2px #303841;
+    cursor: pointer;
 }
 .headBarSuggerimentiSpan{
     color: #303841;

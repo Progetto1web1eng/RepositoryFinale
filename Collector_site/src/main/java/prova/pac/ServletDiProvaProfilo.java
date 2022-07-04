@@ -4,7 +4,13 @@
  */
 package prova.pac;
 
+import collector_site.data.DAO.Collector_siteDataLayer;
+import collector_site.data.model.Collezione;
+import collector_site.data.model.Collezionista;
+import collector_site.framework.data.DataException;
+import collector_site.framework.result.ProvaConfig;
 import freemarker.core.HTMLOutputFormat;
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
@@ -12,6 +18,7 @@ import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,31 +26,41 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fabri
  */
-public class ServletDiProvaProfilo extends HttpServlet {
+public class ServletDiProvaProfilo extends ServletDiProvaCollector_siteBaseController {
 
+  
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Configuration cfg= new Configuration(Configuration.VERSION_2_3_0);
-        cfg.setDefaultEncoding("utf-8");
-        cfg.setOutputFormat(HTMLOutputFormat.INSTANCE);
-        cfg.setServletContextForTemplateLoading(getServletContext(),"template");
-        DefaultObjectWrapperBuilder ob = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_0);
-        cfg.setObjectWrapper(ob.build());
-        Template t = cfg.getTemplate("dispatcherDiProva.ftl.html");
-            Map<String,Object> dataM = new HashMap();
-            dataM.put("numero",5);
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            t.process(dataM, response.getWriter());
-        } catch (TemplateException ex) {
-            Logger.getLogger(ServletDiProvaCollezioniCondivise.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            HttpSession s = request.getSession(false);
+            ProvaConfig pcg = new ProvaConfig(getServletContext());
+            Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
+            Map<String,Object> dataM = new HashMap();
             
+            Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById((int)s.getAttribute("id"));
+            List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+            dataM.put("collezioni",collezioni);
+            
+            
+            dataM.put("numero",5);
+            
+            
+            t.process(dataM,  response.getWriter());
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletDiProvaProfilo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ServletDiProvaProfilo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TemplateException ex) {
+            Logger.getLogger(ServletDiProvaProfilo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DataException ex) {
+            Logger.getLogger(ServletDiProvaProfilo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

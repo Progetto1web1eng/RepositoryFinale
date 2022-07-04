@@ -69,6 +69,10 @@
         <servlet-name>ServletDiProvaModificaDisco</servlet-name>
         <servlet-class>prova.pac.ServletDiProvaModificaDisco</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletDiProvaLoggedRicercaGlobale</servlet-name>
+        <servlet-class>prova.pac.ServletDiProvaLoggedRicercaGlobale</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDiProvaInserisciImmagine</servlet-name>
         <url-pattern>/servletDiProvaInserisciImmagine</url-pattern>
@@ -132,6 +136,10 @@
     <servlet-mapping>
         <servlet-name>ServletDiProvaModificaDisco</servlet-name>
         <url-pattern>/servletDiProvaModificaDisco</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDiProvaLoggedRicercaGlobale</servlet-name>
+        <url-pattern>/servletDiProvaLoggedRicercaGlobale</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

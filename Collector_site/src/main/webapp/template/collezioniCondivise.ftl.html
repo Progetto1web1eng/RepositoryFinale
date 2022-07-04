@@ -4,7 +4,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
 <div id="collezioniCondiviseDiv">
-    <a href="servletBotEmailDiProva">
-        manda l'email(questa è solo una prova)
-    </a>
+    <!--lista di collezioni altrui condivise a te -->
+    <div>
+        <#list collezioniList as c>
+            <div>
+                <h1> ${c.nomeCollezione}</h1>
+                <h3 style="font-size: 20px">
+                    <#if c.pubblico>
+                        pubblica
+                    <#else>
+                        privata
+                    </#if>
+                </h3> 
+            </div>
+            <div >
+                <p id="vistaCollezioniP2">info<img></p>
+            </div>
+        <#/list>
+    </div>
 </div>

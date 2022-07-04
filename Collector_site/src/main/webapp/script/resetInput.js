@@ -11,6 +11,7 @@ function resetCercaIMieiDischiInput(){
         cercaIMieiDischiInput.value="";
     }
     //elimino i caratteri speciali se presenti
+    
     if(cercaIMieiDischiInput.value.substring(cercaIMieiDischiInput.value.length-2,cercaIMieiDischiInput.value.length)===":T")
     {
         cercaIMieiDischiInput.value = cercaIMieiDischiInput.value.substring(0,cercaIMieiDischiInput.value.length-2);
@@ -28,6 +29,23 @@ function resetHeadBarInput(){
     const headBarInput = document.getElementById("headBarInput");
     if(headBarInput.value==="cerca"){
         headBarInput.value="";
+    }
+    //elimino i caratteri speciali se presenti
+    if(headBarInput.value.substring(headBarInput.value.length-2,headBarInput.value.length)===":U")
+    {
+        headBarInput.value = headBarInput.value.substring(0,headBarInput.value.length-2);
+    }
+    if(headBarInput.value.substring(headBarInput.value.length-2,headBarInput.value.length)===":C")
+    {
+        headBarInput.value = headBarInput.value.substring(0,headBarInput.value.length-2);
+    }
+    if(headBarInput.value.substring(headBarInput.value.length-2,headBarInput.value.length)===":D")
+    {
+        headBarInput.value = headBarInput.value.substring(0,headBarInput.value.length-2);
+    }
+     if(headBarInput.value.substring(headBarInput.value.length-2,headBarInput.value.length)===":A")
+    {
+        headBarInput.value = headBarInput.value.substring(0,headBarInput.value.length-2);
     }
 }
 function resetLoginUsernameInput(){

@@ -27,6 +27,7 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
+import static java.lang.System.out;
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -521,8 +522,11 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public List<Disco> getDischiByNome(String nomeDisco, Collezionista collezionista) throws DataException {
         List<Disco> result = new ArrayList();
-        
-        for(Disco disco : getDischiByCollezionista(collezionista)) {
+        out.println(collezionista.getUsername());
+        List<Disco> dl = getDischiByCollezionista(collezionista);
+        out.println("ho creato dl");
+        for(Disco disco : dl) {
+            out.println("ciclo dentro i dischi del collezionista, disco: "+disco.getNomeDisco());
             if(nomeDisco.equals(disco.getNomeDisco())) {
                 result.add(disco);
             }
@@ -536,6 +540,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         try{
             getDischiByCollezionista.setInt(1, collezionista.getKey());
+            out.println("dentro detDischiByCollezionista"+collezionista.getKey());
             
             try(ResultSet rs = getDischiByCollezionista.executeQuery()){
                 result.add(getDisco(rs.getInt("c.IDdisco")));

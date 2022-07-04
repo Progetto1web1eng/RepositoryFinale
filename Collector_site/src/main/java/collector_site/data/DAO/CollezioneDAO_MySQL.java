@@ -51,6 +51,8 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     private PreparedStatement deleteCondivisione;
     private PreparedStatement getCollezioniCondiviseToCollezionista;
     private PreparedStatement getCollezioniPubbliche;
+    private PreparedStatement getCollezioniAccessibiliLoggato;
+    private PreparedStatement getCollezioniPubblicheByCollezionista;
 
     public CollezioneDAO_MySQL(DataLayer d) {
         super(d);
@@ -74,6 +76,8 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             addCondivisione = connection.prepareStatement("INSERT INTO condivide (IDcollezionista,IDcollezione) VALUES(?,?)");
             deleteCondivisione = connection.prepareStatement("DELETE FROM condivide WHERE IDcollezionista=? and IDcollezione=?"); 
             getCollezioniCondiviseToCollezionista = connection.prepareStatement("SELECT IDcollezione FROM condivide WHERE IDcollezionista =?");
+            getCollezioniAccessibiliLoggato = connection.prepareStatement("select con.IDcollezionista as collezionista_loggato, col.IDcollezionista as collezionista_target, col.ID as IDcollezione from condivide con join collezione col on(con.IDcollezione = col.ID) where (con.IDcollezionista=? and col.IDcollezionista=? and col.pubblico = false);");   
+            getCollezioniPubblicheByCollezionista = connection.prepareStatement("select c.ID from collezione c where c.IDcollezionista=? and c.pubblico=true;");  
             getCollezioniPubbliche = connection.prepareStatement("SELECT * FROM collezione WHERE pubblico=true");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezione data layer", ex);
@@ -97,6 +101,8 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             storeCollezione.close();
             getCollezioniCondiviseToCollezionista.close();
             getCollezioniPubbliche.close();
+            getCollezioniAccessibiliLoggato.close();
+            getCollezioniPubblicheByCollezionista.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -390,6 +396,33 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             throw new DataException("Unable to load Collezioni condivise by Collezionista", ex);
         }
         
+        // aggiungo le collezioni  a "listaCollezioni"
+        try {
+            try (ResultSet rs = getCollezioniPubbliche.executeQuery()) {
+                while (rs.next()) {
+                    listaCollezioni.add(getCollezioneById(rs.getInt("ID")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezioni condivise by Collezionista", ex);
+        }
+        return listaCollezioni;
+        
+        /*
+        List<Collezione> listaCollezioni = new ArrayList();
+        
+        // aggiungo le collezioni non pubbliche condivise al Collezionista in questione a "listaCollezioni"
+        try {
+            getCollezioniCondiviseToCollezionista.setInt(1, collezionista.getKey());
+            try (ResultSet rs = getCollezioniCondiviseToCollezionista.executeQuery()) {
+                while (rs.next()) {
+                    listaCollezioni.add(getCollezioneById(rs.getInt("IDcollezione")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezioni condivise by Collezionista", ex);
+        }
+        
         // aggiungo le collezioni pubbliche a "listaCollezioni"
         try {
             try (ResultSet rs = getCollezioniPubbliche.executeQuery()) {
@@ -401,6 +434,10 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             throw new DataException("Unable to load Collezioni condivise by Collezionista", ex);
         }
         return listaCollezioni;
+        
+        */
+        
+        
     }
 
     @Override
@@ -420,5 +457,45 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
         }
         
         return listaCollezioni;
+    }
+
+    @Override
+    public List<Collezione> getCollezioniAccessibili(Collezionista collezionista_target, Collezionista collezionista_loggato) throws DataException {
+        // questo metodo restituisce tutte le collezioni create dal Collezionista in questione
+        List<Collezione> result = new ArrayList();
+        
+        try {
+            getCollezioniPubblicheByCollezionista.setInt(1, collezionista_target.getKey());
+            
+            try (ResultSet rs = getCollezioniPubblicheByCollezionista.executeQuery()) {
+                while (rs.next()) {
+                    result.add(getCollezioneById(rs.getInt("c.ID")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezioni by Collezionista", ex);
+        }
+        
+        if(collezionista_loggato == null) {
+            // caso in cui l'utente non è LOGGATO ==> l'utente potrà visualizzare soltanto le collezioni pubbliche 
+            // che ha creato il collezionista target
+            return result;
+        }
+        
+        
+        try {
+            getCollezioniAccessibiliLoggato.setInt(1, collezionista_loggato.getKey());
+            getCollezioniAccessibiliLoggato.setInt(2, collezionista_target.getKey());
+
+            try (ResultSet rs = getCollezioniAccessibiliLoggato.executeQuery()) {
+                while (rs.next()) {
+                    result.add(getCollezioneById(rs.getInt("IDcollezione")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezioni by Collezionista", ex);
+        }
+        
+        return result;
     }
 }

@@ -49,7 +49,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     private PreparedStatement getCondivisione;
     private PreparedStatement addCondivisione;
     private PreparedStatement deleteCondivisione;
-    private PreparedStatement getCollezioniCondiviseByCollezionista;
+    private PreparedStatement getCollezioniCondiviseToCollezionista;
     private PreparedStatement getCollezioniPubbliche;
 
     public CollezioneDAO_MySQL(DataLayer d) {
@@ -70,10 +70,10 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             getCollezioneByBarcodeDisco = connection.prepareStatement("SELECT c.ID, c.nomeCollezione, c.IDcollezionista, c.pubblico FROM collezione c join racchiude r join disco d on(r.IDdisco = d.ID and c.ID = r.IDcollezione) WHERE (d.barcode = ?)");
             getCollezioneByNomeDisco = connection.prepareStatement("SELECT c.ID, c.nomeCollezione, c.IDcollezionista, c.pubblico FROM collezione c join racchiude r join disco d on(r.IDdisco = d.ID and c.ID = r.IDcollezione) WHERE (d.nomeDisco = ?)");
             // query che operano sulla tabella Condivide
-            getCondivisione = connection.prepareStatement("SELECT count(*) FROM condivide WHERE IDcollezionista=? and IDcollezione=?"); 
+            getCondivisione = connection.prepareStatement("SELECT count(*) as count FROM condivide WHERE IDcollezionista=? and IDcollezione=?"); 
             addCondivisione = connection.prepareStatement("INSERT INTO condivide (IDcollezionista,IDcollezione) VALUES(?,?)");
             deleteCondivisione = connection.prepareStatement("DELETE FROM condivide WHERE IDcollezionista=? and IDcollezione=?"); 
-            getCollezioniCondiviseByCollezionista = connection.prepareStatement("SELECT IDcollezione FROM condivide WHERE IDcollezionista =?");
+            getCollezioniCondiviseToCollezionista = connection.prepareStatement("SELECT IDcollezione FROM condivide WHERE IDcollezionista =?");
             getCollezioniPubbliche = connection.prepareStatement("SELECT * FROM collezione WHERE pubblico=true");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezione data layer", ex);
@@ -95,7 +95,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             addCondivisione.close();
             deleteCondivisione.close();
             storeCollezione.close();
-            getCollezioniCondiviseByCollezionista.close();
+            getCollezioniCondiviseToCollezionista.close();
             getCollezioniPubbliche.close();
         } catch (SQLException ex) {
         }
@@ -176,6 +176,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
     @Override
     public List<Collezione> getCollezioneByCollezionista(Collezionista collezionista) throws collector_site.framework.data.DataException {
+        // questo metodo restituisce tutte le collezioni create dal Collezionista in questione
         List<Collezione> listaCollezioni = new ArrayList();
         try {
             getCollezioneByCollezionista.setInt(1, collezionista.getKey());
@@ -324,8 +325,10 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
     @Override
     public void addCondivisione(Collezione collezione, Collezionista collezionista) throws DataException {
-        // non dovremmo preoccuparci di CONCURRENCY per questo metodo perché la gestione delle condivisioni è personale ==> la
-        // modifica di una condivisione 
+        // con questo metodo si condivide la presente Collezione con il Collezionista in questione
+        
+        // non dovremmo preoccuparci di CONCURRENCY per questo metodo perché la gestione delle condivisioni è
+        // personale ==> la modifica di una condivisione 
         
         // controllo validità ID della Collezione
         if (collezione.getKey() == null || collezione.getKey() <= 0) {
@@ -344,7 +347,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             try (ResultSet rs = getCondivisione.executeQuery()) {
                 // controllo se la Collezione in questione risulta già condiviso con il presente Collezionista 
                 if (rs.next()) {
-                    if(rs.getInt(1) == 0) {
+                    if(rs.getInt("count") == 0) {
                         addCondivisione.setInt(1, collezionista.getKey());
                         addCondivisione.setInt(2, collezione.getKey());
                         // si aggiunge una tupla alla tabella Condivide
@@ -359,6 +362,8 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
     @Override
     public void deleteCondivisione(Collezione collezione, Collezionista collezionista) throws DataException {
+        // per non rendere più accessibile la presente Collezione al Collezionista in questione
+        
         try {
             deleteCondivisione.setInt(1, collezionista.getKey());
             deleteCondivisione.setInt(2, collezione.getKey());
@@ -370,13 +375,13 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     }
 
     @Override
-    public List<Collezione> getCollezioniCondiviseByCollezionista(Collezionista collezionista) throws DataException {
+    public List<Collezione> getCollezioniCondiviseToCollezionista(Collezionista collezionista) throws DataException {
         List<Collezione> listaCollezioni = new ArrayList();
         
         // aggiungo le collezioni non pubbliche condivise al Collezionista in questione a "listaCollezioni"
         try {
-            getCollezioniCondiviseByCollezionista.setInt(1, collezionista.getKey());
-            try (ResultSet rs = getCollezioniCondiviseByCollezionista.executeQuery()) {
+            getCollezioniCondiviseToCollezionista.setInt(1, collezionista.getKey());
+            try (ResultSet rs = getCollezioniCondiviseToCollezionista.executeQuery()) {
                 while (rs.next()) {
                     listaCollezioni.add(getCollezioneById(rs.getInt("IDcollezione")));
                 }
@@ -395,6 +400,25 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
         } catch (SQLException ex) {
             throw new DataException("Unable to load Collezioni condivise by Collezionista", ex);
         }
+        return listaCollezioni;
+    }
+
+    @Override
+    public List<Collezione> getCollezioniPrivateCondiviseToCollezionista(Collezionista collezionista) throws DataException {
+        List<Collezione> listaCollezioni = new ArrayList();
+        
+        // restituisce le collezioni non pubbliche condivise al Collezionista in questione
+        try {
+            getCollezioniCondiviseToCollezionista.setInt(1, collezionista.getKey());
+            try (ResultSet rs = getCollezioniCondiviseToCollezionista.executeQuery()) {
+                while (rs.next()) {
+                    listaCollezioni.add(getCollezioneById(rs.getInt("IDcollezione")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezioni condivise by Collezionista", ex);
+        }
+        
         return listaCollezioni;
     }
 }

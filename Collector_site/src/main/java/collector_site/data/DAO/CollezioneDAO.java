@@ -41,5 +41,6 @@ public interface CollezioneDAO {
     public void deleteCondivisione(Collezione collezione, Collezionista collezionista) throws DataException;
     public void addCondivisione(Collezione collezione, Collezionista collezionista) throws DataException;
 
-    List<Collezione> getCollezioniCondiviseByCollezionista(Collezionista collezionista) throws DataException;
+    List<Collezione> getCollezioniCondiviseToCollezionista(Collezionista collezionista) throws DataException;
+    List<Collezione> getCollezioniPrivateCondiviseToCollezionista(Collezionista collezionista) throws DataException;
 }

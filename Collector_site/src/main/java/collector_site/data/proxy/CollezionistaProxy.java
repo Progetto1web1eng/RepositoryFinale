@@ -48,7 +48,7 @@ public class CollezionistaProxy extends CollezionistaImpl implements DataItemPro
     public List<Collezione> getCollezioniCondivise(){
         if(super.getCollezioniCondivise()==null){
             try{
-                super.setCollezioniCondivise(((CollezioneDAO)dataLayer.getDAO(Collezione.class)).getCollezioniCondiviseByCollezionista(this));
+                super.setCollezioniCondivise(((CollezioneDAO)dataLayer.getDAO(Collezione.class)).getCollezioniCondiviseToCollezionista(this));
             }catch (DataException ex) {
                 Logger.getLogger(CollezionistaProxy.class.getName()).log(Level.SEVERE, null, ex);
             }

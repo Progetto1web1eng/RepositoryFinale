@@ -583,7 +583,9 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getDischiByGenere.setInt(1, idGenere);
             
             try(ResultSet rs = getDischiByGenere.executeQuery()){
-                result.add(getDisco(rs.getInt("d.ID")));
+                while(rs.next()) {
+                    result.add(getDisco(rs.getInt("d.ID")));
+                }
             }
             
         }catch(SQLException ex){

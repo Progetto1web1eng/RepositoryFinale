@@ -66,6 +66,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top: 50px;
     margin-left: 48%;
 }
+#inserisciImmagine{
+    margin-top: 15px;
+    margin-left: 5px;
+}
 #modificaDiscoAggiungiImg:hover{
     content: url("../immagini/icons8-add-black-24.png");
 }

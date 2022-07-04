@@ -5,6 +5,7 @@
 package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
+import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.framework.data.DataException;
@@ -17,6 +18,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,9 @@ public class ServletDiProvaProfilo extends ServletDiProvaCollector_siteBaseContr
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
             dataM.put("collezioni",collezioni);
             
+            // cerco gli artisti preferiti
+            List<Artista> artistiPrefList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistiPreferiti(collezionista);
+           
             
             dataM.put("numero",5);
             

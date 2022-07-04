@@ -6,20 +6,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 <div id="collezioniCondiviseDiv">
     <!--lista di collezioni altrui condivise a te -->
     <div>
-        <#list collezioniList as c>
-            <div>
-                <h1> ${c.nomeCollezione}</h1>
-                <h3 style="font-size: 20px">
-                    <#if c.pubblico>
-                        pubblica
-                    <#else>
-                        privata
-                    </#if>
-                </h3> 
-            </div>
-            <div >
-                <p id="vistaCollezioniP2">info<img></p>
-            </div>
-        <#/list>
+        <#if collezioniList?size != 0>
+            <#list collezioniList as c>
+                <div>
+                    <h1> ${c.nomeCollezione}</h1>
+                </div>
+                <div >
+                    <p class="collezioniCondiviseP1">info<img class="collezioniCondiviseImgInfo" ></p>
+                </div>
+            </#list>
+        <#else>
+            <h1> non ci sono collezioni private condivise con te</h1>
+        </#if>
     </div>
 </div>

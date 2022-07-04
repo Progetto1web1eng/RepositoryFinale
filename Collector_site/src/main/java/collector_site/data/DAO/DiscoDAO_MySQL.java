@@ -27,6 +27,7 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
+import static java.lang.System.out;
 
 
 // import SQL
@@ -137,16 +138,24 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public DiscoProxy createDisco(ResultSet rs) throws DataException {
         DiscoProxy disco = (DiscoProxy) createDisco();
+        out.println("dentro createDisco1");
         try {
             disco.setKey(rs.getInt("ID"));
+            out.println("dentro createDisco1");
             disco.setNomeDisco(rs.getString("nomeDisco"));
+            out.println("dentro createDisco2");
             disco.setBarcode(rs.getString("barcode"));
+            out.println("dentro createDisco3");
             // Genere è un ENUMERAZIONE
-            disco.setGenere(Genere.values()[rs.getInt("IDgenere")]);
+            disco.setGenere(Genere.values()[rs.getInt("IDgenere")-1]);
+            out.println("dentro createDisco4");
             // Tipo è un enumerazione
-            disco.setTipo(Tipo.values()[rs.getInt("IDtipo")]);
+            disco.setTipo(Tipo.values()[rs.getInt("IDtipo")-1]);
+            out.println("dentro createDisco5");
             disco.setAnno(rs.getInt("anno"));
+            out.println("dentro createDisco6");
             disco.setEtichetta(rs.getString("etichetta"));
+            out.println("dentro createDisco7");
         } catch (SQLException ex) {
             throw new DataException("Unable to create Disco object form ResultSet", ex);
         }
@@ -172,17 +181,22 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public Disco getDisco(int id) throws collector_site.framework.data.DataException {
         Disco disco = null;
-   
+            out.println("dentro getDisco1");
             try {
+                out.println("dentro getDisco2");
                 getDisco.setInt(1, id);
+                out.println("dentro getDisco3");
                 try (ResultSet rs = getDisco.executeQuery()) {
                     if (rs.next()) {
+                        out.println("dentro getDisco4");
                         disco = createDisco(rs);
+                        out.println("dentro getDisco5");
                     }
                 }
             } catch (SQLException ex) {
                 throw new DataException("Unable to load Disco by ID", ex);
             }
+            out.println("dentro getDisco6");
         return disco;
         
         
@@ -260,9 +274,11 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         List<Disco> result = new ArrayList();
         
         try{
-            getDischiByNome.setString(2, nome);
+            getDischiByNome.setString(1, nome);
             try(ResultSet rs = getDischiByNome.executeQuery()){
-                result.add(getDisco(rs.getInt("ID")));
+                while(rs.next()){
+                    result.add(getDisco(rs.getInt("ID")));
+                }
             }
             
         }catch(SQLException ex){
@@ -506,13 +522,18 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
     @Override
     public List<Disco> getDischiByNome(String nomeDisco, Collezionista collezionista) throws DataException {
+        out.println("entrato prima riga getDischiByNome");
         List<Disco> result = new ArrayList();
+        
         List<Disco> dl = getDischiByCollezionista(collezionista);
+        out.println("dopo getDischiByCollezionista");
         for(Disco disco : dl) {
             if(nomeDisco.equals(disco.getNomeDisco())) {
                 result.add(disco);
+                out.println("dentro getDischiBynome"+result.size());
             }
         }
+        out.println("fuori dal for, result size:"+ result.size());
         return result; 
     }
 
@@ -526,12 +547,14 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             try(ResultSet rs = getDischiByCollezionista.executeQuery()){
                 while(rs.next()) {
                     result.add(getDisco(rs.getInt("c.IDdisco")));
+                    out.println("dentro get dischibycollezionistaloop result size:"+result.size());
                 }
             }
             
         }catch(SQLException ex){
             throw new DataException("Unable to load Disco by Collezionista");
         }
+        out.println("dentro get dischibycollezionista fuori loop result size:"+result.size());
         return result;
     }
 

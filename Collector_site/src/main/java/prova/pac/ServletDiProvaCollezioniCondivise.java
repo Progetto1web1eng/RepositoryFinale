@@ -47,6 +47,9 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
             dataM.put("collezioni",collezioni);
             
+            List<Collezione> collezioniCondivise = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniPrivateCondiviseToCollezionista(collezionista);
+            
+            dataM.put("collezioniList",collezioniCondivise);
             dataM.put("numero",0);
             
             t.process(dataM, response.getWriter());

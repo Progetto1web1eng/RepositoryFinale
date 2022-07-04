@@ -23,6 +23,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="stili/setCopieStatoFromAdv.css" type="text/css"/>
         <link rel="stylesheet" href="stili/modificaDisco.css" type="text/css"/>
         <link rel="stylesheet" href="stili/inserisciTraccia.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/tracceEsterne.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/dischiEsterni.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/collezioniEsterne.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/collezionistiEsterni.css" type="text/css"/>
         <script src="script/resetInput.js"></script>
         <script src="script/inserimentoArtistiScript.js"></script>
         <script src="script/inputAdvice.js"></script>
@@ -70,6 +74,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             </#if>
             <#if (numero==11)>
              <#include "inserisciTraccia.ftl.html">
+            </#if>
+            <#if (numero==12)>
+             <#include "tracceEsterne.ftl.html">
+            </#if>
+            <#if (numero==13)>
+             <#include "dischiEsterni.ftl.html">
+            </#if>
+            <#if (numero==14)>
+             <#include "collezioniEsterne.ftl.html">
+            </#if>
+            <#if (numero==15)>
+             <#include "collezionistiEsterni.ftl.html">
             </#if>
         </div>
     </body>

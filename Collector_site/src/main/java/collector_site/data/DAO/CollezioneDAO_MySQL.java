@@ -70,7 +70,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             getCollezioneByBarcodeDisco = connection.prepareStatement("SELECT c.ID, c.nomeCollezione, c.IDcollezionista, c.pubblico FROM collezione c join racchiude r join disco d on(r.IDdisco = d.ID and c.ID = r.IDcollezione) WHERE (d.barcode = ?)");
             getCollezioneByNomeDisco = connection.prepareStatement("SELECT c.ID, c.nomeCollezione, c.IDcollezionista, c.pubblico FROM collezione c join racchiude r join disco d on(r.IDdisco = d.ID and c.ID = r.IDcollezione) WHERE (d.nomeDisco = ?)");
             // query che operano sulla tabella Condivide
-            getCondivisione = connection.prepareStatement("SELECT count(*) FROM condivide WHERE IDcollezionista=? and IDcollezione=?"); 
+            getCondivisione = connection.prepareStatement("SELECT count(*) as count FROM condivide WHERE IDcollezionista=? and IDcollezione=?"); 
             addCondivisione = connection.prepareStatement("INSERT INTO condivide (IDcollezionista,IDcollezione) VALUES(?,?)");
             deleteCondivisione = connection.prepareStatement("DELETE FROM condivide WHERE IDcollezionista=? and IDcollezione=?"); 
             getCollezioniCondiviseToCollezionista = connection.prepareStatement("SELECT IDcollezione FROM condivide WHERE IDcollezionista =?");
@@ -325,6 +325,8 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
     @Override
     public void addCondivisione(Collezione collezione, Collezionista collezionista) throws DataException {
+        // con questo metodo si condivide la presente Collezione con il Collezionista in questione
+        
         // non dovremmo preoccuparci di CONCURRENCY per questo metodo perché la gestione delle condivisioni è
         // personale ==> la modifica di una condivisione 
         
@@ -345,7 +347,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             try (ResultSet rs = getCondivisione.executeQuery()) {
                 // controllo se la Collezione in questione risulta già condiviso con il presente Collezionista 
                 if (rs.next()) {
-                    if(rs.getInt(1) == 0) {
+                    if(rs.getInt("count") == 0) {
                         addCondivisione.setInt(1, collezionista.getKey());
                         addCondivisione.setInt(2, collezione.getKey());
                         // si aggiunge una tupla alla tabella Condivide
@@ -360,6 +362,8 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
     @Override
     public void deleteCondivisione(Collezione collezione, Collezionista collezionista) throws DataException {
+        // per non rendere più accessibile la presente Collezione al Collezionista in questione
+        
         try {
             deleteCondivisione.setInt(1, collezionista.getKey());
             deleteCondivisione.setInt(2, collezione.getKey());

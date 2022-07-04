@@ -103,7 +103,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             artista.setNomeDarte(rs.getString("nomeDarte"));
             // Ruolo è un enumerazione
             // CHECK
-            //artista.setRuolo(Ruolo.values()[rs.getInt("IDruolo")]);
+            artista.setRuolo(Ruolo.values()[rs.getInt("IDruolo") - 1]);
         } catch (SQLException ex) {
             throw new DataException("Unable to create Artista object form ResultSet", ex);
         }

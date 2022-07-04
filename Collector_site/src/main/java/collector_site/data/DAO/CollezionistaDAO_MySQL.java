@@ -68,7 +68,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionistaByUandP = connection.prepareStatement("SELECT * FROM collezionista WHERE username=? AND password=?");
             getCollezionisti = connection.prepareStatement("SELECT ID FROM collezionista");
             getCollezionistaByNickname = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=?");
-            getGenerePreferito = connection.prepareStatement("SELECT count(d.IDgenere), d.genere FROM colleziona c join disco d on(c.IDdisco = d.ID) WHERE (c.IDcollezionista=?) GROUP BY i.IDgenere ORDER BY count(i.IDgenere) desc;");
+            getGenerePreferito = connection.prepareStatement("SELECT count(d.IDgenere), d.IDgenere FROM colleziona c join disco d on(c.IDdisco = d.ID) WHERE (c.IDcollezionista =?) GROUP BY d.IDgenere ORDER BY count(d.IDgenere) desc;");
 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezionista data layer", ex);

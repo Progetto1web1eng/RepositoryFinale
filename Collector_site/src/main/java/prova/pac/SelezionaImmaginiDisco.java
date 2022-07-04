@@ -1,58 +1,4 @@
-/*
- * ATTENZIONE: il codice di questa classe dipende dalla corretta definizione delle
- * risorse presente nei file context.xml (Resource) 
- *
- * ATTENZIONE: in codice fa uso del driver per MySQL versione 8. Se questo driver
- * è già presente nel vostro server, non sarà necessario aggiungerlo come libreria
- * al progetto (creandone una copia "privata"). Tuttavia, se il server disponesse solo
- * della versione 5 del driver (ancora molto comune), ricevereste un errore del tipo
- * "impossibile trovare la classe com.mysql.cj.jdbc.Driver", e in tal caso dovreste
- * inserire il jar del connector/J 8 nella vostra applicazione
- *
- * ATTENZIONE: il codice fa uso di un database configurato come segue:
- * - database 'webdb' su DBMS MySQL in esecuzione su localhost
- * - utente 'website' con password 'webpass' autorizzato nel DBMS 
- *   a leggere i dati del suddetto database
- * - la seguente tabella
- *
- * CREATE TABLE  `webdb`.`files` (
- * `name` varchar(255) NOT NULL,
- * `type` varchar(255) NOT NULL,
- * `size` int(11) NOT NULL,
- * `localfile` varchar(255) NOT NULL,
- * `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- * `ID` int(11) NOT NULL AUTO_INCREMENT,
- * `digest` varchar(255) NOT NULL,
- * PRIMARY KEY (`ID`)
- * )  
- * 
- * WARNING: this class needs the definition of an external data source to work correctly.
- * See the Resource element in context.xml 
- * 
- * WARNING: this class uses the MySQL driver version 8. If this driver is already present 
- * on your server, it will not be necessary to add it as a library to the project 
- * (creating a "private" copy). However, if the server has version 5 of the driver pre-installed
- * (still very common), you will receive an error like "class com.mysql.cj.jdbc.Driver not found", 
- * and in this case you should add the connector/J 8 jar in your application libraries.
- *
- * WARNING: the code makes use of a database configured as follows:
- * - 'webdb' database on a MySQL DBMS running on localhost
- * - user 'website' with password 'webpass' authorized in the DBMS to read the 
- *   data of the aforementioned database
- * - the following table
- *
- * CREATE TABLE  `webdb`.`files` (
- * `name` varchar(255) NOT NULL,
- * `type` varchar(255) NOT NULL,
- * `size` int(11) NOT NULL,
- * `localfile` varchar(255) NOT NULL,
- * `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- * `ID` int(11) NOT NULL AUTO_INCREMENT,
- * `digest` varchar(255) NOT NULL,
- * PRIMARY KEY (`ID`)
- * )  
- *
- */
+
 package prova.pac;
 
 import collector_site.framework.result.HTMLResult;
@@ -118,7 +64,7 @@ public class SelezionaImmaginiDisco extends HttpServlet {
                 result.appendToBody("<p>This repository holds " + count + " items.</p>");
                 */
                 result.appendToBody("<table border=\"1\">");
-                result.appendToBody("<thead><th>ID</th><th>Name</th><th>Size</th><th>Modified</th><th>Digest</th></thead>");
+                result.appendToBody("<thead><th>ID</th><th>Nome</th><th>Size</th><th>Modified</th><th>Digest</th></thead>");
                 while (r.next()) {
                     //un modo contorto per leggere il timestamp con la corretta timezone
                     ZonedDateTime updated = r.getTimestamp("updated").toInstant().atZone(ZoneId.of("GMT"));

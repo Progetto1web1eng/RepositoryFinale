@@ -9,6 +9,7 @@ import collector_site.data.impl.DiscoImpl;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
+import collector_site.data.model.Immagine;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
 import freemarker.core.HTMLOutputFormat;
@@ -63,8 +64,10 @@ public class ServletDiProvaVistaCollezione extends ServletDiProvaCollector_siteB
                  out.println("ciao2");
                 List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDiscoByCollezione(collezioneSelezionata);
                  out.println("ciao3");
-                
+                Disco disco =((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco((int)s.getAttribute("id"));
+                List<Immagine>immagini = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(disco);
               
+                dataM.put("immagini",immagini);
                 dataM.put("collezioneSelezionata",collezioneSelezionata);
                 dataM.put("dischiList",dischiList);
                  out.println("ciao4");

@@ -543,7 +543,9 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             out.println("dentro detDischiByCollezionista"+collezionista.getKey());
             
             try(ResultSet rs = getDischiByCollezionista.executeQuery()){
-                result.add(getDisco(rs.getInt("c.IDdisco")));
+                while(rs.next()) {
+                    result.add(getDisco(rs.getInt("c.IDdisco")));
+                }
             }
             
         }catch(SQLException ex){

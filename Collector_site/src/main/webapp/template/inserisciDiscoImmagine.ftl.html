@@ -15,7 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <#list immagini as i>
             <div id="provaListaImmagini">
                 <!<!--lo style dell'immagine è fissato qui e non nelle classi css perchè altrimenti entra in conflitto con quello del bordo -->
-                <img class="inserisciDiscoImmagineNuovaImg" src="immaginiDischi/${i.nomeImmagine}.png" style="height: 170px;width: 300px;border-radius: 37px;">
+                <img class="inserisciDiscoImmagineNuovaImg" src="immaginiDischi/${i.filename}" style="height: 170px;width: 300px;border-radius: 37px;">
             </div>
             </#list>
             <#else>

@@ -66,7 +66,7 @@ public class Upload extends HttpServlet {
         //vogliamo creare il digest sha-1 del file
         MessageDigest md = MessageDigest.getInstance("SHA-1");
         //creiamo un nuovo file (con nome univoco) e copiamoci il file scaricato
-        File uploaded_file = File.createTempFile("img_", "", new File(getServletContext().getInitParameter("uploads.directory")));
+        File uploaded_file = File.createTempFile("img_", ".png", new File(getServletContext().getInitParameter("uploads.directory")));
         try (InputStream is = file_to_upload.getInputStream();
                 OutputStream os = new FileOutputStream(uploaded_file)) {
             byte[] buffer = new byte[1024];

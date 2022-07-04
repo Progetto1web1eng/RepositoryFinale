@@ -290,7 +290,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
     }
 
     @Override
-    public List<Genere> getGeneriPreferito(Collezionista collezionista) throws DataException{
+    public List<Genere> getGeneriPreferiti(Collezionista collezionista) throws DataException{
         List<Genere> result = new ArrayList<Genere>();
         
         try{
@@ -300,7 +300,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
                 int count = 0;
                 
                 while (rs.next()){
-                    Genere g = Genere.values()[rs.getInt("IDgenere")];
+                    Genere g = Genere.values()[rs.getInt("d.IDgenere") - 1];
                     result.add(g);
                     
                     count++;

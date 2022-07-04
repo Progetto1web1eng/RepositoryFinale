@@ -49,9 +49,8 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
     private PreparedStatement getCollezionistaByUandP;
     private PreparedStatement getCollezionisti;
     private PreparedStatement getCollezionistaByNickname;
+    private PreparedStatement getGenerePreferito;
    
-
-
     public CollezionistaDAO_MySQL(DataLayer d) {
         super(d);
     }
@@ -69,9 +68,8 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionistaByUandP = connection.prepareStatement("SELECT * FROM collezionista WHERE username=? AND password=?");
             getCollezionisti = connection.prepareStatement("SELECT ID FROM collezionista");
             getCollezionistaByNickname = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=?");
+            getGenerePreferito = connection.prepareStatement("SELECT count(d.IDgenere), d.genere FROM colleziona c join disco d on(c.IDdisco = d.ID) WHERE (c.IDcollezionista=?) GROUP BY i.IDgenere ORDER BY count(i.IDgenere) desc;");
 
-
-            
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezionista data layer", ex);
         }
@@ -88,6 +86,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionistaByUandP.close();
             getCollezionisti.close();
             getCollezionistaByNickname.close();
+            getGenerePreferito.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -288,6 +287,34 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             throw new DataException("Unable to load Collezionista by nickname", ex);
         }
         return collezionista;
+    }
+
+    @Override
+    public List<Genere> getGeneriPreferito(Collezionista collezionista) throws DataException{
+        List<Genere> result = new ArrayList<Genere>();
+        
+        try{
+            getGenerePreferito.setInt(1, collezionista.getKey()); 
+            
+            try(ResultSet rs = getGenerePreferito.executeQuery()){
+                int count = 0;
+                
+                while (rs.next()){
+                    Genere g = Genere.values()[rs.getInt("IDgenere")];
+                    result.add(g);
+                    
+                    count++;
+                    
+                    if(count >= 3) {
+                        break;
+                    }
+                }
+            }
+        }catch(SQLException ex){
+            throw new DataException("Unable to load artisti preferiti");
+        }
+        
+        return result;
     }
 }
 

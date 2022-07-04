@@ -266,7 +266,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             throw new DataException("Unable to load Artista by gruppo musicale");
         }
         
-        if (componenti.size() > 0) {
+        if (!componenti.isEmpty()) {
             // caso in cui l'oggetto {O} passato come parametro è un gruppo musicale ==> è necessario 
             // aggiungere ad {0} i componenti del gruppo musicale
             artista.setComponenti(componenti);

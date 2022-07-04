@@ -330,6 +330,7 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                     gruppoMusicale.setComponenti(componenti);
                     
                     return gruppoMusicale;
+                    
                 }
             }
         } catch (SQLException ex) {

@@ -33,7 +33,7 @@ public interface CollezioneDAO {
     
     Collezione getCollezioneById(int id) throws DataException;
     //possiamo prendere una collezione dal collezionista che l'ha creata
-    List<Collezione> getCollezioneByCollezionista(Collezionista collezionista) throws DataException;
+    List<Collezione> getCollezioniByCollezionista(Collezionista collezionista) throws DataException;
     List<Collezione> getCollezioneByDisco(Disco disco) throws DataException;
     List<Collezione> getCollezioneByBarcodeDisco(String barcode) throws DataException;
     List<Collezione> getCollezioneByNomeDisco(String nomeDisco) throws DataException;
@@ -41,5 +41,6 @@ public interface CollezioneDAO {
     public void deleteCondivisione(Collezione collezione, Collezionista collezionista) throws DataException;
     public void addCondivisione(Collezione collezione, Collezionista collezionista) throws DataException;
 
-    List<Collezione> getCollezioniCondiviseByCollezionista(Collezionista collezionista) throws DataException;
+    List<Collezione> getCollezioniCondiviseToCollezionista(Collezionista collezionista) throws DataException;
+    List<Collezione> getCollezioniPrivateCondiviseToCollezionista(Collezionista collezionista) throws DataException;
 }

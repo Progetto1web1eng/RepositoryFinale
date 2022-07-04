@@ -440,13 +440,13 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         // controllo che evita l'inserimento di tuple duplicate nella tabella Colleziona
         String[] statiDischi = new String[2];
-        statiDischi[0] = "Nuovo";
-        statiDischi[1] = "Usato";
+        statiDischi[0] = "NUOVO";
+        statiDischi[1] = "USATO";
         
         for (CopieStato c : disco.getCopieStati()) {
             CopieStato cs = null;
             
-            for(int i=0;i<=statiDischi.length;i++) {
+            for(int i=0;i<=statiDischi.length-1;i++) {
                 if(c.getStato().toString().equals(statiDischi[i])) {
                     cs = c;
                     

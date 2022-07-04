@@ -33,7 +33,7 @@ public interface CollezioneDAO {
     
     Collezione getCollezioneById(int id) throws DataException;
     //possiamo prendere una collezione dal collezionista che l'ha creata
-    List<Collezione> getCollezioniByCollezionista(Collezionista collezionista) throws DataException;
+    List<Collezione> getCollezioneByCollezionista(Collezionista collezionista) throws DataException;
     List<Collezione> getCollezioneByDisco(Disco disco) throws DataException;
     List<Collezione> getCollezioneByBarcodeDisco(String barcode) throws DataException;
     List<Collezione> getCollezioneByNomeDisco(String nomeDisco) throws DataException;

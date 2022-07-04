@@ -4,6 +4,7 @@
  */
 package collector_site.data.DAO;
 
+import collector_site.data.impl.Genere;
 import collector_site.data.model.Artista;
 import collector_site.framework.data.DataException;
 import collector_site.data.model.Collezione;
@@ -32,6 +33,7 @@ public interface CollezionistaDAO {
     public List<Collezionista> getCollezionisti() throws collector_site.framework.data.DataException;
     
     public Collezionista getCollezionistaByNickname(String nickname) throws DataException;
-
+    
+    List<Genere> getGeneriPreferito(Collezionista collezionista) throws DataException;
     
 }

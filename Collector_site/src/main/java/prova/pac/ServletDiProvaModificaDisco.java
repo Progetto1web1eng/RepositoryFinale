@@ -34,6 +34,18 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBaseController {
 
+    private void update_disco(HttpServletRequest request,HttpServletResponse response,int IDdisco,int collK) throws DataException, IOException{
+        //out.println(collK);
+        Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
+        disco.setNomeDisco(request.getParameter("nomeDiscoPar"));
+        disco.setAnno(Integer.parseInt(request.getParameter("dataPar")));
+        disco.setBarcode(request.getParameter("barcodePar"));
+        disco.setEtichetta(request.getParameter("etichettaPar"));
+        out.println("prima dello store update");
+        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
+        out.println("dopo lo store update");
+        response.sendRedirect("servletDiProvaVistaCollezione?k="+collK);
+    }
     private void schermata_traccia(HttpServletRequest request,HttpServletResponse response,Template t,Map<String,Object> dataM,int IDcollezionista) throws IOException, TemplateException, DataException{
         
         Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
@@ -56,6 +68,7 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
                 //significa che ho cliccato il tasto modifica
                 int IDdisco = Integer.parseInt(request.getParameter("discoKey"));
                 s.setAttribute("discoID", IDdisco);
+                s.setAttribute("collK",Integer.parseInt(request.getParameter("collK")));
                 
                 //completo la lista di collezione nella side bar
                 Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
@@ -70,6 +83,8 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
                 t.process(dataM, response.getWriter());
             }else if(request.getParameter("aggiungiTraccia")!=null){
                 schermata_traccia(request,response,t,dataM,IDcollezionista);
+            }else { 
+                update_disco(request,response, (int) s.getAttribute("discoID"),(int) s.getAttribute("collK"));
             }
         
         } catch (ParseException ex) {

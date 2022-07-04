@@ -49,6 +49,7 @@ public class ServletDiProvaVistaCollezione extends ServletDiProvaCollector_siteB
             Map<String,Object> dataM = new HashMap();
             
             String idcollS = request.getParameter("k");
+            out.println("id collezione:"+idcollS);
             int idColl = Integer.parseInt(idcollS);
             
             try {        // estraggo le collezioni dal collezionista che ha effettuato il login per la visualizzazione del side menu
@@ -57,13 +58,16 @@ public class ServletDiProvaVistaCollezione extends ServletDiProvaCollector_siteB
                 dataM.put("collezioni",collezioni);
                         // estraggo la lista di dischi data una collezione
                         
-                        
+                out.println("ciao1");
                 Collezione collezioneSelezionata = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(idColl);
+                 out.println("ciao2");
                 List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDiscoByCollezione(collezioneSelezionata);
+                 out.println("ciao3");
                 
               
                 dataM.put("collezioneSelezionata",collezioneSelezionata);
                 dataM.put("dischiList",dischiList);
+                 out.println("ciao4");
             
             } catch (DataException ex) {
                 Logger.getLogger(ServletDiProvaLogin.class.getName()).log(Level.SEVERE, null, ex);

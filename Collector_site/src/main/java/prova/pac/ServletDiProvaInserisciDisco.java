@@ -174,24 +174,24 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                
                 
                 CopieStato cp = (CopieStato) s.getAttribute("copieStato");
+                CopieStato np = new CopieStato();
                 List<CopieStato> listcp = new ArrayList();
                 if(cp.getStato().toString().equals("NUOVO")){
-                    listcp.add(cp);
-                    listcp.add(new CopieStato());
+                    np.setStato(StatoDisco.USATO);
                 }else{
-                    listcp.add(new CopieStato());
-                    listcp.add(cp);
+                    np.setStato(StatoDisco.NUOVO);
                 }
+                np.setNumCopieDisco(0);
+                listcp.add(cp);
+                listcp.add(np);
                 disco.setCopieStati(listcp);
                 
-                
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(artista);
                 out.println("porco e fagioli0");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
                 out.println("porco e fagioli1");
-                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().updateQuantitaDisco(disco, collezionista,cp.getStato(),cp.getNumCopieDisco());
-                out.println("porco e fagioli2");
-                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
-                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(artista);
+                
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(

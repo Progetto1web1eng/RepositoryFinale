@@ -27,7 +27,7 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
-import static java.lang.System.out;
+
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -172,28 +172,17 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public Disco getDisco(int id) throws collector_site.framework.data.DataException {
         Disco disco = null;
-        
-        //prima vediamo se l'oggetto è già stato caricato
-        //first look for this object in the cache
-        if (dataLayer.getCache().has(Disco.class, id)) {
-            disco = dataLayer.getCache().get(Disco.class, id);
-        } else {
-            //altrimenti lo carichiamo dal database
-            //otherwise load it from database
+   
             try {
                 getDisco.setInt(1, id);
                 try (ResultSet rs = getDisco.executeQuery()) {
                     if (rs.next()) {
                         disco = createDisco(rs);
-                        //e lo mettiamo anche nella cache
-                        //and put it also in the cache
-                        dataLayer.getCache().add(Disco.class, disco);
                     }
                 }
             } catch (SQLException ex) {
                 throw new DataException("Unable to load Disco by ID", ex);
             }
-        }
         return disco;
         
         
@@ -217,7 +206,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public List<Disco> getDiscoByCollezione(Collezione collezione) throws collector_site.framework.data.DataException {
         List<Disco> result = new ArrayList();
-        
         try {
             getDiscoByCollezione.setInt(1, collezione.getKey());
             try (ResultSet rs = getDiscoByCollezione.executeQuery()) {
@@ -301,25 +289,26 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
                 if (disco instanceof DataItemProxy && !((DataItemProxy) disco).isModified()) {
                     return;
                 }
-            
                 updateDisco.setString(1, disco.getNomeDisco());
             
                 if ("".equals(disco.getBarcode())) {
-                    storeDisco.setNull(2, java.sql.Types.CHAR);
+                    updateDisco.setNull(2, java.sql.Types.CHAR);
                 } else {
-                    storeDisco.setString(2, disco.getBarcode());
+                    updateDisco.setString(2, disco.getBarcode());
+                    // remove
                 }
 
                 String genere = disco.getGenere().toString();
-            
-                storeDisco.setInt(3, Genere.valueOf(genere).ordinal() + 1);
-                storeDisco.setString(4, genere);
-                storeDisco.setInt(5, disco.getAnno());
-                storeDisco.setString(6, disco.getEtichetta());
+                updateDisco.setInt(3, Genere.valueOf(genere).ordinal() + 1);
+                updateDisco.setString(4, genere);
+                updateDisco.setInt(5, disco.getAnno());
+                updateDisco.setString(6, disco.getEtichetta());
             
                 String tipo =  disco.getTipo().toString(); 
-                storeDisco.setInt(7, Tipo.valueOf(tipo).ordinal() + 1);
-                storeDisco.setString(8, tipo);
+                updateDisco.setInt(7, Tipo.valueOf(tipo).ordinal() + 1);
+                updateDisco.setString(8, tipo);
+                
+                updateDisco.setInt(9, disco.getKey());
             
                 long current_version = disco.getVersion();
                 long next_version = current_version + 1;
@@ -445,11 +434,9 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         for (CopieStato c : disco.getCopieStati()) {
             CopieStato cs = null;
-            
             for(int i=0;i<=statiDischi.length-1;i++) {
                 if(c.getStato().toString().equals(statiDischi[i])) {
                     cs = c;
-                    
                     try{
                         getQuantitaDisco.setInt(1, collezionista.getKey());
                         getQuantitaDisco.setInt(2, disco.getKey());
@@ -463,10 +450,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             
                                         storeQuantitaDisco.setInt(2, StatoDisco.valueOf(statiDischi[i]).ordinal() + 1);
                                         storeQuantitaDisco.setString(3, statiDischi[i]);
-        
                                         storeQuantitaDisco.setInt(4, collezionista.getKey());
                                         storeQuantitaDisco.setInt(5, disco.getKey());
-                        
                                         if (storeQuantitaDisco.executeUpdate() != 1) {
                                                 // solleva eccezione
                                         }
@@ -522,11 +507,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public List<Disco> getDischiByNome(String nomeDisco, Collezionista collezionista) throws DataException {
         List<Disco> result = new ArrayList();
-        out.println(collezionista.getUsername());
         List<Disco> dl = getDischiByCollezionista(collezionista);
-        out.println("ho creato dl");
         for(Disco disco : dl) {
-            out.println("ciclo dentro i dischi del collezionista, disco: "+disco.getNomeDisco());
             if(nomeDisco.equals(disco.getNomeDisco())) {
                 result.add(disco);
             }
@@ -540,7 +522,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         try{
             getDischiByCollezionista.setInt(1, collezionista.getKey());
-            out.println("dentro detDischiByCollezionista"+collezionista.getKey());
             
             try(ResultSet rs = getDischiByCollezionista.executeQuery()){
                 while(rs.next()) {

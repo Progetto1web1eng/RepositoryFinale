@@ -6,7 +6,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 <div id="vistaCollezioneDiv">
     <div id="vistaCollezioneDiv1">
         <div style="width: 30%;height: 100%;position: relative;" class="vistaCollezioniDiv1_1">
-            <img src="immaginiDischi/defaultIMG.png" alt="immagine Collezione" id="vistaCollezioneImmagineCollezione"/> 
+            <#if immagini ??>
+            <#list immagini as i>
+            <img src="immaginiDischi/${i.filename}" alt="immagine Collezione" id="vistaCollezioneImmagineCollezione"/> 
+            </#list>
+            <#else>
+             <img src="immaginiDischi/defaultIMG.png" alt="immagine Collezione" id="vistaCollezioneImmagineCollezione"/> 
+            </#if>
         </div>
         <div class="vistaCollezioniDiv1_1" style="display: flex;flex-direction: column;align-items: center;justify-content: space-between;">
             <h1> ${collezioneSelezionata.nomeCollezione}</h1>

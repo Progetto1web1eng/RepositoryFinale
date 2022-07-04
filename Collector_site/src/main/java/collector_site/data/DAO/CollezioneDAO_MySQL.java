@@ -41,7 +41,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     private PreparedStatement updateCollezione;
     private PreparedStatement updateCondivisione;
     private PreparedStatement getCollezioneById;
-    private PreparedStatement getCollezioniByCollezionista;
+    private PreparedStatement getCollezioneByCollezionista;
     private PreparedStatement getCollezioneByDisco;
     private PreparedStatement getCollezioneByBarcodeDisco;
     private PreparedStatement getCollezioneByNomeDisco; 
@@ -65,7 +65,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             deleteCollezione = connection.prepareStatement("DELETE FROM collezione WHERE ID=?"); 
             updateCollezione = connection.prepareStatement("UPDATE collezione SET nomeCollezione=?,pubblico=? WHERE ID=?");
             getCollezioneById = connection.prepareStatement("SELECT * FROM collezione WHERE ID=?");
-            getCollezioniByCollezionista = connection.prepareStatement("SELECT * FROM collezione WHERE IDcollezionista=?");
+            getCollezioneByCollezionista = connection.prepareStatement("SELECT * FROM collezione WHERE IDcollezionista=?");
             getCollezioneByDisco = connection.prepareStatement("SELECT c.ID, c.nomeCollezione, c.IDcollezionista, c.pubblico FROM collezione c join racchiude r on(c.ID = r.IDcollezione) WHERE (r.IDdisco = ?);");
             getCollezioneByBarcodeDisco = connection.prepareStatement("SELECT c.ID, c.nomeCollezione, c.IDcollezionista, c.pubblico FROM collezione c join racchiude r join disco d on(r.IDdisco = d.ID and c.ID = r.IDcollezione) WHERE (d.barcode = ?)");
             getCollezioneByNomeDisco = connection.prepareStatement("SELECT c.ID, c.nomeCollezione, c.IDcollezionista, c.pubblico FROM collezione c join racchiude r join disco d on(r.IDdisco = d.ID and c.ID = r.IDcollezione) WHERE (d.nomeDisco = ?)");
@@ -87,7 +87,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             deleteCollezione.close();
             updateCollezione.close();
             getCollezioneById.close();
-            getCollezioniByCollezionista.close();
+            getCollezioneByCollezionista.close();
             getCollezioneByDisco.close();
             getCollezioneByBarcodeDisco.close();
             getCollezioneByNomeDisco.close();
@@ -175,12 +175,12 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     
 
     @Override
-    public List<Collezione> getCollezioniByCollezionista(Collezionista collezionista) throws collector_site.framework.data.DataException {
+    public List<Collezione> getCollezioneByCollezionista(Collezionista collezionista) throws collector_site.framework.data.DataException {
         // questo metodo restituisce tutte le collezioni create dal Collezionista in questione
         List<Collezione> listaCollezioni = new ArrayList();
         try {
-            getCollezioniByCollezionista.setInt(1, collezionista.getKey());
-            try (ResultSet rs = getCollezioniByCollezionista.executeQuery()) {
+            getCollezioneByCollezionista.setInt(1, collezionista.getKey());
+            try (ResultSet rs = getCollezioneByCollezionista.executeQuery()) {
                 while (rs.next()) {
                     listaCollezioni.add(getCollezioneById(rs.getInt("ID")));
                 }
@@ -259,7 +259,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             
             // controllo che uno stesso collezionista non possa creare più di una collezione con il medesimo
             // nome
-            for(Collezione c : getCollezioniByCollezionista(collezione.getCreatore())) {
+            for(Collezione c : getCollezioneByCollezionista(collezione.getCreatore())) {
                 if(collezione.getNomeCollezione().equals(c.getNomeCollezione())) {
                     return; // si deve sollevare ECCEZIONE
                 }

@@ -53,6 +53,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     private PreparedStatement getCollezioniPubbliche;
     private PreparedStatement getCollezioniAccessibiliLoggato;
     private PreparedStatement getCollezioniPubblicheByCollezionista;
+    private PreparedStatement getCollezioneByNome;
 
     public CollezioneDAO_MySQL(DataLayer d) {
         super(d);
@@ -79,6 +80,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             getCollezioniAccessibiliLoggato = connection.prepareStatement("select con.IDcollezionista as collezionista_loggato, col.IDcollezionista as collezionista_target, col.ID as IDcollezione from condivide con join collezione col on(con.IDcollezione = col.ID) where (con.IDcollezionista=? and col.IDcollezionista=? and col.pubblico = false);");   
             getCollezioniPubblicheByCollezionista = connection.prepareStatement("select c.ID from collezione c where c.IDcollezionista=? and c.pubblico=true;");  
             getCollezioniPubbliche = connection.prepareStatement("SELECT * FROM collezione WHERE pubblico=true");
+            getCollezioneByNome = connection.prepareStatement(""); 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezione data layer", ex);
         }
@@ -103,6 +105,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             getCollezioniPubbliche.close();
             getCollezioniAccessibiliLoggato.close();
             getCollezioniPubblicheByCollezionista.close();
+            getCollezioneByNome.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -495,6 +498,19 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             }
         } catch (SQLException ex) {
             throw new DataException("Unable to load Collezioni by Collezionista", ex);
+        }
+        
+        return result;
+    }
+
+    @Override
+    public List<Collezione> getCollezioniAccessibiliByNome(Collezionista collezionista_target, Collezionista collezionista_loggato, String nomeCollezione) throws DataException {
+        List<Collezione> result = new ArrayList<Collezione>();
+        
+        for(Collezione c : getCollezioniAccessibili(collezionista_target, collezionista_loggato)) {
+            if(c.getNomeCollezione().equals(nomeCollezione)) {
+                result.add(c);
+            }
         }
         
         return result;

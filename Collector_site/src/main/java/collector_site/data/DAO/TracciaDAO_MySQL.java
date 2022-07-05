@@ -9,6 +9,7 @@ package collector_site.data.DAO;
  * @author stefa
  */
 import collector_site.data.model.Artista;
+import collector_site.data.model.Collezione;
 import collector_site.data.model.Disco;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.TracciaProxy;
@@ -41,6 +42,7 @@ public class TracciaDAO_MySQL extends DAO implements TracciaDAO {
     private PreparedStatement getTracciaById;
     private PreparedStatement getTracciaByArtista;
     private PreparedStatement getTracceByDisco;
+    private PreparedStatement storeTraccia;
 
 
     public TracciaDAO_MySQL(DataLayer d) {
@@ -58,6 +60,7 @@ public class TracciaDAO_MySQL extends DAO implements TracciaDAO {
             getTracciaByArtista = connection.prepareStatement("SELECT * FROM crea WHERE IDartista=?");
             //se non funziona l'errore è nella select del FORM "traccia"
             getTracceByDisco = connection.prepareStatement("SELECT * FROM traccia WHERE IDdisco=?");
+            storeTraccia = connection.prepareStatement("INSERT INTO traccia (titolo,durata,IDdisco) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException ex) {
             throw new DataException("Error initializing Traccia data layer", ex);
         }
@@ -99,6 +102,11 @@ public class TracciaDAO_MySQL extends DAO implements TracciaDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    
+    // fino a qui tutto controllato
+    
+    
+    
     @Override
     public Traccia getTracciaById(int traccia_key) throws DataException {
         Traccia t = null;
@@ -144,6 +152,52 @@ public class TracciaDAO_MySQL extends DAO implements TracciaDAO {
             throw new DataException("Unable to load Tracce by Disco");
         }
         return result;
+    }
+
+    @Override
+    public void storeTraccia(Traccia traccia) throws DataException {
+        
+        // CREAZIONE TRACCIA
+        if (traccia.getDurata() == null ||
+            "".equals(traccia.getTitolo()) ||
+            traccia.getDisco().getKey() == null ||
+            traccia.getDisco().getKey() <= 0) {
+               
+            return;
+        }
+        
+        try {
+            
+            storeTraccia.setString(1, traccia.getTitolo());
+            storeTraccia.setTime(2, traccia.getDurata());
+            storeTraccia.setInt(3, traccia.getKey());
+            
+            if (storeTraccia.executeUpdate() == 1) {
+                //per leggere la chiave generata dal database per il record appena inserito
+                try (ResultSet keys = storeTraccia.getGeneratedKeys()) {
+                       
+                        if (keys.next()) {
+                            int key = keys.getInt(1);
+                            //aggiornaimo la chiave anche nell oggetto di Collezione
+                            traccia.setKey(key);
+                            //inseriamo il nuovo oggetto nella cache
+                            dataLayer.getCache().add(Traccia.class, traccia);
+                        }
+                    }
+                }
+            
+            // questo "if" deve essere eseguto sia quando si fa la create che l'update della Collezione 
+            if (traccia instanceof DataItemProxy) {
+                ((DataItemProxy) traccia).setModified(false);
+            }
+           
+        } catch (SQLException ex) {
+            throw new DataException("Unable to store Traccia", ex);
+        }
+    
+    
+    
+    
     }
     
 }

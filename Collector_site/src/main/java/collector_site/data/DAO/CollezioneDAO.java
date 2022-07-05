@@ -44,5 +44,6 @@ public interface CollezioneDAO {
     List<Collezione> getCollezioniCondiviseToCollezionista(Collezionista collezionista) throws DataException;
     List<Collezione> getCollezioniPrivateCondiviseToCollezionista(Collezionista collezionista) throws DataException;
     List<Collezione> getCollezioniAccessibili(Collezionista collezionista_target, Collezionista collezionista_loggato) throws DataException;
+    List<Collezione> getCollezioniAccessibiliByNome(Collezionista collezionista_target, Collezionista collezionista_loggato, String nomeCollezione) throws DataException;
 
 }

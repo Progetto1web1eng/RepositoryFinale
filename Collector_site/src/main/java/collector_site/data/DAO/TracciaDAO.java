@@ -20,6 +20,7 @@ public interface TracciaDAO {
     Traccia createTraccia();
     TracciaProxy createTraccia(ResultSet rs)throws DataException;
     void deleteTraccia(Traccia traccia);
+    public void storeTraccia(Traccia traccia) throws DataException;
     Traccia getTracciaById(int id)throws DataException;
     //questo è da rimuovere(?)
     List<Traccia> getTracciaByArtista(Artista artista) throws DataException;

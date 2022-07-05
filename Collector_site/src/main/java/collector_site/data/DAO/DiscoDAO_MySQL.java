@@ -68,6 +68,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement getStatiDischi;
     private PreparedStatement getDischiByCollezionista;
     private PreparedStatement getDischiByGenere;
+    private PreparedStatement getDischiOfCollezionistaByArtista;
 
     public DiscoDAO_MySQL(DataLayer d) {
         super(d);
@@ -101,6 +102,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getStatiDischi = connection.prepareStatement("SELECT nome FROM statoDisco");
             getDischiByCollezionista = connection.prepareStatement("SELECT c.IDdisco FROM colleziona c WHERE (c.IDcollezionista=?);");
             getDischiByGenere = connection.prepareStatement("SELECT * FROM disco d where (d.IDgenere = ?);");
+            getDischiOfCollezionistaByArtista = connection.prepareStatement("select i.IDdisco from colleziona c join incide i on(c.IDdisco = i.IDdisco) where c.IDcollezionista=? and i.IDartista=?;"); 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
         }
@@ -124,6 +126,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getQuantitaDisco.close();
             getStatiDischi.close();
             getDischiByCollezionista.close();
+            getDischiOfCollezionistaByArtista.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -148,6 +151,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             disco.setTipo(Tipo.values()[rs.getInt("IDtipo")-1]);
             disco.setAnno(rs.getInt("anno"));
             disco.setEtichetta(rs.getString("etichetta"));
+            // TO REMOVE
+            System.out.println("in creazione disco");
         } catch (SQLException ex) {
             throw new DataException("Unable to create Disco object form ResultSet", ex);
         }
@@ -183,9 +188,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             } catch (SQLException ex) {
                 throw new DataException("Unable to load Disco by ID", ex);
             }
+        
         return disco;
-        
-        
     }
 
     @Override
@@ -540,15 +544,20 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
 
     @Override
     public List<Disco> getDischiByArtista(Artista artista, Collezionista collezionista) throws DataException {
-        List<Disco> result = new ArrayList<>();
+        List<Disco> result = new ArrayList<Disco>();
         
-        for(Disco d : getDischiByCollezionista(collezionista)) {
-            
-            for(Artista a : d.getCompositori()) {
-                if(artista.getKey().equals(a.getKey())) {
-                    result.add(d);
+        try{
+            getDischiOfCollezionistaByArtista.setInt(1, collezionista.getKey());
+            getDischiOfCollezionistaByArtista.setInt(2, artista.getKey());
+
+            try(ResultSet rs = getDischiOfCollezionistaByArtista.executeQuery()){
+                while(rs.next()) {
+                    result.add(getDisco(rs.getInt("i.IDdisco")));
                 }
             }
+            
+        }catch(SQLException ex){
+            throw new DataException("Unable to load dischi of Collezionista by Artista");
         }
         
         return result;

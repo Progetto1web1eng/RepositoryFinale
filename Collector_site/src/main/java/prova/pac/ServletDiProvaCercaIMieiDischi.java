@@ -62,9 +62,7 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                 
             if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":T")){ //ricerca per titolo
                 dataM.put("numero",4);
-                out.println("prima della ricerca getdischibynome");
                 List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH, collezionista);
-                out.println(listD.get(0).getNomeDisco());
                 if(listD.isEmpty()){
                         // caso in cui non abbiamo trovato nulla
                     dataM.put("hidden", 2);
@@ -93,6 +91,7 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
             else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":G")){ //ricerca per genere
                 dataM.put("numero",4);
                 List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByGenere(Genere.valueOf(inputSenzaPlaceH), collezionista);
+
                 if(listD.isEmpty()){
                         // caso in cui non abbiamo trovato nulla
                     dataM.put("hidden", 2);

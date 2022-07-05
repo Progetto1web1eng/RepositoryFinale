@@ -52,9 +52,11 @@ public class ServletDiProvaHome extends ServletDiProvaCollector_siteBaseControll
         if(s==null){
              try {
                  ProvaConfig pcg = new ProvaConfig(getServletContext());
+                  Map<String,Object> dataM = new HashMap();
+                  dataM.put("numero", 0);
                  Template t = pcg.getTemplate("dispatcherUnlogged.ftl.html");
                  try {
-                     t.process(null,response.getWriter());
+                     t.process(dataM,response.getWriter());
                      
                  } catch (TemplateException ex) {
                      Logger.getLogger(ServletDiProvaHome.class.getName()).log(Level.SEVERE, null, ex);

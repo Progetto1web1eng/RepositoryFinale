@@ -9,6 +9,8 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -30,8 +32,10 @@ public class ServletDiProvaLogout extends HttpServlet {
         s.invalidate();
         ProvaConfig pcg = new ProvaConfig(getServletContext());
         Template t = pcg.getTemplate("dispatcherUnlogged.ftl.html");
+         Map<String,Object> dataM = new HashMap();
+         dataM.put("numero", 0);
         try {
-            t.process(null,response.getWriter());
+            t.process(dataM,response.getWriter());
         } catch (TemplateException ex) {
             Logger.getLogger(ServletDiProvaLogout.class.getName()).log(Level.SEVERE, null, ex);
         }

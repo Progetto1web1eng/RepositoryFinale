@@ -4,5 +4,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
 <div id="collezionistiEsterniDiv">
-    
+    <#if cPar??>
+        <div id="collezionistiEsterniDivContainer">
+            <h3 style="color: #303841;font-size: 30px;">${cPar.nickname} </h3>
+             <a id="collezionistiEsterniA" href="servletDiProvaRicercaGlobale?cPar=${cPar.key}"><img id="collezionistiEsterniImgInfo" ></a>
+        </div>
+    <#else>
+        <h3>
+            Nessun utente ha questo nickname
+        </h3>
+    </#if>
 </div>

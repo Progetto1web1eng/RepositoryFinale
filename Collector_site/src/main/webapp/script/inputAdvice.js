@@ -14,7 +14,7 @@ function adviceHeadBarVisible(){
     document.getElementById("headBarSuggerimenti").style.visibility = "visible";
 }
 function adviceHeadBar(){
-     alert("keyup funzionante ");
+    
     //suggerimenti nascosti se l'input torna vuoto
     if(document.getElementById("headBarInput").value===""){
         document.getElementById("headBarSuggerimenti").style.visibility = "hidden";

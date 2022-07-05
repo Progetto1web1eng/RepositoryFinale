@@ -3,7 +3,7 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
-<html>
+<html lang="it">
     <head>
         <title>Collector_site</title>
         <meta charset="UTF-8">
@@ -11,10 +11,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="stili/sideMenu.css" type="text/css"/>
         <link rel="stylesheet" href="stili/headBar.css" type="text/css"/>
         <link rel="stylesheet" href="stili/homeUnlogged.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/UnCollezioniEsterne.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/UnCollezionistiEsterni.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/UnDischiEsterni.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/UnTracceEsterne.css" type="text/css"/>
+         <script src="script/resetInput.js"></script>
+         <script src="script/inputAdvice.js"></script>
         
     </head>
     <body style="display: flex;flex-direction: column;align-items: flex-start;background-color:#303841;">
         <#include "headBar.ftl.html">
-        <#include "homeUnlogged.ftl.html">
+        <#if numero==0>
+             <#include "homeUnlogged.ftl.html">
+        </#if>
+        <#if numero==1>
+             <#include "UnCollezioniEsterne.ftl.html">
+        </#if>
+        <#if numero==2>
+             <#include "UnCollezionistiEsterni.ftl.html">
+        </#if>
+        <#if numero==3>
+             <#include "UnDischiEsterni.ftl.html">
+        </#if>
+         <#if numero==4>
+             <#include "UnTracceEsterni.ftl.html">
+        </#if>
     </body>
 </html>

@@ -8,11 +8,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <div>
         <#if collezioniList?size != 0>
             <#list collezioniList as c>
-                <div>
+                <div class="collezioniCondiviseContainer">
                     <h1> ${c.nomeCollezione}</h1>
-                </div>
-                <div >
-                    <p class="collezioniCondiviseP1">info<img class="collezioniCondiviseImgInfo" ></p>
+                     <a class="collezioniCondiviseA" href="servletDiProvaRicercaGlobale?collezioneK=${c.key}"><img class="collezioniCondiviseImgInfo" ></a>
                 </div>
             </#list>
         <#else>

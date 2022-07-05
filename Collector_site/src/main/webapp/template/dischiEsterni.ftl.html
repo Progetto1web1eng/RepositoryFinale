@@ -5,13 +5,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <div id="dischiEsterniDiv">
     <div>
-        <#list dischiList as d>
-            <div>
-                <h1> ${d.nomeDisco}</h1>
-            </div>
-            <div >
-                <p>info<img></p>
-            </div>
-        <#/list>
+        <#if dischiList?size != 0>
+            <#list dischiList as d>
+                <div class="dischiEsterniContainer">
+                    <h1> ${d.nomeDisco}</h1>
+                </div>
+                <div >
+                    <a href="servletDiProvaRicercaGlobale?discoK=${d.key}"><img class="dischiEsterniImgInfo" ></a>
+                </div>
+            </#list>
+        <#else>
+            <h1 style="margin-left: 38%;">
+                collezione priva di dischi
+            </h1>
+        </#if>
     </div>
 </div>

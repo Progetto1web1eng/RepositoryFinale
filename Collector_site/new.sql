@@ -125,7 +125,8 @@ create table incide (
 	IDdisco smallint not null, 
     IDartista smallint not null,
     primary key(IDdisco, IDartista),
-    foreign key (IDdisco) references disco(ID),
+    # CHECK RECENTE
+    foreign key (IDdisco) references disco(ID) on delete cascade,
     foreign key (IDartista) references artista(ID)
 );
 
@@ -134,7 +135,8 @@ create table crea (
     IDtraccia smallint not null,
     primary key (IDartista, IDtraccia),
     foreign key (IDartista) references artista(ID),
-    foreign key (IDtraccia) references traccia(ID)
+    # CHECK RECENT
+    foreign key (IDtraccia) references traccia(ID) on delete cascade
 );
 
 create table racchiude (

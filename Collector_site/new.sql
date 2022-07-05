@@ -203,7 +203,7 @@ insert into collezione values (7, "sci-fi", 2, false);
 insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio", 1, "CD");
 insert into disco values (2, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 2, "vinile");
 insert into disco values (3, "bianco", "47956", 1, "Metal", 1978, "Metal Studio", 1, "CD");
-insert into disco values (4, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 4, "audiocassetta");
+# insert into disco values (4, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 4, "audiocassetta");
 insert into disco values (5, "The Dark Side of the Moon", "3282", 6, "Rock", 1970, "Rock Studio", 2, "vinile"); 
 # dischi recenti
 insert into disco values (6, "DiscoRock1", "3283", 6, "Rock", 1972, "Rock Studio", 2, "vinile"); 
@@ -218,7 +218,7 @@ insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,di
 insert into traccia values (1, "Enter Sandman", 0, 1); 
 
 insert into racchiude values (1, 3);
-insert into racchiude values (1, 4);
+# insert into racchiude values (1, 4);
 insert into racchiude values (1, 2);
 insert into racchiude values (1, 5);
 insert into racchiude values (1, 1);
@@ -237,9 +237,10 @@ insert into racchiude values (2, 11);
 insert into colleziona values (1, 1, "Nuovo", 1, 1);
 insert into colleziona values (2, 2, "Usato", 1, 2);
 insert into colleziona values (5, 1, "Nuovo", 1, 5);
-insert into colleziona values (1, 1, "Nuovo", 1, 4);
-insert into colleziona values (2, 2, "Usato", 2, 3); 
 insert into colleziona values (1, 1, "Nuovo", 1, 3);
+
+# insert into colleziona values (1, 1, "Nuovo", 1, 4);
+insert into colleziona values (2, 2, "Usato", 2, 3); 
 # dischi recenti di Stefano
 insert into colleziona values (1, 1, "Nuovo", 1, 6);
 insert into colleziona values (1, 1, "Nuovo", 1, 7);
@@ -254,10 +255,11 @@ insert into crea values (1, 1);
 insert into incide values(1, 1);
 insert into incide values(2, 1);
 insert into incide values(3, 3);
-insert into incide values(4, 1);
+# insert into incide values(4, 1);
 insert into incide values(5, 3);
 
 insert into condivide values(1, 7);
+
 
 
 

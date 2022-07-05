@@ -129,17 +129,18 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
     @Override
     public void deleteCollezione(Collezione collezione) {
-        // DA COMPLETARE
         
+        if (collezione.getKey() == null || collezione.getKey() >= 0) {
+            return;
+        }
         
-        
-        
-        
-        
-        
-        
-        
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if (deleteCollezione.executeUpdate() == 0) {
+                // qui si deve sollevare eccezione
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CollezioneDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override

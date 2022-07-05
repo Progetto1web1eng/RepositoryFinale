@@ -212,6 +212,9 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             try (ResultSet rs = getArtistaByNomeDarte.executeQuery()) {
                 if (rs.next()) {
                     artista = getArtistaById(rs.getInt("ID")); 
+                } else {
+                    // caso in cui il nomeDarte inserito non appartiene ad alcun Artista registrato nella webapp
+                    return null;
                 }
             }
         } catch (SQLException ex) {

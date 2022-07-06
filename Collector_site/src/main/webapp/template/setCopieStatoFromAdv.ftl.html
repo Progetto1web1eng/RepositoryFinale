@@ -4,11 +4,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
 <div id="setCopieStatoFromAdv">
-    <form method="get" action="servletDiProvaInserisciDisco?settingCS=1">
+    <div id="setCopieStatoFromAdvLinea1"></div>
+    <div id="setCopieStatoFromAdvLinea2"></div>
+    <form method="get" action="servletDiProvaSettingCopieStato">
         <select id="setCopieStatoSelect" name="sCSSPar">
             <option value="NUOVO">Nuovo</option>
             <option value="USATO">Usato</option>
         </select>
+        <span style="font-style: italic;font-size: 20px;position: absolute;top: 444px;"> numero copie: </span>
         <input type="number" id="setCopieStatoFromAdvInput1" name="sCSSI1Par">
         <input type="submit" id="setCopieStatoFromAdvInput2" name="sCSSI2Par">
     </form>

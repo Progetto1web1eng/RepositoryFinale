@@ -77,7 +77,12 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
             else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){ //ricerca per artista
                 dataM.put("numero",4);
                 Artista artista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
+                if(artista==null){
+                     dataM.put("hidden", 2);
+                      t.process(dataM, response.getWriter());
+                }else{
                 List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(artista, collezionista);
+                
                 if(listD.isEmpty()){
                         // caso in cui non abbiamo trovato nulla
                     dataM.put("hidden", 2);
@@ -87,10 +92,29 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     dataM.put("dischiList",listD);
                 }
                 t.process(dataM, response.getWriter());
+                }
             }
             else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":G")){ //ricerca per genere
+                inputSenzaPlaceH = inputSenzaPlaceH.toLowerCase();
+                String firstLetStr = inputSenzaPlaceH.substring(0, 1);
+                String remLetStr = inputSenzaPlaceH.substring(1);
+                firstLetStr = firstLetStr.toUpperCase();
+                inputSenzaPlaceH = firstLetStr + remLetStr;
                 dataM.put("numero",4);
-                List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByGenere(Genere.valueOf(inputSenzaPlaceH), collezionista);
+                if(inputSenzaPlaceH.equals("Rock")||
+                    inputSenzaPlaceH.equals("Metal")||
+                        inputSenzaPlaceH.equals("Pop")||
+                        inputSenzaPlaceH.equals("Blues")||
+                        inputSenzaPlaceH.equals("Classico")||
+                        inputSenzaPlaceH.equals("Country")||
+                        inputSenzaPlaceH.equals("Dance")||
+                        inputSenzaPlaceH.equals("Folk")||
+                        inputSenzaPlaceH.equals("House")||
+                        inputSenzaPlaceH.equals("Indie")||
+                        inputSenzaPlaceH.equals("Jazz")||
+                        inputSenzaPlaceH.equals("Latino")
+                        ){
+                    List<Disco> listD = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByGenere(Genere.valueOf(inputSenzaPlaceH), collezionista);
 
                 if(listD.isEmpty()){
                         // caso in cui non abbiamo trovato nulla
@@ -101,6 +125,13 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     dataM.put("dischiList",listD);
                 }
                 t.process(dataM, response.getWriter());
+                }else{
+                        // caso in cui non abbiamo trovato nulla
+                    dataM.put("hidden", 2);
+                     t.process(dataM, response.getWriter());
+                
+                }
+               
             }
             
         } catch (ParseException ex) {
@@ -127,7 +158,7 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                 List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
                 dataM.put("collezioni",collezioni);
                 dataM.put("numero",4);
-                dataM.put("hidden",0); //non verrà visualizzato il div con la lista di dichi
+                dataM.put("hidden",0); //non verrà visualizzato il div con la lista di dischi
                 t.process(dataM, response.getWriter());
             }else{
                 cerca_InputAction(request,response,dataM,(int)s.getAttribute("id"));

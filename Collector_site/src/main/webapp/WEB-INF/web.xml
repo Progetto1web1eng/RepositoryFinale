@@ -77,6 +77,14 @@
         <servlet-name>ServletDiProvaRicercaGlobale</servlet-name>
         <servlet-class>prova.pac.ServletDiProvaRicercaGlobale</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletDiProvaSettingCopieStato</servlet-name>
+        <servlet-class>prova.pac.ServletDiProvaSettingCopieStato</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletDiProvaDelete</servlet-name>
+        <servlet-class>prova.pac.ServletDiProvaDelete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDiProvaInserisciImmagine</servlet-name>
         <url-pattern>/servletDiProvaInserisciImmagine</url-pattern>
@@ -148,6 +156,14 @@
     <servlet-mapping>
         <servlet-name>ServletDiProvaRicercaGlobale</servlet-name>
         <url-pattern>/servletDiProvaRicercaGlobale</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDiProvaSettingCopieStato</servlet-name>
+        <url-pattern>/servletDiProvaSettingCopieStato</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDiProvaDelete</servlet-name>
+        <url-pattern>/servletDiProvaDelete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

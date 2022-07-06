@@ -49,10 +49,17 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
             
             List<Collezione> collezioniCondivise = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniPrivateCondiviseToCollezionista(collezionista);
             
-            dataM.put("collezioniList",collezioniCondivise);
+            //servletDiProvaCollezioniCondivise?AggCond=${collezioneSelezionata.key}
+            if(request.getParameter("AggCond")!=null){
+                //vista di aggiunta di una condivisione
+                Collezione collSelezionata = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(Integer.parseInt(request.getParameter("AggCond")));
+                // devo ricavare una lista di condivisioni
+            }else{
+                 dataM.put("collezioniList",collezioniCondivise);
             dataM.put("numero",0);
             
             t.process(dataM, response.getWriter());
+            }
         } catch (ParseException ex) {
             Logger.getLogger(ServletDiProvaCollezioniCondivise.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

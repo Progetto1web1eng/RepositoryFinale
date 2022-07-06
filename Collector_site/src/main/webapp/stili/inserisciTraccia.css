@@ -23,7 +23,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 50px;
     position: absolute;
     top: 50px;
-    left: 20%;
+    left: 39%;
 }
 #inserisciTracciaInput1{
     height: 40px;
@@ -32,8 +32,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #ACACBB;
     color: #303841;
     position: absolute;
-    left: 9%;
-    top: 160px;
+   left: 19%;
+    top: 430px;
     width: 18%;
     border: none;
 }
@@ -44,8 +44,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #ACACBB;
     color: #303841;
     position: absolute;
-    left: 20%;
-    top: 190px;
+    left: 63%;
+    top: 430px;
     width: 18%;
     border: none;
 }
@@ -61,7 +61,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-weight: bolder;
     color: #303841;
 }
-#inseriscitracciaInput3:hover{
+#inserisciTracciaInput3:hover{
     color: white;
     background-color: #303841;
     border-color: #303841;
@@ -71,4 +71,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 #inserisciTracciaInput2:focus-visible{
     outline: none;
+}
+#inserisciTracciaLinea1{
+   height: 1px;
+    background-color: white;
+    width: 17%;
+    position: absolute;
+    top: 473px;
+    left: 18%;
+}
+#inserisciTracciaLinea2{
+   height: 1px;
+    background-color: white;
+    width: 25%;
+    position: absolute;
+    top: 473px;
+    left: 62%;
 }

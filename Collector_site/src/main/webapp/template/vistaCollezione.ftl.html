@@ -26,7 +26,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </div>
         <div class="vistaCollezioniDiv1_1">
             <p id="vistaCollezioniP1">cancella<img id="vistaCollezioneCestinoImg" style="vertical-align:middle;padding-left: 5px"></p>
-            <p id="vistaCollezioniP2">aggiungi<img id="vistaCollezioneModificaImg" style="vertical-align:middle"></p>
+            <a href="servletDiProvaCollezioniCondivise?AggCond=${collezioneSelezionata.key}" id="vistaCollezioniP2">aggiungi<img id="vistaCollezioneModificaImg" style="vertical-align:middle"></a>
         </div>
     </div>
     <div id="vistaCollezioneDiv2">
@@ -40,7 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <h3 style="color: white">${d.nomeDisco}:  ${d.anno}</h3>
                 </div>
                 <div>
-                    <img id="vistaCollezioneCestinoImg" alt="cancella" style="margin-right: 20px;">
+                    <a href="servletDiProvaDelete?dK=${d.key}"><img id="vistaCollezioneCestinoImg" alt="cancella" style="margin-right: 20px;"></a>
                     <a href="servletDiProvaModificaDisco?discoKey=${d.key}&collK=${collezioneSelezionata.key}"><img id="vistaCollezioneModificaImg" alt="modifica" style="margin-right: 20px;"></a>
                 </div>
 

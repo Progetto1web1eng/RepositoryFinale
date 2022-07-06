@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="modificaDiscoDiv">
+    <div id="modificaDiscoDiv1">
+        <!-- questo è il primo div con le caratteristiche del disco-->
+        <form method="get" action="servletDiProvaModificaDisco"> 
+        <!-- inizio inserimento caratteristiche disco -->
+            <input  type="text" value="${disco.nomeDisco}" name="nomeDiscoPar" id="modificaDiscoNomeDisco">
+            <input type="text" value="${disco.barcode}" name="barcodePar" id="modificaDiscoBarcode">
+            <input type="number" name="dataPar" id="modificaDiscoData">
+            <input type="text" value="${disco.etichetta}" name="etichettaPar" id="modificaDiscoEtichetta">
+            <input type="submit" value="aggiorna" id="modificaDiscoSubmit">   
+        </form>
+        <div id="inserisciImmagine" >
+            <a href="servletDiProvaInserisciImmagine">Inserisci Immagini </a>
+        </div>
+        
+    </div>
+    <div id="modificaDiscoDiv2">
+        <!-- ciclo di ripetizione per ogni disco della collezione -->
+        <#list tracceList as t>
+            <div class="modificaDiscoDivTracce">
+                <h3 style="color: white">${t.titolo}</h3>
+                <h3 style="color: white">${t.durata}</h3>
+            </div>
+        </#list>
+        <a href="servletDiProvaModificaDisco?aggiungiTraccia=1"><img id="modificaDiscoAggiungiImg"></a>
+    </div>
+</div>

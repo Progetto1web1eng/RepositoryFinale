@@ -1,0 +1,144 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 11 giu 2022, 17:48:25
+    Author     : fabri
+*/
+
+#profiloDiv{
+    width: 86%;
+    height:985px;
+    border: 3px solid #979C98;
+    margin-top:8px;
+    background-color: #ACACBB;
+    border-top-left-radius: 38px;
+    border-bottom-left-radius:38px;
+    margin-left: 20px;
+}
+#profiloCarDiv{
+    width: 90%;
+    margin-left: 5%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 40px;
+        
+}
+.profiloSpan1{
+    color: #303841;
+    font-size: 25px;
+}
+.profiloSpan2{
+     color: #303841;
+     padding-left: 15%;
+     font-size: 13px;
+}
+#profiloDivC{
+    width: 90%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 150px;
+}
+#profiloContainerArtistiStat{
+    width: 40%;
+    height: 300px;
+    background-color: #DBDBDB;
+    border: 3px solid #979C98;
+    border-radius: 38px;
+    position: relative
+}
+#profiloDivPrimoPosto{
+    width: 80px;
+    height: 40px;
+    background-color: yellow;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 20%;
+    bottom: 10px;
+}
+#profiloDivSecondoPosto{
+     width: 80px;
+    height: 40px;
+    background-color: gray;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 40%;
+    bottom: 10px;
+}
+#profiloDivTerzoPosto{
+    width: 80px;
+    height: 40px;
+    background-color: brown;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 60%;
+    bottom: 10px;
+}
+#profiloContainerArtistiStat:hover #profiloDivPrimoPosto{
+    height: 180px;
+}
+#profiloContainerArtistiStat:hover #profiloDivSecondoPosto{
+    height: 160px;
+}
+#profiloContainerArtistiStat:hover #profiloDivTerzoPosto{
+    height: 140px;
+}
+
+
+#profiloContainerGeneriStat{
+    width: 40%;
+    height: 300px;
+   background-color: #DBDBDB;
+    border: 3px solid #979C98;
+    border-radius: 38px;
+    position: relative;
+    
+}
+#profiloDivPPosto{
+    width: 80px;
+    height: 40px;
+    background-color: yellow;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 20%;
+    bottom: 10px;
+}
+#profiloDivSPosto{
+     width: 80px;
+    height: 40px;
+    background-color: gray;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 40%;
+    bottom: 10px;
+}
+#profiloDivTPosto{
+    width: 80px;
+    height: 40px;
+    background-color: brown;
+    transition: all .5s linear;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 60%;
+    bottom: 10px;
+}
+#profiloContainerGeneriStat:hover #profiloDivPPosto{
+    height: 180px;
+}
+#profiloContainerGeneriStat:hover #profiloDivSPosto{
+    height: 160px;
+}
+#profiloContainerGeneriStat:hover #profiloDivTPosto{
+    height: 140px;
+}

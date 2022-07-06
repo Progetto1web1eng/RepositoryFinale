@@ -1,0 +1,41 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 4 lug 2022, 17:55:41
+    Author     : fabri
+*/
+
+#collezioniEsterneDiv{
+    width: 86%;
+    height:985px;
+    border: 3px solid #979C98;
+    margin-top:8px;
+    background-color: #ACACBB;
+    border-top-left-radius: 38px;
+    border-bottom-left-radius:38px;
+    margin-left: 20px;
+    overflow-y: auto;
+}
+.collezioniEsterneContainer{
+    background-color: #DBDBDB;
+    width: 90%;
+    border-radius: 38px;
+    height: 197px;
+    margin-top: 2%;
+    border: 3px solid #979C98;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.collezioniEsterneImgInfo{
+    content: url(../immagini/icons8-modifica-white-24.png);
+    height: 32px;
+    width: 32px;
+}
+.collezioniEsterneImgInfo:hover{
+    content: url(../immagini/icons8-modifica-black-24.png);
+}

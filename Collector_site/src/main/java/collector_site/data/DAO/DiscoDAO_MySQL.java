@@ -90,7 +90,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             deleteDisco = connection.prepareStatement("DELETE FROM disco WHERE ID=?"); 
             updateDisco = connection.prepareStatement("UPDATE disco SET nomeDisco=?,barcode=?,IDgenere=?,genere=?,anno=?,etichetta=?,IDtipo=?,tipo=? WHERE ID=?");
             getDisco = connection.prepareStatement("SELECT * FROM disco WHERE ID=?");
-            getDischi = connection.prepareStatement("SELECT ID AS IDdisco,nomeDisco FROM disco");
+            getDischi = connection.prepareStatement("SELECT ID,nomeDisco FROM disco");
             getDiscoByCollezione = connection.prepareStatement("SELECT * FROM racchiude WHERE IDcollezione=?");
             // DA COMPLETARE
             getDiscoByTraccia = connection.prepareStatement("SELECT * FROM collezione WHERE IDcollezionista=?");
@@ -609,15 +609,16 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     }
     
     @Override
-    public void getJson() throws DataException, IOException {
-        List<DiscoMinimale> dischi = null;
+    public void getJson(String pathProgetto) throws DataException, IOException {
+        List<DiscoMinimale> dischi = new ArrayList<DiscoMinimale>();
         
         try {
             
             try (ResultSet rs = getDischi.executeQuery()) {
+                
                 while (rs.next()) {
                     DiscoMinimale disco = new DiscoMinimale();
-                    disco.setId(rs.getInt("IDdisco"));
+                    disco.setId(rs.getInt("ID"));
                     disco.setNome(rs.getString("nomeDisco"));
                     dischi.add(disco);
                 }
@@ -625,13 +626,10 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         } catch (SQLException ex) {
             throw new DataException("Unable to create JSON for dischi", ex);
         }
-        // REMOVE
-        System.out.println(1);
         
-        File f = new File("");
-        //"f.getAbsolutePath()" restituisce il path della cartella di nome "Collector_Site" (che sarebbe la 
-        // cartella radice del progetto)
-        String p = f.getAbsolutePath() + "src\\main\\webapp\\script\\dischi.json";
+        // il parametro "pathProgetto" contiene il path della cartella di nome "Collector_Site" (che sarebbe 
+        // la cartella radice del progetto)
+        String p = pathProgetto + "\\src\\main\\webapp\\script\\dischi.json";
         Path path = Paths.get(p);
         
         String jsonContent = "";
@@ -644,10 +642,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         // controlla se il file json già esiste: se NO lo crea; altrimenti, se dovesse già contenere del 
         // testo, lo elimina dal file
-                
-        // REMOVE
-        System.out.println(2);
-        
         Files.writeString(path, "");
         // scrive il file json
         Files.writeString(path, jsonContent);

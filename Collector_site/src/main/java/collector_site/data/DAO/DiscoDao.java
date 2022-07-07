@@ -14,6 +14,7 @@ import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.DiscoProxy;
 import collector_site.data.impl.StatoDisco;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
@@ -49,4 +50,5 @@ public interface DiscoDao {
     public List<Disco> getDischiIncisi()throws DataException;
     void setArtistaOfDisco(Disco disco, Artista artista) throws DataException;
     void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException;
+    public void getJson() throws DataException, IOException;
 }

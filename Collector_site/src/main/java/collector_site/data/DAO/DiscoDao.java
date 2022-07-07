@@ -50,5 +50,5 @@ public interface DiscoDao {
     public List<Disco> getDischiIncisi()throws DataException;
     void setArtistaOfDisco(Disco disco, Artista artista) throws DataException;
     void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException;
-    public void getJson() throws DataException, IOException;
+    public void getJson(String pathProgetto) throws DataException, IOException;
 }

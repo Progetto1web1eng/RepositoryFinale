@@ -169,11 +169,13 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public void deleteDisco(Disco disco) {
         
-        if (disco.getKey() == null || disco.getKey() >= 0) {
+        if (disco.getKey() == null || disco.getKey() <= 0) {
             return;
         }
         
         try {
+            deleteDisco.setInt(1, disco.getKey());
+            
             if (deleteDisco.executeUpdate() == 0) {
                 // qui si deve sollevare eccezione
             }

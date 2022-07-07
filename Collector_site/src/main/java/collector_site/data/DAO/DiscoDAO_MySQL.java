@@ -76,6 +76,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement getDischiByCollezionista;
     private PreparedStatement getDischiByGenere;
     private PreparedStatement getDischiOfCollezionistaByArtista;
+    private PreparedStatement getDischiUniqueName;
 
     public DiscoDAO_MySQL(DataLayer d) {
         super(d);
@@ -91,6 +92,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             updateDisco = connection.prepareStatement("UPDATE disco SET nomeDisco=?,barcode=?,IDgenere=?,genere=?,anno=?,etichetta=?,IDtipo=?,tipo=? WHERE ID=?");
             getDisco = connection.prepareStatement("SELECT * FROM disco WHERE ID=?");
             getDischi = connection.prepareStatement("SELECT ID,nomeDisco FROM disco");
+            getDischiUniqueName = connection.prepareStatement("SELECT ID, nomeDisco FROM disco GROUP BY(nomeDisco);"); 
             getDiscoByCollezione = connection.prepareStatement("SELECT * FROM racchiude WHERE IDcollezione=?");
             // DA COMPLETARE
             getDiscoByTraccia = connection.prepareStatement("SELECT * FROM collezione WHERE IDcollezionista=?");
@@ -123,6 +125,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             updateDisco.close();
             getDisco.close();
             getDischi.close();
+            getDischiUniqueName.close();
             getDiscoByCollezione.close();
             getDiscoByTraccia.close();
             updateQuantitaDisco.close();
@@ -614,7 +617,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         
         try {
             
-            try (ResultSet rs = getDischi.executeQuery()) {
+            try (ResultSet rs = getDischiUniqueName.executeQuery()) {
                 
                 while (rs.next()) {
                     DiscoMinimale disco = new DiscoMinimale();

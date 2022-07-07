@@ -10,6 +10,7 @@ import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.data.proxy.ArtistaProxy;
 import collector_site.data.proxy.DiscoProxy;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface ArtistaDao {
     Artista getArtistiByGruppoMusicale (Artista gruppoMusicale) throws DataException;
     List<Artista> getArtistiPreferiti(Collezionista collezionista) throws DataException;
     public Artista getArtistaNomeDarte(String nomeDarte) throws DataException;
+    public void getArtistiSingoliJson(String pathProgetto) throws DataException, IOException;
+    public void getGruppiMusicaliJson(String pathProgetto) throws DataException, IOException;
 
-
-    
 }

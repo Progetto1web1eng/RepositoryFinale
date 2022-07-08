@@ -224,33 +224,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
                             idCollezione));
-                
-                /*
-                //storage dei dischi nel file json
-                    FileWriter file = new FileWriter("dischi.json");
-                    BufferedWriter filebuf = new BufferedWriter(file);
-                try (PrintWriter printout = new PrintWriter(filebuf)) {
-                    String nomeDisco;
-                    int ID;
-                    JSONObject newJSON = new JSONObject();
-                    int position = 0;
-                    printout.print("[");
-                    List<Disco> diskList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischi();
-                    for(Disco disk : diskList){
-                        nomeDisco = disk.getNomeDisco();
-                        ID = disk.getKey();
-                        newJSON.put("nomeDisco", nomeDisco);
-                        newJSON.put("ID",ID);
-                        if(position!=0){
-                            printout.print(",");
-                        }
-                        printout.println(newJSON.toJSONString());
-                        position++;
-                    }
-                    printout.print("]");
-                }
-                //fine storage sul json
-                */
+              
                 
                 s.removeAttribute("gruppoSessione");
                 s.removeAttribute("ListaArtisti");
@@ -410,7 +384,11 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 s.removeAttribute("IDCollezioneSessione");
                 s.removeAttribute("copieStato");
                  
-                
+            String path = getServletContext().getInitParameter("pathProgetto");
+            ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistiSingoliJson(path);
+            ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getGruppiMusicaliJson(path);
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getJson(path);
+
                  //significa che ho chiamato la servlet per l'inserimento di un nuovo disco dalla vista di una collezione
                  s.setAttribute("IDCollezioneSessione", request.getParameter("collezioneKey"));
                  //completo la sideBar con la lista di collezioni

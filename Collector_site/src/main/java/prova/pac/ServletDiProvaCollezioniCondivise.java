@@ -51,7 +51,7 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
             
             //servletDiProvaCollezioniCondivise?AggCond=${collezioneSelezionata.key}
             if(request.getParameter("AggCond")!=null){
-                //vista di aggiunta di una condivisione
+                //vista di aggiunta di una condivisione la vista ha il numero 16
                 Collezione collSelezionata = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(Integer.parseInt(request.getParameter("AggCond")));
                 // devo ricavare una lista di condivisioni
             }else{

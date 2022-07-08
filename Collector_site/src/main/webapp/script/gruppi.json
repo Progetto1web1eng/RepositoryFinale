@@ -1,11 +1,1 @@
-[
-    {
-        "nomeDarte": "Metallica",
-        "ID": 1
-    },
-    {
-        "nomeDarte": "Queen",
-        "ID": 5 
-    }
-    
-]
+[{"id":1,"nome":"Metallica"},{"id":5,"nome":"Queen"}]

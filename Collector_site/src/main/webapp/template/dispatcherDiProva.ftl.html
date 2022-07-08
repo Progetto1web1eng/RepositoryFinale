@@ -27,6 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="stili/dischiEsterni.css" type="text/css"/>
         <link rel="stylesheet" href="stili/collezioniEsterne.css" type="text/css"/>
         <link rel="stylesheet" href="stili/collezionistiEsterni.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/setCondivisioniCollezione.css" type="text/css"/>
         <script src="script/resetInput.js"></script>
         <script src="script/inserimentoArtistiScript.js"></script>
         <script src="script/inputAdvice.js"></script>
@@ -86,6 +87,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             </#if>
             <#if (numero==15)>
              <#include "collezionistiEsterni.ftl.html">
+            </#if>
+            <#if (numero==16)>
+             <#include "setCondivisioniCollezione.ftl.html">
             </#if>
         </div>
     </body>

@@ -130,6 +130,7 @@ create table incide (
     foreign key (IDartista) references artista(ID)
 );
 
+
 create table crea (
     IDartista smallint not null,
     IDtraccia smallint not null,
@@ -185,7 +186,11 @@ insert into tipo values(4,"audiocassetta");
 # INSERIMENTO DATI DI PROVA
 insert into artista values (1, "Metallica", null, null, null);
 insert into artista values (2,"James Hetfield", 1, "Voce", 1);
-insert into artista values (3,"Pink Floyd", null, null, null);
+insert into artista values (3,"Lars Ulrich", 5, "Percussioni",1);
+insert into artista values (4,"axl rose", null, null, null);
+insert into artista values (5,"Queen",null,null,null);
+insert into artista values (6,"Freddy Mercury",1, "Voce",5);
+#ID,nomeDarte,IDruolo,ruolo,IDgruppoMusicale
 
 insert into collezionista values (1, "Stefano", "stefano@gmail.com", "stefa", "stefa", "3880581680");
 insert into collezionista values (2, "Fabrizio", "fabrizio@gmail.com", "fabri", "fabri", "3880581670");
@@ -204,7 +209,7 @@ insert into collezione values (7, "sci-fi", 2, false);
 
 insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio", 1, "CD");
 insert into disco values (2, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 2, "vinile");
-insert into disco values (3, "bianco", "47956", 1, "Metal", 1978, "Metal Studio", 1, "CD");
+insert into disco values (3, "Bianco", "47956", 1, "Metal", 1978, "Metal Studio", 1, "CD");
 # insert into disco values (4, "Master of Puppets", "47956", 11, "Metal", 1958, "Metal Studio", 4, "audiocassetta");
 insert into disco values (5, "The Dark Side of the Moon", "3282", 6, "Rock", 1970, "Rock Studio", 2, "vinile"); 
 # dischi recenti
@@ -217,7 +222,9 @@ insert into disco values (11, "DiscoBlues", "3288", 1, "Blues", 1970, "Rock Stud
 
 insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
-insert into traccia values (1, "Enter Sandman", 0, 1); 
+insert into traccia values (1, "Enter Sandman", 0251, 1);  
+insert into traccia values (2, "Sad butTrue",0 , 1);
+
 
 insert into racchiude values (1, 3);
 # insert into racchiude values (1, 4);
@@ -236,14 +243,11 @@ insert into racchiude values (1, 10);
 insert into racchiude values (2, 11);
 
 # dischi di Stefano
+#numCopeDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco
 insert into colleziona values (1, 1, "Nuovo", 1, 1);
 insert into colleziona values (2, 2, "Usato", 1, 2);
 insert into colleziona values (5, 1, "Nuovo", 1, 5);
 insert into colleziona values (1, 1, "Nuovo", 1, 3);
-
-# insert into colleziona values (1, 1, "Nuovo", 1, 4);
-insert into colleziona values (2, 2, "Usato", 2, 3); 
-# dischi recenti di Stefano
 insert into colleziona values (1, 1, "Nuovo", 1, 6);
 insert into colleziona values (1, 1, "Nuovo", 1, 7);
 insert into colleziona values (1, 1, "Nuovo", 1, 8);
@@ -252,13 +256,29 @@ insert into colleziona values (1, 1, "Nuovo", 1, 10);
 insert into colleziona values (1, 1, "Nuovo", 1, 11);
 
 
+# insert into colleziona values (1, 1, "Nuovo", 1, 4);
+insert into colleziona values (2, 2, "Usato", 2, 3); 
+# dischi recenti di Stefano
+
+
+
 insert into crea values (1, 1);
+
 
 insert into incide values(1, 1);
 insert into incide values(2, 1);
-insert into incide values(3, 3);
+insert into incide values(3, 4);
 # insert into incide values(4, 1);
-insert into incide values(5, 3);
+insert into incide values(5, 4);
+insert into incide values(6, 5);
+insert into incide values(7, 5);
+insert into incide values(8, 5);
+insert into incide values(9, 5);
+insert into incide values(10, 5);
+insert into incide values(11, 5);
+
+
+
 
 insert into condivide values(1, 7);
 

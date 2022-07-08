@@ -6,7 +6,11 @@ package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.impl.CopieStato;
+import collector_site.data.impl.DiscoImpl;
+import collector_site.data.impl.Genere;
 import collector_site.data.impl.StatoDisco;
+import collector_site.data.impl.Tipo;
+import collector_site.data.model.Artista;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.framework.data.DataException;
@@ -36,26 +40,27 @@ public class ServletDiProvaSettingCopieStato extends ServletDiProvaCollector_sit
             
             HttpSession s = request.getSession(false);
            
-            Disco disco = (Disco) s.getAttribute("discoSessione");
+           
+            Disco disk = (Disco) s.getAttribute("discoSessione");
+            Artista artista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(disk);
+            Disco disco = new DiscoImpl();
+            disco.setAnno(disk.getAnno());
+            disco.setBarcode(disk.getBarcode());
+            disco.setEtichetta(disk.getEtichetta());
+            disco.setGenere(disk.getGenere());
+            disco.setNomeDisco(disk.getNomeDisco());
             
             int IDCollezioneSessione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
-            
             Collezionista collezionista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById((int) s.getAttribute("id"));
-            
             String[] parStato=request.getParameterValues("sCSSPar");
             int parCopie=Integer.parseInt(request.getParameter("sCSSI1Par"));
+            String[] parTipo=request.getParameterValues("tipoDiscoPar");
             
-            out.println("1");
             CopieStato cp = new CopieStato();
-             out.println("2");
             cp.setStato(StatoDisco.valueOf(parStato[0]));
-             out.println("3");
             cp.setNumCopieDisco(parCopie);
-             out.println("4");
             CopieStato np = new CopieStato();
-             out.println("5");
             List<CopieStato> listcp = new ArrayList();
-             out.println("6");
             if(cp.getStato().toString().equals("NUOVO")){
                 np.setStato(StatoDisco.USATO);
             }else{
@@ -65,12 +70,10 @@ public class ServletDiProvaSettingCopieStato extends ServletDiProvaCollector_sit
             listcp.add(cp);
             listcp.add(np);
             disco.setCopieStati(listcp);
-             out.println("settingcopieStato3");
+            disco.setTipo(Tipo.valueOf(parTipo[0]));
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
-            
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
-            out.println("po1");
-            
+            ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco,
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
                             IDCollezioneSessione));
@@ -80,7 +83,6 @@ public class ServletDiProvaSettingCopieStato extends ServletDiProvaCollector_sit
             s.removeAttribute("gruppoSessione");
             s.removeAttribute("ListaArtisti");
             s.removeAttribute("discoSessione");
-            s.removeAttribute("IDCollezioneSessione");
             s.removeAttribute("copieStato");
             
             response.sendRedirect("servletDiProvaVistaCollezione?k="+IDCollezioneSessione);

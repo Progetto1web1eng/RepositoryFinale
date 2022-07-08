@@ -49,39 +49,38 @@ public class ServletDiProvaCreaCollezione extends ServletDiProvaCollector_siteBa
             
             // creo la collezione dall'input 
             Collezione collezione = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().createCollezione();
-            String[] valC = request.getParameterValues("checkbox");
-            String nomeC = request.getParameter("nomeColl");
+           
             
-            // se valC ha 2 valori manda in output un errore
             
-            // se valC non ha valori o nomeColl non ha un valore manda in output un errore
-            
-            // se i dati sono stati inseriti correttamente
-            if (valC[0].equals("Privata")){
-                collezione.setCreatore(collezionista);
-                collezione.setNomeCollezione(nomeC);
-                collezione.setPubblico(false);
-                
-                //aggiungo la collezione al db
-                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().storeCollezione(collezione);
-                
-                //aggiorno il side menu
-                dataM.remove("collezioni");
-                List<Collezione> collezion = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
-                dataM.put("collezioni",collezion);
-                
-            }else{
-                collezione.setCreatore(collezionista);
-                collezione.setNomeCollezione(nomeC);
-                collezione.setPubblico(true);
-                //aggiungo la collezione al db
-                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().storeCollezione(collezione);
-                
-                //aggiorno il side menu
-                dataM.remove("collezioni");
-                List<Collezione> collezion = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
-                dataM.put("collezioni",collezion);
-            }
+                String[] valC = request.getParameterValues("checkbox");
+                String nomeC = request.getParameter("nomeColl");
+                dataM.put("errore", 0);
+                // se i dati sono stati inseriti correttamente
+                if (valC[0].equals("Privata")){
+                    collezione.setCreatore(collezionista);
+                    collezione.setNomeCollezione(nomeC);
+                    collezione.setPubblico(false);
+
+                    //aggiungo la collezione al db
+                    ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().storeCollezione(collezione);
+
+                    //aggiorno il side menu
+                    dataM.remove("collezioni");
+                    List<Collezione> collezion = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                    dataM.put("collezioni",collezion);
+
+                }else{
+                    collezione.setCreatore(collezionista);
+                    collezione.setNomeCollezione(nomeC);
+                    collezione.setPubblico(true);
+                    //aggiungo la collezione al db
+                    ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().storeCollezione(collezione);
+
+                    //aggiorno il side menu
+                    dataM.remove("collezioni");
+                    List<Collezione> collezion = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                    dataM.put("collezioni",collezion);
+                }
             
             
             t.process(dataM,response.getWriter());
@@ -103,7 +102,30 @@ public class ServletDiProvaCreaCollezione extends ServletDiProvaCollector_siteBa
             int IDcollezionista = (int) s.getAttribute("id");
             if(request.getParameter("crea")==null){
                 try {
+                     // se il check box non ha valori o non si è inserito un nome alla collezione
+                    if((request.getParameterValues("checkbox")==null)||(request.getParameter("nomeColl").length()==0)){
+                    dataM.put("errore", 1);
+                    dataM.put("numero",1);
+                    //completo la sideBar con la lista di collezioni
+                    Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
+                    List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                    dataM.put("collezioni",collezioni);
+                    t.process(dataM, response.getWriter());
+                    }
+                    // se il checkbox ha due valori
+                    else if(request.getParameterValues("checkbox").length==2){
+                    dataM.put("errore", 1);
+                    dataM.put("numero",1);
+                    //completo la sideBar con la lista di collezioni
+                    Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
+                    List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                    dataM.put("collezioni",collezioni);
+                    t.process(dataM, response.getWriter());
+                    }
+                    else{
+                    // caso in cui i dati sono stati inseriti correttamente
                     aggiungi_action(request,response,dataM,IDcollezionista);
+                    }
                 } catch (DataException ex) {
                     Logger.getLogger(ServletDiProvaCreaCollezione.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -114,6 +136,7 @@ public class ServletDiProvaCreaCollezione extends ServletDiProvaCollector_siteBa
                 List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
                 dataM.put("collezioni",collezioni);
             
+                dataM.put("errore",0);
                 dataM.put("numero",1);
                 t.process(dataM, response.getWriter());
             }

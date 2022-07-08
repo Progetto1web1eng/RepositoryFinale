@@ -59,6 +59,7 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                 t.process(dataM,response.getWriter());
             }else if(request.getParameter("discoK")!=null){
                 // per visualizzare tracce esterne
+
                 Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(Integer.parseInt(request.getParameter("discoK")));
                 List<Traccia> tracceList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().getTracceByDisco(disco);
                 dataM.put("tracceList",tracceList);

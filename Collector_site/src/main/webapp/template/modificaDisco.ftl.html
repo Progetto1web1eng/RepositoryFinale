@@ -4,6 +4,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
 <div id="modificaDiscoDiv">
+    
     <div id="modificaDiscoDiv1">
         <!-- questo è il primo div con le caratteristiche del disco-->
         <div style="display: flex;flex-direction: column;height: 355px;align-items: center;justify-content: space-around;">
@@ -11,9 +12,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <!-- inizio inserimento caratteristiche disco -->
                 <input  type="text" value="${disco.nomeDisco}" name="nomeDiscoPar" id="modificaDiscoNomeDisco">
                 <input type="text" value="${disco.barcode}" name="barcodePar" id="modificaDiscoBarcode">
-                <input type="number" name="dataPar" id="modificaDiscoData">
+                <input type="number" name="dataPar" id="modificaDiscoData" onclick="hideDataSpan()">
                 <input type="text" value="${disco.etichetta}" name="etichettaPar" id="modificaDiscoEtichetta">
-                <input type="submit" value="aggiorna" id="modificaDiscoSubmit">   
+                <input type="submit" value="aggiorna" id="modificaDiscoSubmit"> 
+                <span id="modificaDiscoSpanHidden" style="font-style: italic;font-size: 23px;color: #303841;position: absolute;top: 292px;left: 54%;">${disco.anno}</span>
+                
             </form>
         </div>
         <div id="inserisciImmagine" >
@@ -29,6 +32,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <h3 style="color: white">${t.durata}</h3>
             </div>
         </#list>
-        <a href="servletDiProvaModificaDisco?aggiungiTraccia=1"><img id="modificaDiscoAggiungiImg"></a>
+        <a href="servletDiProvaModificaDisco?aggiungiTraccia=${disco.key}"><img id="modificaDiscoAggiungiImg"></a>
     </div>
 </div>

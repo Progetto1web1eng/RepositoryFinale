@@ -5,6 +5,7 @@
 package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
+import collector_site.data.impl.TracciaImpl;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
@@ -17,6 +18,7 @@ import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,24 +36,40 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBaseController {
 
+    private void add_T(HttpServletRequest request,HttpServletResponse response,int IDdisco) throws DataException, IOException{
+        String nomeTracciaPar = request.getParameter("nomeTracciaPar");
+        Time timePar = java.sql.Time.valueOf(request.getParameter("timePar"));
+        Traccia traccia = new TracciaImpl();
+        traccia.setDurata(timePar);
+        traccia.setTitolo(nomeTracciaPar);
+        Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
+        traccia.setDisco(disco);
+        
+        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().storeTraccia(traccia);
+        response.sendRedirect("servletDiProvaModificaDisco?discoKey="+IDdisco);
+        
+    }
+    
+    
     private void update_disco(HttpServletRequest request,HttpServletResponse response,int IDdisco,int collK) throws DataException, IOException{
         //out.println(collK);
         Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
         disco.setNomeDisco(request.getParameter("nomeDiscoPar"));
-        disco.setAnno(Integer.parseInt(request.getParameter("dataPar")));
+        if(request.getParameter("dataPar").length()!=0){
+            disco.setAnno(Integer.parseInt(request.getParameter("dataPar")));
+        }
         disco.setBarcode(request.getParameter("barcodePar"));
         disco.setEtichetta(request.getParameter("etichettaPar"));
-        out.println("prima dello store update");
         ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
-        out.println("dopo lo store update");
         response.sendRedirect("servletDiProvaVistaCollezione?k="+collK);
     }
-    private void schermata_traccia(HttpServletRequest request,HttpServletResponse response,Template t,Map<String,Object> dataM,int IDcollezionista) throws IOException, TemplateException, DataException{
+    private void schermata_traccia(HttpServletRequest request,HttpServletResponse response,Template t,Map<String,Object> dataM,int IDcollezionista,HttpSession s) throws IOException, TemplateException, DataException{
         
         Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
-                List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
-                dataM.put("collezioni",collezioni);
-        
+        List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+        dataM.put("collezioni",collezioni);
+                
+        s.setAttribute("idDiscoS", Integer.parseInt(request.getParameter("aggiungiTraccia")));
         dataM.put("numero", 11);
         t.process(dataM, response.getWriter());
     }
@@ -82,8 +100,11 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
                 dataM.put("numero", 10);
                 t.process(dataM, response.getWriter());
             }else if(request.getParameter("aggiungiTraccia")!=null){
-                schermata_traccia(request,response,t,dataM,IDcollezionista);
-            }else { 
+                schermata_traccia(request,response,t,dataM,IDcollezionista,s);
+            }else if(request.getParameter("addT")!=null){
+                add_T(request,response, (int) s.getAttribute("idDiscoS"));
+            }
+            else { 
                 update_disco(request,response, (int) s.getAttribute("discoID"),(int) s.getAttribute("collK"));
             }
         

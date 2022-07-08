@@ -52,17 +52,30 @@ import org.json.simple.parser.JSONParser;
 public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBaseController  {
 
     private void advice_artista(HttpServletRequest request, HttpServletResponse response,HttpSession s,int IDartista) throws DataException, IOException{
+        
+        Collezionista collezionista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById((int) s.getAttribute("id"));
         int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
         Disco disco = (Disco) s.getAttribute("discoSessione");
         Artista artista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaById(IDartista);
-        
+        CopieStato cp = (CopieStato) s.getAttribute("copieStato");
+                CopieStato np = new CopieStato();
+                List<CopieStato> listcp = new ArrayList();
+                if(cp.getStato().toString().equals("NUOVO")){
+                    np.setStato(StatoDisco.USATO);
+                }else{
+                    np.setStato(StatoDisco.NUOVO);
+                }
+                np.setNumCopieDisco(0);
+                listcp.add(cp);
+                listcp.add(np);
+                disco.setCopieStati(listcp);
+
         ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
-                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(artista);
-                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);
+        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
+        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
                             idCollezione));
-        
         
                 
         response.sendRedirect("servletDiProvaVistaCollezione?k="+idCollezione);
@@ -75,7 +88,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
         try {
             int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
             Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco); 
-            s.setAttribute("discoSessone", disco);
+            s.setAttribute("discoSessione", disco);
             Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
             dataM.put("collezioni",collezioni);
@@ -132,10 +145,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 
         ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(gruppo);
-                out.println("po0");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
-                out.println("po");
-                
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, gruppo);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
@@ -209,10 +219,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                 
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().storeArtista(artista);
-                out.println("po0");
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
-                out.println("po1");
-                
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);
                 ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezione(disco, 
                     ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(
@@ -333,6 +340,8 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
     private void add_disco(HttpServletRequest request, HttpServletResponse response, Map<String,Object> dataM, int IDcollezionista,HttpSession s) throws java.text.ParseException, DataException{
         try {
             
+            
+            
             ProvaConfig pcg = new ProvaConfig(getServletContext());
             Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
             
@@ -393,7 +402,6 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
              Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
              Map<String,Object> dataM = new HashMap();
              if(request.getParameter("collezioneKey")!=null){
-                 
                  // rimuovo eventuali attributi di sessione
               
                 s.removeAttribute("gruppoSessione");
@@ -410,30 +418,42 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
                  Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
                  List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
                  dataM.put("collezioni",collezioni);
-                 
+                 dataM.put("error",0 );
                  dataM.put("numero",2);
                  t.process(dataM, response.getWriter());
-             }else if(request.getParameter("etichettaPar")!=null){
-                //significa che ho chiamato la servlet per l'inserimento di un artista dopo aver inserito un disco
-                 add_disco(request,response,dataM,IDcollezionista,s);// chiama la funzione di storage di un disco
-             }else if(request.getParameter("insDG")!=null){
-                 //significa che chiamo la servlet per lo storage di un gruppo musicale e del disco che hanno inciso
-                 store_DG(request,response,IDcollezionista,s);
              }else if(request.getParameter("AdviceD")!=null){
-                 //significa che ho selezionato un disco gi� esistente
+                 //significa che ho selezionato un disco già esistente
                  int IDdisco = Integer.parseInt(request.getParameter("AdviceD"));
                  advice_disco(request,response,IDcollezionista,s,IDdisco,t,dataM);
              }else if (request.getParameter("AdviceA")!=null){
                  // significa che sto selezionando un artista/gruppo gi� esistente
                  int IDartista = Integer.parseInt(request.getParameter("AdviceA"));
                  advice_artista(request,response,s,IDartista);
-             }/*else if(request.getParameter("settingCS")!=null){
-                 
-                 set_copieStato
-             }*/
+             }else if(request.getParameter("etichettaPar")!=null){
+                 if( request.getParameter("nomeDiscoPar").length()==0 ||
+                        request.getParameter("barcodePar").length()==0||
+                            request.getParameter("dataPar").length()==0||
+                                request.getParameter("etichettaPar").length()==0||
+                                    request.getParameter("numeroDiCopiePar").length()==0){
+                    Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
+                 List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                 dataM.put("collezioni",collezioni);
+                 dataM.put("error",1 );
+                 dataM.put("numero",2);
+                 t.process(dataM, response.getWriter());
+                }else{
+                    //significa che ho chiamato la servlet per l'inserimento di un artista dopo aver inserito un disco
+                 add_disco(request,response,dataM,IDcollezionista,s);// chiama la funzione di storage di un disco 
+                 }
+                
+             }else if(request.getParameter("insDG")!=null){
+                 //significa che chiamo la servlet per lo storage di un gruppo musicale e del disco che hanno inciso
+                 store_DG(request,response,IDcollezionista,s);
+             }
              else{
-                 //significa che chiamo la servlet per l'inserimento e lo storage di un singolo artista/ per l'inserimento di un gruppo
-                 create_artista(request,response,dataM,IDcollezionista,s);
+                    //significa che chiamo la servlet per l'inserimento e lo storage di un singolo artista/ per l'inserimento di un gruppo
+                    create_artista(request,response,dataM,IDcollezionista,s);
+                
              }} catch (ParseException ex) {
              Logger.getLogger(ServletDiProvaInserisciDisco.class.getName()).log(Level.SEVERE, null, ex);
          } catch (IOException | TemplateException | DataException | java.text.ParseException ex) {

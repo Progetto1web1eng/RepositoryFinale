@@ -6,9 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 <div id="tracceEsterneDiv">
     <#if tracceList?size !=0>
         <#list tracceList as t>
-            <div>
-                <h1> ${t.titolo}</h1>
-                <h1> ${t.durata}</h1>
+            <div class="tracceEsterneContainer">
+                <h3> ${t.titolo}</h3>
+                <h3> ${t.durata}</h3>
                 <!-- qui va passato il compositore -->
             </div>
         </#list>

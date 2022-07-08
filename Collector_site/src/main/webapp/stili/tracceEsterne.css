@@ -18,3 +18,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-left: 20px;
     overflow-y: auto;
 }
+.tracceEsterneContainer{
+    background-color: #DBDBDB;
+    width: 90%;
+    border-radius: 38px;
+    height: 120px;
+    margin-top: 2%;
+    border: 3px solid #979C98;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}

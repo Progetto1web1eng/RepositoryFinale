@@ -90,5 +90,13 @@ function resetInserisciNomeDiscoInput(){
     if(nomeDiscoInput.value==="Nome disco"){
         nomeDiscoInput.value="";
     }
-    
+  
+}
+function hideDataSpan(){
+     const modificaDiscoSpanHidden = document.getElementById("modificaDiscoSpanHidden");
+     modificaDiscoSpanHidden.style.display="none";
+}
+function hideDataSpan1(){
+    const inserisciDiscoSpanHidden = document.getElementById("inserisciDiscoSpanHidden");
+    inserisciDiscoSpanHidden.style.display="none";
 }

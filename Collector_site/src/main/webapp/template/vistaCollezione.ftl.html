@@ -37,7 +37,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <img src="immaginiDischi/defaultIMG.png" alt="immagine disco" class="vistaCollezioneImmagineDisco" >
                 </div>
                 <div>
-                    <h3 style="color: white">${d.nomeDisco}:  ${d.anno}</h3>
+                    <h3 style="color: white">${artistiList[d?index].nomeDarte}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.nomeDisco} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.anno}</h3>
                 </div>
                 <div>
                     <a href="servletDiProvaDelete?dK=${d.key}"><img id="vistaCollezioneCestinoImg" alt="cancella" style="margin-right: 20px;"></a>

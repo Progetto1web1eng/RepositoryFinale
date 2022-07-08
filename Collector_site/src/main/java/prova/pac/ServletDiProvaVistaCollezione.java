@@ -6,6 +6,7 @@ package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.impl.DiscoImpl;
+import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
@@ -64,6 +65,14 @@ public class ServletDiProvaVistaCollezione extends ServletDiProvaCollector_siteB
                 List<Immagine>immagini = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(disco);
                 s.setAttribute("collezioneSelezionata",idColl);
                 
+                // trovo gli artisti per ogni disco per motivi puramente grafici per poi aggiungere una lista al data model
+                List<Artista> artistiList = new ArrayList();
+                for(Disco d : dischiList){
+                    artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                }
+               
+                
+                dataM.put("artistiList", artistiList);
                 dataM.put("immagini",immagini);
                 dataM.put("collezioneSelezionata",collezioneSelezionata);
                 dataM.put("dischiList",dischiList);

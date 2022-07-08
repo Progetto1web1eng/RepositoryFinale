@@ -5,6 +5,12 @@
         <param-name>uploads.directory</param-name>
         <param-value>C:\Users\fabri</param-value>
     </context-param>
+    <context-param>
+    	<param-name>pathProgetto</param-name>
+    	<!-- mettere il path in cui è presente la cartella root del progetto (ovvero la cartella "CollectorSite")
+        come valore del tag successivo-->
+        <param-value>C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\RepositoryFinale\Collector_site</param-value>
+    </context-param>
     <servlet>
         <servlet-name>ServletDiProvaHome</servlet-name>
         <servlet-class>prova.pac.ServletDiProvaHome</servlet-class>
@@ -85,6 +91,11 @@
         <servlet-name>ServletDiProvaDelete</servlet-name>
         <servlet-class>prova.pac.ServletDiProvaDelete</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>JsonServlet</servlet-name>
+        <servlet-class>prova.pac.JsonServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDiProvaInserisciImmagine</servlet-name>
         <url-pattern>/servletDiProvaInserisciImmagine</url-pattern>
@@ -164,6 +175,11 @@
     <servlet-mapping>
         <servlet-name>ServletDiProvaDelete</servlet-name>
         <url-pattern>/servletDiProvaDelete</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>JsonServlet</servlet-name>
+        <url-pattern>/jsonServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

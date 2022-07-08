@@ -12,6 +12,8 @@ package collector_site.data.DAO;
 
 // AGGIUNGERE IMPORT: PROXY
 
+import collector_site.data.impl.ArtistaMinimale;
+import collector_site.data.impl.DiscoMinimale;
 import collector_site.data.impl.Genere;
 import collector_site.data.impl.Ruolo;
 import collector_site.data.impl.Tipo;
@@ -28,6 +30,11 @@ import collector_site.data.proxy.DiscoProxy;
 // import riguardanti il framework
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.OptimisticLockException;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -50,6 +57,8 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
     private PreparedStatement getArtistaByDisco;
     private PreparedStatement getArtistiByGruppoMusicale;
     private PreparedStatement getArtistiPreferiti;
+    private PreparedStatement getGruppiMusicaliUniqueName;
+    private PreparedStatement getArtistiSingoliUniqueName;
 
     public ArtistaDAO_MySQL(DataLayer d) {
         super(d);
@@ -68,7 +77,9 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             getArtistiByGruppoMusicale = connection.prepareStatement("SELECT * FROM artista WHERE IDgruppoMusicale=?");
             getArtistiPreferiti = connection.prepareStatement("SELECT count(i.IDartista), i.IDartista FROM colleziona c join incide i on(c.IDdisco = i.IDdisco) WHERE (c.IDcollezionista = ?) GROUP BY i.IDartista ORDER BY count(i.IDartista) desc;");
             getArtistaByNomeDarte = connection.prepareStatement("SELECT * FROM artista WHERE nomeDarte=?");
-
+            getGruppiMusicaliUniqueName= connection.prepareStatement("SELECT distinct a1.ID, a1.nomeDarte FROM artista a1 join artista a2 on(a1.ID = a2.IDgruppoMusicale) GROUP BY a1.nomeDarte;"); 
+            getArtistiSingoliUniqueName = connection.prepareStatement("SELECT distinct a1.ID, a1.nomeDarte FROM artista a1 LEFT JOIN artista a2 on (a1.ID = a2.IDgruppoMusicale) WHERE a1.IDgruppoMusicale is null and a2.ID is null GROUP BY a1.nomeDarte;");
+            
         } catch (SQLException ex) {
             throw new DataException("Error initializing Artista data layer", ex);
         }
@@ -84,6 +95,8 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             getArtistaByDisco.close();
             getArtistiByGruppoMusicale.close();
             getArtistiPreferiti.close();
+            getGruppiMusicaliUniqueName.close();
+            getArtistiSingoliUniqueName.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -239,9 +252,6 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         // si assume che il sistema permetta soltanto lo store e non l'update dell'Artista
         
         try {
-            
-            // REMOVE
-            System.out.println(artista.getNomeDarte());
             
             if ("".equals(artista.getNomeDarte())) {
                 return;  
@@ -444,6 +454,84 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         }
         
         return result;
+    }
+    
+    @Override
+    public void getArtistiSingoliJson(String pathProgetto) throws DataException, IOException {
+        List<ArtistaMinimale> artisti = new ArrayList<ArtistaMinimale>();
+        
+        try {
+            
+            try (ResultSet rs = getArtistiSingoliUniqueName.executeQuery()) {
+                
+                while (rs.next()) {
+                    ArtistaMinimale artista = new ArtistaMinimale();
+                    artista.setId(rs.getInt("a1.ID"));
+                    artista.setNome(rs.getString("a1.nomeDarte"));
+                    artisti.add(artista);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to create JSON for artisti singoli", ex);
+        }
+        
+        // il parametro "pathProgetto" contiene il path della cartella di nome "Collector_Site" (che sarebbe 
+        // la cartella radice del progetto)
+        String p = pathProgetto + "\\src\\main\\webapp\\script\\artistiSingoli.json";
+        Path path = Paths.get(p);
+        
+        String jsonContent = "";
+        Gson serializer = new Gson();
+        
+        jsonContent = serializer.toJson(artisti);
+        
+        // REMOVE
+        System.out.println(jsonContent);
+        
+        // controlla se il file json già esiste: se NO lo crea; altrimenti, se dovesse già contenere del 
+        // testo, lo elimina dal file
+        Files.writeString(path, "");
+        // scrive il file json
+        Files.writeString(path, jsonContent); 
+    }
+
+    @Override
+    public void getGruppiMusicaliJson(String pathProgetto) throws DataException, IOException {
+        List<ArtistaMinimale> gruppiMusicali = new ArrayList<ArtistaMinimale>();
+        
+        try {
+            
+            try (ResultSet rs = getGruppiMusicaliUniqueName.executeQuery()) {
+                
+                while (rs.next()) {
+                    ArtistaMinimale gruppoMusicale = new ArtistaMinimale();
+                    gruppoMusicale.setId(rs.getInt("a1.ID"));
+                    gruppoMusicale.setNome(rs.getString("a1.nomeDarte"));
+                    gruppiMusicali.add(gruppoMusicale);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to create JSON for gruppi musicali", ex);
+        }
+        
+        // il parametro "pathProgetto" contiene il path della cartella di nome "Collector_Site" (che sarebbe 
+        // la cartella radice del progetto)
+        String p = pathProgetto + "\\src\\main\\webapp\\script\\gruppi.json";
+        Path path = Paths.get(p);
+        
+        String jsonContent = "";
+        Gson serializer = new Gson();
+        
+        jsonContent = serializer.toJson(gruppiMusicali);
+        
+        // REMOVE
+        System.out.println(jsonContent);
+        
+        // controlla se il file json già esiste: se NO lo crea; altrimenti, se dovesse già contenere del 
+        // testo, lo elimina dal file
+        Files.writeString(path, "");
+        // scrive il file json
+        Files.writeString(path, jsonContent);
     }
 }
 

@@ -19,6 +19,7 @@ import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.DiscoProxy;
 import collector_site.data.impl.CopieStato;
+import collector_site.data.impl.DiscoMinimale;
 import collector_site.data.impl.StatoDisco;
 
 
@@ -27,7 +28,13 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
+import com.google.gson.Gson;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.System.out;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 // import SQL
@@ -69,6 +76,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement getDischiByCollezionista;
     private PreparedStatement getDischiByGenere;
     private PreparedStatement getDischiOfCollezionistaByArtista;
+    private PreparedStatement getDischiUniqueName;
 
     public DiscoDAO_MySQL(DataLayer d) {
         super(d);
@@ -83,7 +91,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             deleteDisco = connection.prepareStatement("DELETE FROM disco WHERE ID=?"); 
             updateDisco = connection.prepareStatement("UPDATE disco SET nomeDisco=?,barcode=?,IDgenere=?,genere=?,anno=?,etichetta=?,IDtipo=?,tipo=? WHERE ID=?");
             getDisco = connection.prepareStatement("SELECT * FROM disco WHERE ID=?");
-            getDischi = connection.prepareStatement("SELECT ID AS IDdisco FROM disco");
+            getDischi = connection.prepareStatement("SELECT ID,nomeDisco FROM disco");
+            getDischiUniqueName = connection.prepareStatement("SELECT ID, nomeDisco FROM disco GROUP BY(nomeDisco);"); 
             getDiscoByCollezione = connection.prepareStatement("SELECT * FROM racchiude WHERE IDcollezione=?");
             // DA COMPLETARE
             getDiscoByTraccia = connection.prepareStatement("SELECT * FROM collezione WHERE IDcollezionista=?");
@@ -116,6 +125,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             updateDisco.close();
             getDisco.close();
             getDischi.close();
+            getDischiUniqueName.close();
             getDiscoByCollezione.close();
             getDiscoByTraccia.close();
             updateQuantitaDisco.close();
@@ -162,11 +172,13 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public void deleteDisco(Disco disco) {
         
-        if (disco.getKey() == null || disco.getKey() >= 0) {
+        if (disco.getKey() == null || disco.getKey() <= 0) {
             return;
         }
         
         try {
+            deleteDisco.setInt(1, disco.getKey());
+            
             if (deleteDisco.executeUpdate() == 0) {
                 // qui si deve sollevare eccezione
             }
@@ -598,5 +610,43 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         }
         return result;
     }
-
+    
+    @Override
+    public void getJson(String pathProgetto) throws DataException, IOException {
+        List<DiscoMinimale> dischi = new ArrayList<DiscoMinimale>();
+        
+        try {
+            
+            try (ResultSet rs = getDischiUniqueName.executeQuery()) {
+                
+                while (rs.next()) {
+                    DiscoMinimale disco = new DiscoMinimale();
+                    disco.setId(rs.getInt("ID"));
+                    disco.setNome(rs.getString("nomeDisco"));
+                    dischi.add(disco);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to create JSON for dischi", ex);
+        }
+        
+        // il parametro "pathProgetto" contiene il path della cartella di nome "Collector_Site" (che sarebbe 
+        // la cartella radice del progetto)
+        String p = pathProgetto + "\\src\\main\\webapp\\script\\dischi.json";
+        Path path = Paths.get(p);
+        
+        String jsonContent = "";
+        Gson serializer = new Gson();
+        
+        jsonContent = serializer.toJson(dischi);
+        
+        // REMOVE
+        System.out.println(jsonContent);
+        
+        // controlla se il file json già esiste: se NO lo crea; altrimenti, se dovesse già contenere del 
+        // testo, lo elimina dal file
+        Files.writeString(path, "");
+        // scrive il file json
+        Files.writeString(path, jsonContent);
+    }
 }

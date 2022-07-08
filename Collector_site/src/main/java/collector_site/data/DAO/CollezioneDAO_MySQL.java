@@ -347,6 +347,13 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             return;
         }
         
+        // controllo sul tipo di Collezione
+        if(collezione.getPubblico() == true) {
+            // caso in cui la collezione in questione è pubblica ==> non è necessario aggiungere condivisioni
+            // a quest'ultimo
+            return;
+        }
+        
         try {
             getCondivisione.setInt(1, collezionista.getKey());
             getCondivisione.setInt(2, collezione.getKey());

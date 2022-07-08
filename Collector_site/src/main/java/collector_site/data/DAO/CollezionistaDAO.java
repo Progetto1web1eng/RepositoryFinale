@@ -35,5 +35,7 @@ public interface CollezionistaDAO {
     public Collezionista getCollezionistaByNickname(String nickname) throws DataException;
     
     List<Genere> getGeneriPreferiti(Collezionista collezionista) throws DataException;
+    public List<Collezionista> getCondivisioniByCollezione(Collezione collezione) throws DataException;
+
     
 }

@@ -169,8 +169,12 @@ public class TracciaDAO_MySQL extends DAO implements TracciaDAO {
         try {
             
             storeTraccia.setString(1, traccia.getTitolo());
-            storeTraccia.setTime(2, traccia.getDurata());
-            storeTraccia.setInt(3, traccia.getKey());
+            // CHANGED
+            //storeTraccia.setTime(2, traccia.getDurata());
+            storeTraccia.setTime(2, new java.sql.Time(traccia.getDurata().getTime()));
+            
+                System.out.println("arrivato");
+            storeTraccia.setInt(3, traccia.getDisco().getKey());
             
             if (storeTraccia.executeUpdate() == 1) {
                 //per leggere la chiave generata dal database per il record appena inserito

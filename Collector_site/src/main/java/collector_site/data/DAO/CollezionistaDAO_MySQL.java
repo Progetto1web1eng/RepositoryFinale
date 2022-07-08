@@ -50,6 +50,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
     private PreparedStatement getCollezionisti;
     private PreparedStatement getCollezionistaByNickname;
     private PreparedStatement getGenerePreferito;
+    private PreparedStatement getCondivisioniByCollezione;
    
     public CollezionistaDAO_MySQL(DataLayer d) {
         super(d);
@@ -69,7 +70,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionisti = connection.prepareStatement("SELECT ID FROM collezionista");
             getCollezionistaByNickname = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=?");
             getGenerePreferito = connection.prepareStatement("SELECT count(d.IDgenere), d.IDgenere FROM colleziona c join disco d on(c.IDdisco = d.ID) WHERE (c.IDcollezionista =?) GROUP BY d.IDgenere ORDER BY count(d.IDgenere) desc;");
-
+            getCondivisioniByCollezione = connection.prepareStatement("SELECT IDcollezionista FROM condivide WHERE IDcollezione =?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezionista data layer", ex);
         }
@@ -87,6 +88,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionisti.close();
             getCollezionistaByNickname.close();
             getGenerePreferito.close();
+            getCondivisioniByCollezione.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -314,6 +316,24 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             throw new DataException("Unable to load artisti preferiti");
         }
         
+        return result;
+    }
+    
+    @Override
+    public List<Collezionista> getCondivisioniByCollezione(Collezione collezione) throws DataException {
+        List<Collezionista> result = new ArrayList<Collezionista>();
+        
+        try {
+            getCondivisioniByCollezione.setInt(1, collezione.getKey());
+            
+            try (ResultSet rs = getCondivisioniByCollezione.executeQuery()) {
+                while (rs.next()) {
+                    result.add(getCollezionistaById(rs.getInt("IDcollezionista")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load condivisioni by Collezione", ex);
+        }
         return result;
     }
 }

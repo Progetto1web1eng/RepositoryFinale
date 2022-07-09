@@ -190,16 +190,26 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     @Override
     public Disco getDisco(int id) throws collector_site.framework.data.DataException {
         Disco disco = null;
+        
+        //prima vediamo se l'oggetto è già stato caricato
+        if (dataLayer.getCache().has(Disco.class, id)) {
+            disco = dataLayer.getCache().get(Disco.class, id);  
+        } else{    
+            
             try {
                 getDisco.setInt(1, id);
                 try (ResultSet rs = getDisco.executeQuery()) {
                     if (rs.next()) {
                         disco = createDisco(rs);
+                        
+                        //e lo mettiamo anche nella cache
+                        dataLayer.getCache().add(Disco.class, disco);
                     }
                 }
             } catch (SQLException ex) {
                 throw new DataException("Unable to load Disco by ID", ex);
             }
+        }
         
         return disco;
     }

@@ -16,11 +16,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <input id="setCCSubmit" type="submit">
             </form>
             <h3 style="position: absolute;top: 450px;left: 78%;color: #303841;"> lista Condivisioni</h3>
-            <div id="setCCdivContainer" style="width: 350px;height: 400px;background-color: greenyellow;display: flex;flex-direction: column;align-items: center;justify-content: flex-start;overflow-y:auto;position: absolute;top: 500px;left: 78%; ">
+            <div id="setCCDivContainer" style="width: 350px;height: 400px;background-color: greenyellow;display: flex;flex-direction: column;align-items: center;justify-content: flex-start;overflow-y:auto;position: absolute;top: 500px;left: 78%; ">
                 <#if collezionistiList?size!=0>
                     <#list collezionistiList as c>
-                        <div class="setCCdivItem" style="margin-top: 5px;width: 90%;height: 50px">
+                        <div class="setCCDivItem" style="margin-top: 5px;width: 90%;height: 50px">
                             ${c.nickname}
+                            <a href="servletDiProvaCollezioniCondivise?kCollezionista=${c.key}">caneclla</a>
                         </div>
                     </#list>
                 <#else>

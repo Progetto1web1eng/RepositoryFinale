@@ -36,22 +36,22 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_siteBaseController {
 
-private void aggiungi_condivisione(HttpServletRequest request, HttpServletResponse response,HttpSession s) throws DataException, IOException{
-    out.println("dentro aggiungi_condivisione");
-    String nicknamePar = request.getParameter("nicknamePar");
-    out.println("dentro aggiungi_condivisione1");
-    Collezione coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById((int) s.getAttribute("collezioneSelezionata"));
-    out.println("dentro aggiungi_condivisione2");
-    Collezionista collDaAggiungere = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByNickname(nicknamePar);
-    out.println("dentro aggiungi_condivisione3");
-    if(collDaAggiungere!=null){
-        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().addCondivisione(coll, collDaAggiungere);
-    out.println("dentro aggiungi_condivisione4");
+    private void delete_condivisione(HttpServletRequest request, HttpServletResponse response,HttpSession s,Collezionista cDaRimuovere) throws DataException, IOException{
+        Collezione collez = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById((int) s.getAttribute("collezioneSelezionata"));
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().deleteCondivisione(collez, cDaRimuovere);
+        response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")));
     }
-     out.println("dentro aggiungi_condivisione5");
-    response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")));
     
-}
+    private void aggiungi_condivisione(HttpServletRequest request, HttpServletResponse response,HttpSession s) throws DataException, IOException{
+        String nicknamePar = request.getParameter("nicknamePar");
+        Collezione coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById((int) s.getAttribute("collezioneSelezionata"));
+        Collezionista collDaAggiungere = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByNickname(nicknamePar);
+        if(collDaAggiungere!=null){
+            ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().addCondivisione(coll, collDaAggiungere);
+        }
+        response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")));
+
+    }
     
     
     @Override
@@ -81,6 +81,9 @@ private void aggiungi_condivisione(HttpServletRequest request, HttpServletRespon
             }else if(request.getParameter("nicknamePar")!=null){
                 out.println("prima di aggiungi condivisione");
                 aggiungi_condivisione(request,response,s);
+            }else if(request.getParameter("kCollezionista")!=null){
+                Collezionista co = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(Integer.parseInt(request.getParameter("kCollezionista")));
+                delete_condivisione(request,response,s,co);
             }
             else{
                  dataM.put("collezioniList",collezioniCondivise);

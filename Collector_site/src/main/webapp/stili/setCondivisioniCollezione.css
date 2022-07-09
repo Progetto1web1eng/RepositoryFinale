@@ -17,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-bottom-left-radius:38px;
     margin-left: 20px;
 }
-#setCCdivContainer{
+#setCCDivContainer{
     width: 350px;
     height: 400px;
     display: flex;
@@ -64,3 +64,9 @@ margin-top: 10px;
 height: 7%;
 text-align: center;
 }
+.setCCRemoveImg{
+     content: url("../immagini/icons8-elimina-black-32.png");
+     height: 16px;
+     width: 16px;
+}
+

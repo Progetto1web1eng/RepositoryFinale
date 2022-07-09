@@ -149,23 +149,13 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                 int IDgruppoMusicale = 0;
                 try (ResultSet rs = getArtistaById.executeQuery()) {
                     if (rs.next()) {
-                        // IDgruppoMusicale = rs.getInt("IDgruppoMusicale"); 
                         
                         artista = createArtista(rs);
-                        
                         artista = getArtistiByGruppoMusicale(artista);
                         
+                        //e lo mettiamo anche nella cache
+                        dataLayer.getCache().add(Artista.class, artista);
                         //out.println(artista.getComponenti().get(0).getNomeDarte());
-
-                        
-                        /*
-                        if (rs.wasNull()) {
-                            // caso in cui l'artista in questione è un gruppo musicale oppure un singolo 
-                            // Artista
-                            artista = createArtista(rs); 
-                            
-        
-                        } */
                     }
                 }
             
@@ -177,41 +167,6 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         dataLayer.getCache().add(Artista.class, artista);
         
         return artista;
-        
-        
-        
-        
-        
-        
-        
-        
-        /*
-        Artista artista = null;
-        
-        //prima vediamo se l'oggetto è già stato caricato
-        if (dataLayer.getCache().has(Artista.class, id)) {
-            artista = dataLayer.getCache().get(Artista.class, id);
-        } else {
-            //altrimenti lo carichiamo dal database
-            try {
-                getArtistaById.setInt(1, id);
-                try (ResultSet rs = getArtistaById.executeQuery()) {
-                    if (rs.next()) {
-                        System.out.println("prima createArtista");
-                        artista = createArtista(rs);
-                        System.out.println("dopo createArtista");
-                        // si controlla se l'artista in questione è un gruppo musicale e se sì, si aggiungono
-                        // i suoi componenti
-                        artista = getArtistiByGruppoMusicale(artista);
-                        //e lo mettiamo anche nella cache
-                        dataLayer.getCache().add(Artista.class, artista);
-                    }
-                }
-            } catch (SQLException ex) {
-                throw new DataException("Unable to load Artista by ID", ex);
-            }
-        }
-        return artista; */
     }
 
     

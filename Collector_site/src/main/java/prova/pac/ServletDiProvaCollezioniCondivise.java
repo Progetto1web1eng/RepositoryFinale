@@ -36,7 +36,24 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_siteBaseController {
 
-
+private void aggiungi_condivisione(HttpServletRequest request, HttpServletResponse response,HttpSession s) throws DataException, IOException{
+    out.println("dentro aggiungi_condivisione");
+    String nicknamePar = request.getParameter("nicknamePar");
+    out.println("dentro aggiungi_condivisione1");
+    Collezione coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById((int) s.getAttribute("collezioneSelezionata"));
+    out.println("dentro aggiungi_condivisione2");
+    Collezionista collDaAggiungere = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByNickname(nicknamePar);
+    out.println("dentro aggiungi_condivisione3");
+    if(collDaAggiungere!=null){
+        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().addCondivisione(coll, collDaAggiungere);
+    out.println("dentro aggiungi_condivisione4");
+    }
+     out.println("dentro aggiungi_condivisione5");
+    response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")));
+    
+}
+    
+    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
@@ -53,18 +70,19 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
             
             if(request.getParameter("AggCond")!=null){
                 //vista di aggiunta di una condivisione la vista ha il numero 16
-               out.println("dentro aggcond");
                 Collezione collSelezionata = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(Integer.parseInt(request.getParameter("AggCond")));
-                out.println("dentro aggcond");
                 List<Collezionista> condivisioniACollezionisti = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCondivisioniByCollezione(collSelezionata);
-                out.println("dentro aggcond");
                 
                 dataM.put("numero",16);
                 dataM.put("collezione",collSelezionata);
                 dataM.put("collezionistiList",condivisioniACollezionisti);
                  t.process(dataM, response.getWriter());
                 // devo ricavare una lista di condivisioni
-            }else{
+            }else if(request.getParameter("nicknamePar")!=null){
+                out.println("prima di aggiungi condivisione");
+                aggiungi_condivisione(request,response,s);
+            }
+            else{
                  dataM.put("collezioniList",collezioniCondivise);
             dataM.put("numero",0);
             

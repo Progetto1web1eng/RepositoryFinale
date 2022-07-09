@@ -530,4 +530,5 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
         
         return result;
     }
+    
 }

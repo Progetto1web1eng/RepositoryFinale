@@ -17,6 +17,8 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +51,18 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
             
             List<Collezione> collezioniCondivise = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniPrivateCondiviseToCollezionista(collezionista);
             
-            //servletDiProvaCollezioniCondivise?AggCond=${collezioneSelezionata.key}
             if(request.getParameter("AggCond")!=null){
                 //vista di aggiunta di una condivisione la vista ha il numero 16
+               out.println("dentro aggcond");
                 Collezione collSelezionata = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(Integer.parseInt(request.getParameter("AggCond")));
+                out.println("dentro aggcond");
+                List<Collezionista> condivisioniACollezionisti = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCondivisioniByCollezione(collSelezionata);
+                out.println("dentro aggcond");
+                
+                dataM.put("numero",16);
+                dataM.put("collezione",collSelezionata);
+                dataM.put("collezionistiList",condivisioniACollezionisti);
+                 t.process(dataM, response.getWriter());
                 // devo ricavare una lista di condivisioni
             }else{
                  dataM.put("collezioniList",collezioniCondivise);

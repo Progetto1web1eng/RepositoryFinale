@@ -14,17 +14,17 @@ async function printJSON(input) {
     let i = 0;
     let leng = Object.keys(json).length;
     for(var index=0;index<leng;index++){
-        if(input.toUpperCase()===(json[index].nomeDisco.substring(0,l)).toUpperCase()){
+        if(input.toUpperCase()===(json[index].nome.substring(0,l)).toUpperCase()){
             if(i===0){
                 document.getElementById("inserisciDiscoHDSJS1").style.visibility="visible";
-                document.getElementById("inserisciDiscoHDSJS1").href=("servletDiProvaInserisciDisco?AdviceD="+json[index].ID);
-                document.getElementById("inserisciDiscoHDSJSpan1").innerHTML=json[index].nomeDisco;
+                document.getElementById("inserisciDiscoHDSJS1").href=("servletDiProvaInserisciDisco?AdviceD="+json[index].id);
+                document.getElementById("inserisciDiscoHDSJSpan1").innerHTML=json[index].nome;
                 i++;
             }
             else if(i===1){
                 document.getElementById("inserisciDiscoHDSJS2").style.visibility="visible";
-                document.getElementById("inserisciDiscoHDSJS2").href=("servletDiProvaInserisciDisco?AdviceD="+json[index].ID);
-                document.getElementById("inserisciDiscoHDSJSpan2").innerHTML=json[index].nomeDisco;
+                document.getElementById("inserisciDiscoHDSJS2").href=("servletDiProvaInserisciDisco?AdviceD="+json[index].id);
+                document.getElementById("inserisciDiscoHDSJSpan2").innerHTML=json[index].nome;
                 i++;
             }
         }
@@ -46,17 +46,17 @@ async function printJSONArtistaSingolo(input){
     let i = 0;
     let leng = Object.keys(json).length;
     for(var index=0;index<leng;index++){
-         if(input.toUpperCase()===(json[index].nomeDarte.substring(0,l)).toUpperCase()){
+         if(input.toUpperCase()===(json[index].nome.substring(0,l)).toUpperCase()){
             if(i===0){
                 document.getElementById("inserisciArtistaHASJS1").style.visibility="visible";
-                document.getElementById("inserisciArtistaHASJS1").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].ID);
-                document.getElementById("inserisciArtistaHASJSpan1").innerHTML=json[index].nomeDarte;
+                document.getElementById("inserisciArtistaHASJS1").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].id);
+                document.getElementById("inserisciArtistaHASJSpan1").innerHTML=json[index].nome;
                 i++;
             }
             else if(i===1){
                 document.getElementById("inserisciArtistaHASJS2").style.visibility="visible";
-                document.getElementById("inserisciArtistaHASJS2").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].ID);
-                document.getElementById("inserisciArtistaHASJSpan2").innerHTML=json[index].nomeDarte;
+                document.getElementById("inserisciArtistaHASJS2").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].id);
+                document.getElementById("inserisciArtistaHASJSpan2").innerHTML=json[index].nome;
                 i++;
             }
         }
@@ -77,17 +77,17 @@ async function printJSONGruppo(input){
     let i = 0;
     let leng = Object.keys(json).length;
     for(var index=0;index<leng;index++){
-         if(input.toUpperCase()===(json[index].nomeDarte.substring(0,l)).toUpperCase()){
+         if(input.toUpperCase()===(json[index].nome.substring(0,l)).toUpperCase()){
             if(i===0){
                 document.getElementById("inserisciArtistaHASJS1").style.visibility="visible";
-                document.getElementById("inserisciArtistaHASJS1").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].ID);
-                document.getElementById("inserisciArtistaHASJSpan1").innerHTML=json[index].nomeDarte;
+                document.getElementById("inserisciArtistaHASJS1").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].id);
+                document.getElementById("inserisciArtistaHASJSpan1").innerHTML=json[index].nome;
                 i++;
             }
             else if(i===1){
                 document.getElementById("inserisciArtistaHASJS2").style.visibility="visible";
-                document.getElementById("inserisciArtistaHASJS2").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].ID);
-                document.getElementById("inserisciArtistaHASJSpan2").innerHTML=json[index].nomeDarte;
+                document.getElementById("inserisciArtistaHASJS2").href=("servletDiProvaInserisciDisco?AdviceA="+json[index].id);
+                document.getElementById("inserisciArtistaHASJSpan2").innerHTML=json[index].nome;
                 i++;
             }
         }

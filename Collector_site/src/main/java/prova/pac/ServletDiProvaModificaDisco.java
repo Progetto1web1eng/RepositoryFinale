@@ -38,28 +38,25 @@ import javax.servlet.http.HttpSession;
 public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBaseController {
 
     private void add_T(HttpServletRequest request,HttpServletResponse response,int IDdisco) throws DataException, IOException, java.text.ParseException{
-        out.println("store traccia");
+        
         String nomeTracciaPar = request.getParameter("nomeTracciaPar");
-        out.println("store traccia0");
         String timeParS = request.getParameter("timePar");
          SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
          long ms = sdf.parse(timeParS).getTime();
          Time timePar = new Time(ms);
-         out.println("store traccia1");
         Traccia traccia = new TracciaImpl();
-         out.println("store traccia2");
         traccia.setDurata(timePar);
-         out.println("store traccia3");
         traccia.setTitolo(nomeTracciaPar);
-         out.println("store traccia4");
         Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
-         out.println("store traccia5");
         traccia.setDisco(disco);
-         out.println("store traccia6");
         ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().storeTraccia(traccia);
-         out.println("store traccia7");
+        out.println("prima della response");
+        out.println("prima della response");
+        out.println("prima della response");
+        out.println("prima della response");
+        out.println("prima della response");
         response.sendRedirect("servletDiProvaModificaDisco?discoKey="+IDdisco);
-        
+           
     }
     
     
@@ -98,7 +95,9 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
                 //significa che ho cliccato il tasto modifica
                 int IDdisco = Integer.parseInt(request.getParameter("discoKey"));
                 s.setAttribute("discoID", IDdisco);
-                s.setAttribute("collK",Integer.parseInt(request.getParameter("collK")));
+                if(request.getParameter("collK")!= null){
+                     s.setAttribute("collK",Integer.parseInt(request.getParameter("collK")));
+                }
                 
                 //completo la lista di collezione nella side bar
                 Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
@@ -114,7 +113,6 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
             }else if(request.getParameter("aggiungiTraccia")!=null){
                 schermata_traccia(request,response,t,dataM,IDcollezionista,s);
             }else if(request.getParameter("timePar")!=null){
-                out.println("primaDiaddT");
                 add_T(request,response, (int) s.getAttribute("idDiscoS"));
             }
             else { 

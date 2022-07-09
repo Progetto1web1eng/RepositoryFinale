@@ -53,6 +53,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     private PreparedStatement getCollezioniPubbliche;
     private PreparedStatement getCollezioniAccessibiliLoggato;
     private PreparedStatement getCollezioniPubblicheByCollezionista;
+    private PreparedStatement getCondivisioniByCollezione;
 
     public CollezioneDAO_MySQL(DataLayer d) {
         super(d);
@@ -79,6 +80,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             getCollezioniAccessibiliLoggato = connection.prepareStatement("select con.IDcollezionista as collezionista_loggato, col.IDcollezionista as collezionista_target, col.ID as IDcollezione from condivide con join collezione col on(con.IDcollezione = col.ID) where (con.IDcollezionista=? and col.IDcollezionista=? and col.pubblico = false);");   
             getCollezioniPubblicheByCollezionista = connection.prepareStatement("select c.ID from collezione c where c.IDcollezionista=? and c.pubblico=true;");  
             getCollezioniPubbliche = connection.prepareStatement("SELECT * FROM collezione WHERE pubblico=true");
+            getCondivisioniByCollezione = connection.prepareStatement("SELECT IDcollezionista FROM condivide WHERE IDcollezione =?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezione data layer", ex);
         }
@@ -103,6 +105,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             getCollezioniPubbliche.close();
             getCollezioniAccessibiliLoggato.close();
             getCollezioniPubblicheByCollezionista.close();
+            getCondivisioniByCollezione.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -365,7 +368,9 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
                         addCondivisione.setInt(1, collezionista.getKey());
                         addCondivisione.setInt(2, collezione.getKey());
                         // si aggiunge una tupla alla tabella Condivide
-                        addCondivisione.executeQuery();
+                        if (addCondivisione.executeUpdate() == 0) {
+                            // solleva eccezione
+                        } 
                     }
                 }
             }
@@ -378,11 +383,30 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     public void deleteCondivisione(Collezione collezione, Collezionista collezionista) throws DataException {
         // per non rendere più accessibile la presente Collezione al Collezionista in questione
         
+        // controllo validità ID della Collezione
+        if (collezione.getKey() == null || collezione.getKey() <= 0) {
+            return;
+        }
+        
+        // controllo validità ID del Collezionista
+        if (collezionista.getKey() == null || collezionista.getKey() <= 0) {
+            return;
+        }
+        
+        // controllo sul tipo di Collezione
+        if(collezione.getPubblico() == true) {
+            // caso in cui la collezione in questione è pubblica ==> non è necessario rimuovere condivisioni
+            // a quest'ultimo
+            return;
+        }
+        
         try {
             deleteCondivisione.setInt(1, collezionista.getKey());
             deleteCondivisione.setInt(2, collezione.getKey());
             
-            deleteCondivisione.executeQuery();
+            if (deleteCondivisione.executeUpdate() == 0) {
+                // solleva eccezione
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CollezioneDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
         }

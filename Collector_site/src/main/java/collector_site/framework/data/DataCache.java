@@ -2,6 +2,8 @@ package collector_site.framework.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +18,7 @@ public class DataCache {
     }
 
     public <C extends DataItem> void add(Class<C> c, C o) {
-        //Logger.getLogger("DataCache").log(Level.INFO, "Cache add: object of class {0} with key {1}", new Object[]{c.getName(), o.getKey()});
+        Logger.getLogger("DataCache").log(Level.INFO, "Cache add: object of class {0} with key {1}", new Object[]{c.getName(), o.getKey()});
         if (!cache.containsKey(c)) {
             cache.put(c, new HashMap<>());
         }
@@ -30,13 +32,13 @@ public class DataCache {
     }
 
     public <C extends DataItem> boolean has(Class<C> c, C o) {
-        //Logger.getLogger("DataCache").log(Level.INFO, "Cache lookup: object of class {0} with key {1}", new Object[]{c.getName(), o.getKey()});
+        Logger.getLogger("DataCache").log(Level.INFO, "Cache lookup: object of class {0} with key {1}", new Object[]{c.getName(), o.getKey()});
         return cache.containsKey(c) && cache.get(c).containsKey(o.getKey());
     }
 
     public <C extends DataItem> C get(Class<C> c, Object key) {
         if (has(c, key)) {
-            //Logger.getLogger("DataCache").log(Level.INFO, "Cache hit: object of class {0} with key {1}", new Object[]{c.getName(), key});
+            Logger.getLogger("DataCache").log(Level.INFO, "Cache hit: object of class {0} with key {1}", new Object[]{c.getName(), key});
             return (C) cache.get(c).get(key);
         } else {
             return null;
@@ -44,7 +46,7 @@ public class DataCache {
     }
 
     public boolean has(Class c, Object key) {
-        //Logger.getLogger("DataCache").log(Level.INFO, "Cache lookup: object of class {0} with key {1}", new Object[]{c.getName(), key});
+        Logger.getLogger("DataCache").log(Level.INFO, "Cache lookup: object of class {0} with key {1}", new Object[]{c.getName(), key});
         return cache.containsKey(c) && cache.get(c).containsKey(key);
     }
 

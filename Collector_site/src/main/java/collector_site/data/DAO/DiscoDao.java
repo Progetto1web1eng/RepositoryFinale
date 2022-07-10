@@ -4,6 +4,7 @@
  */
 package collector_site.data.DAO;
 
+import collector_site.data.impl.CopieStato;
 import collector_site.data.impl.Genere;
 import collector_site.framework.data.DataException;
 import collector_site.data.model.Artista;
@@ -51,4 +52,5 @@ public interface DiscoDao {
     void setArtistaOfDisco(Disco disco, Artista artista) throws DataException;
     void addDiscoToCollezionista(Disco disco, Collezionista collezionista) throws DataException;
     public void getJson(String pathProgetto) throws DataException, IOException;
+    List<CopieStato> getCopieStati(Disco disco, Collezionista collezionista) throws DataException;
 }

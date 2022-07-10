@@ -77,6 +77,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
     private PreparedStatement getDischiByGenere;
     private PreparedStatement getDischiOfCollezionistaByArtista;
     private PreparedStatement getDischiUniqueName;
+    private PreparedStatement getCopieStati;
+
 
     public DiscoDAO_MySQL(DataLayer d) {
         super(d);
@@ -111,7 +113,8 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getStatiDischi = connection.prepareStatement("SELECT nome FROM statoDisco");
             getDischiByCollezionista = connection.prepareStatement("SELECT c.IDdisco FROM colleziona c WHERE (c.IDcollezionista=?);");
             getDischiByGenere = connection.prepareStatement("SELECT * FROM disco d where (d.IDgenere = ?);");
-            getDischiOfCollezionistaByArtista = connection.prepareStatement("select i.IDdisco from colleziona c join incide i on(c.IDdisco = i.IDdisco) where c.IDcollezionista=? and i.IDartista=?;"); 
+            getDischiOfCollezionistaByArtista = connection.prepareStatement("select i.IDdisco from colleziona c join incide i on(c.IDdisco = i.IDdisco) where c.IDcollezionista=? and i.IDartista=?;");
+            getCopieStati = connection.prepareStatement("SELECT * FROM colleziona WHERE IDdisco=? and IDcollezionista=?;");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Disco data layer", ex);
         }
@@ -137,6 +140,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             getStatiDischi.close();
             getDischiByCollezionista.close();
             getDischiOfCollezionistaByArtista.close();
+            getCopieStati.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -180,7 +184,12 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             deleteDisco.setInt(1, disco.getKey());
             
             if (deleteDisco.executeUpdate() == 0) {
-                // qui si deve sollevare eccezione
+                /*
+                // eliminazione del disco dalla cache
+                dataLayer.getCache().delete(Disco.class, disco);
+                */
+                
+                // solleva eccezione
             }
         } catch (SQLException ex) {
             Logger.getLogger(DiscoDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,14 +203,19 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         //prima vediamo se l'oggetto è già stato caricato
         if (dataLayer.getCache().has(Disco.class, id)) {
             disco = dataLayer.getCache().get(Disco.class, id);  
+            // REMOVE
+            System.out.println("disco preso dalla cache " + disco.getNomeDisco());
         } else{    
-            
+            // REMOVE
+            System.out.println("disco preso dal DB");
             try {
                 getDisco.setInt(1, id);
                 try (ResultSet rs = getDisco.executeQuery()) {
                     if (rs.next()) {
                         disco = createDisco(rs);
                         
+                        // REMOVE
+                        System.out.println(disco.getNomeDisco());
                         //e lo mettiamo anche nella cache
                         dataLayer.getCache().add(Disco.class, disco);
                     }
@@ -658,5 +672,31 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         Files.writeString(path, "");
         // scrive il file json
         Files.writeString(path, jsonContent);
+    }
+
+    @Override
+    public List<CopieStato> getCopieStati(Disco disco, Collezionista collezionista) throws DataException {
+        List<CopieStato> copieStati = new ArrayList<CopieStato>();
+        
+        try{
+            getCopieStati.setInt(1, disco.getKey());
+            getCopieStati.setInt(2, collezionista.getKey());
+
+            try(ResultSet rs = getCopieStati.executeQuery()){
+                while(rs.next()) {
+                    CopieStato copiaStato = new CopieStato();
+                    
+                    copiaStato.setNumCopieDisco(rs.getInt("numCopieDisco"));
+                    copiaStato.setStato(StatoDisco.values()[rs.getInt("IDstatoDisco")-1]);
+                    
+                    copieStati.add(copiaStato);
+                }
+            }
+            
+        }catch(SQLException ex){
+            throw new DataException("Unable to load CopieStati");
+        }
+        
+        return copieStati;
     }
 }

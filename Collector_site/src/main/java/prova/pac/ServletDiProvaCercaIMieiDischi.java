@@ -21,6 +21,7 @@ import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,15 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                         // caso in cui non abbiamo trovato nulla
                     dataM.put("hidden", 2);
                 }else{
-                        // caso in cui abbiamo un riscontro
+                    // caso in cui abbiamo un riscontro
+                    
+                    // trovo tutti gli artisti di ogni disco 
+                    List<Artista> artistiList = new ArrayList();
+                    for(Disco d : listD){
+                        artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                    }
+              
+                    dataM.put("artistiList", artistiList);
                     dataM.put("hidden", 1);
                     dataM.put("dischiList",listD);
                 }
@@ -87,7 +96,13 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                         // caso in cui non abbiamo trovato nulla
                     dataM.put("hidden", 2);
                 }else{
-                        // caso in cui abbiamo un riscontro
+                     // caso in cui abbiamo un riscontro
+                    
+                    List<Artista> artistiList = new ArrayList();
+                    for ( Disco d : listD){
+                        artistiList.add(artista);
+                    }
+                    dataM.put("artistiList", artistiList);  
                     dataM.put("hidden", 1);
                     dataM.put("dischiList",listD);
                 }
@@ -121,6 +136,13 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     dataM.put("hidden", 2);
                 }else{
                         // caso in cui abbiamo un riscontro
+                    // trovo tutti gli artisti di ogni disco 
+                    List<Artista> artistiList = new ArrayList();
+                    for(Disco d : listD){
+                        artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                    }
+              
+                    dataM.put("artistiList", artistiList);  
                     dataM.put("hidden", 1);
                     dataM.put("dischiList",listD);
                 }

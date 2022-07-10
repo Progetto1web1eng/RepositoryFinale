@@ -43,13 +43,16 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
     }
     
     private void aggiungi_condivisione(HttpServletRequest request, HttpServletResponse response,HttpSession s) throws DataException, IOException{
+        int e=0;
         String nicknamePar = request.getParameter("nicknamePar");
         Collezione coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById((int) s.getAttribute("collezioneSelezionata"));
         Collezionista collDaAggiungere = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByNickname(nicknamePar);
         if(collDaAggiungere!=null){
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().addCondivisione(coll, collDaAggiungere);
+        }else{
+            e=1;
         }
-        response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")));
+        response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")+"&e="+e));
 
     }
     
@@ -72,6 +75,12 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
                 //vista di aggiunta di una condivisione la vista ha il numero 16
                 Collezione collSelezionata = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(Integer.parseInt(request.getParameter("AggCond")));
                 List<Collezionista> condivisioniACollezionisti = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCondivisioniByCollezione(collSelezionata);
+                
+                if(request.getParameter("e")!=null){
+                    if(Integer.parseInt(request.getParameter("e"))==1){
+                         dataM.put("errore",1);
+                    }
+                }
                 
                 dataM.put("numero",16);
                 dataM.put("collezione",collSelezionata);

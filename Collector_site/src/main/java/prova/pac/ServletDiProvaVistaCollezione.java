@@ -61,8 +61,7 @@ public class ServletDiProvaVistaCollezione extends ServletDiProvaCollector_siteB
                         
                 Collezione collezioneSelezionata = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(idColl);
                 List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDiscoByCollezione(collezioneSelezionata);
-                Disco disco =((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco((int)s.getAttribute("id"));
-                List<Immagine>immagini = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(disco);
+               
                 s.setAttribute("collezioneSelezionata",idColl);
                 
                 // trovo gli artisti per ogni disco per motivi puramente grafici per poi aggiungere una lista al data model
@@ -73,7 +72,6 @@ public class ServletDiProvaVistaCollezione extends ServletDiProvaCollector_siteB
                
                 
                 dataM.put("artistiList", artistiList);
-                dataM.put("immagini",immagini);
                 dataM.put("collezioneSelezionata",collezioneSelezionata);
                 dataM.put("dischiList",dischiList);
 

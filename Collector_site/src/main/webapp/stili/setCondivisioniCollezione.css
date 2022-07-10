@@ -54,6 +54,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     left: 34%;
     top: 600px;
     width: 18%;
+    border: none;
 }
 .setCCDivItem{
     width: 80%;
@@ -69,4 +70,19 @@ text-align: center;
      height: 16px;
      width: 16px;
 }
-
+#setCCLinea{
+    height: 1px;
+    width: 18%;
+    position: absolute;
+    background-color: white;
+    top: 642px;
+    left: 31%;  
+}
+#setCCSubmit:hover{
+    background-color: #303841;
+    border-color: #303841;
+    color: white;
+}
+#setCCInput:focus-visible{
+    outline: none;
+}

@@ -1,0 +1,151 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23 mag 2022, 16:24:54
+    Author     : fabri
+*/
+
+#headBarDiv1{
+    width: 100%;
+    height: 80px;
+    background-color:#ACACBB;
+    border:3px solid #979C98;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.headBarDiv1_1{
+    height: 90%;
+    background-color:#ACACBB;
+    width: 30%;
+    border-radius: 50px;
+    position: relative;
+}
+#headBarLogoDivButton{
+    height: 74px;
+    width: 80px;
+    background-color: #ACACBB;;
+    margin-left: 6%;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+#headBarDivDiRicerca{
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+#headBarDivLog{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+.headBarImg{
+    content:url("../immagini/icons8-ricerca-24 (1).png")
+}
+#headBarButton{
+    position: absolute;
+    top: 5%;
+    left: 84%;
+    width: 15%;
+    height: 90%;
+    border-top-right-radius: 33px;
+    border-bottom-right-radius: 33px;
+    visibility: hidden;
+    box-sizing: border-box;
+    background-color: #DBDBDB;
+    border: 3px solid #979C98;
+    
+    
+}
+#headBarInput{ 
+    color: #303841;
+    background-color:#ACACBB;
+    padding-left: 6%;
+    font-size: 17px;
+    border-width: 0px;
+}
+
+#headBarDivDiRicerca:hover #headBarImg1{
+    content:url("../immagini/icons8-ricerca-24.png")
+}
+#headBarDivDiRicerca:hover #headBarInput{
+    color: black;
+    background-color:#DBDBDB;
+}
+#headBarDivDiRicerca:hover #headBarButton{
+    visibility: visible;
+}
+#headBarButton:hover{
+    background-color: #303841;
+    border: 0px;
+}
+#headBarButton:hover #headBarImg2{
+    content:url("../immagini/icons8-ricerca-24.png")
+}
+#headBarDivDiRicerca:hover{
+    background-color:#DBDBDB; 
+}
+
+#headBarInput:focus{
+    outline:none;
+}
+.headBarAncora{
+    color:#303841;
+    font-size: 20px;
+    text-decoration: none;
+}
+.headBarAncora:hover{
+    color: black;
+    text-decoration: underline;
+}
+#headBarLogo{
+    content: url("../immagini/logo_transparent.png");
+    height: 100%;
+    padding-top: 6px;
+    padding-left: 3px;
+}
+#headBarLogoDivButton:hover{
+    background-color: #DBDBDB;
+    border: 3px solid #979C98;
+}
+#headBarSuggerimenti{
+    position: absolute;
+    height: 245px;
+    width: 89%;
+    background-color: white;
+    top: 72px;
+    z-index: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    visibility: hidden;
+}
+.headBarDivSuggerimenti{
+    height: 50px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 22px;
+    border: 2px solid #DBDBDB;
+    justify-content: center;
+    margin-top: 10px;
+}
+.headBarDivSuggerimenti:hover{
+    box-shadow: 2px 2px #303841;
+    cursor: pointer;
+}
+.headBarSuggerimentiSpan{
+    color: #303841;
+}
+

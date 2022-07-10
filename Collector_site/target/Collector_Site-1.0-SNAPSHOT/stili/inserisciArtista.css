@@ -1,0 +1,217 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 28 giu 2022, 17:15:32
+    Author     : fabri
+*/
+
+#inserisciArtistaDiv{
+     width: 86%;
+    height:985px;
+    border: 3px solid #979C98;
+    margin-top:8px;
+    background-color: #ACACBB;
+    border-top-left-radius: 38px;
+    border-bottom-left-radius:38px;
+    margin-left: 20px;
+    overflow-y: auto;
+}
+#inserisciArtistaSpan{
+    color: #303841;
+    font-size: 50px;
+    position: absolute;
+    top: 130px;
+    left: 48%;
+}
+#inserisciArtistaDivB{
+    width: 20%;
+    height: 120px;
+    margin-left: 40%;
+    display: flex;
+    flex-direction: row; 
+    margin-top: 100px
+}
+.inserisciArtistaButton{
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    color: #303841;
+    border: 2px solid #303841;
+}
+.inserisciArtistaButton:hover{
+    background-color: #303841;
+    color:white;
+    border-color: #303841;
+}
+#inserisciAristaDivSingolo{
+    display:none;
+}
+#inserisciAristaDivGruppo{
+    display:none;
+}
+#inserisciArtistaDivSingoloInput1{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 49%;
+    top: 500px;
+    width: 18%;
+    border: none;
+}
+#inserisciArtistaDivSingoloSubmit{
+    width: 140px;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+    position: absolute;
+    top: 500px;
+    left: 79%;
+   
+}
+#inserisciArtistaHiddenDivContainer{
+    width: 70%;
+    height: 170px;
+    position: absolute;
+    top: 83%;
+    border-radius: 25px;
+    border: 3px solid #303841;
+    margin-left: 7%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+}
+.inserisciArtistaHiddenASuggerimento{
+    height: 80%;
+    width: 20%;
+    margin-left: 15px;
+    border-radius: 10px;
+    border: 3px solid #303841;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    visibility: hidden;
+}
+#inserisciArtistaDivGruppoInput1{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 28%;
+    top: 380px;
+    width: 18%;
+    border: none;
+}
+#inserisciArtistaDivGruppoInput2{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 28%;
+    top: 500px;
+    width: 18%;
+    border: none;
+}
+#inserisciArtistaDivGruppoSelect{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 49%;
+    top: 500px;
+    width: 8%;
+    border: none;
+}
+#inserisciArtistaDivGruppoInserisci{
+    width: 120px;
+    height: 25px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+    position: absolute;
+    top: 758px;
+    left: 53%;
+    text-align: center;
+}
+#inserisciArtistaDivGruppoContainerArtisti{
+    width: 21%;
+    height: 34%;
+    position: absolute;
+    top: 322px;
+    left: 70%;
+    border-radius: 25px;
+    border: 3px solid #303841;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.inserisciArtistaDivGruppoObjArtista{
+    width: 80%;
+    border-radius: 10px;
+    border: 3px solid #303841;
+    background-color: white;
+    margin-top: 10px;
+    height: 7%;
+    text-align: center;
+}
+#inserisciArtistaDivGruppoSubmit{
+     text-align: center;
+    width: 105px;
+    height: 25px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+    position: absolute;
+    top: 600px;
+    left: 39%;
+
+}
+#inserisciArtistaDivSingoloSubmit:hover{
+    border-color: #303841;
+    background-color: #303841;
+    color: white
+}
+#inserisciArtistaDivSingoloInput1:focus-visible{
+    outline: none;
+}
+#inserisciArtistaDivGruppoInput1:focus-visible{
+    outline: none;
+}
+#inserisciArtistaDivGruppoInput2focus-visible{
+    outline: none;
+}
+#inserisciArtistaDivGruppoSubmit:hover{
+    border-color: #303841;
+    background-color: #303841;
+    color: white
+}
+#inserisciArtistaDivGruppoInserisci:hover{
+    border-color: #303841;
+    background-color: #303841;
+    color: white
+}

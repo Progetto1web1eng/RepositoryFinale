@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="creaCollezioneDiv">
+    <h1 id="creaCollezioneH1">CREA UNA NUOVA COLLEZIONE</h1>
+    <form id="creaCollezioneForm" action="servletDiProvaCreaCollezione" method="get">
+        <div class="creaCollezioneFormDiv">
+            <input id="creaCollezioneInput" type="text" value="Nome Collezione" name="nomeColl">
+            <div id="creaCollezioneLinea"></div>
+        </div>
+        <div class="creaCollezioneFormDiv">
+            <input type="checkbox" class="creaCollezioneCheck" style="margin-left: 30%; color: #ACACBB" name="checkbox" value="Privata">
+            <label class="creaCollezioneLabel">Privata</label>
+            <input type="checkbox" class="creaCollezioneCheck" style="margin-left: 20%; color: #ACACBB" name="checkbox" value="Pubblica">
+            <label class="creaCollezioneLabel">Pubblica</label>
+        </div>
+        <button type="submit" id="creaCollezioneButton">crea</button>
+    </form>
+    <#if errore==1>
+        <label style="position: absolute;color: red;top: 730px;left: 48%;"> Non tutti i dati sono stati inseriti correttamente </label>
+    </#if>
+    
+</div>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html lang="it">
+    <head>
+        <title>Collector_site</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="stili/sideMenu.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/headBar.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/home.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/creaCollezione.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/vistaCollezione.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/collezioniCondivise.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/inserisciDisco.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/inserisciDiscoImmagine.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/cercaIMieiDischi.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/profilo.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/homeLogged.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/inserisciArtista.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/setCopieStatoFromAdv.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/modificaDisco.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/inserisciTraccia.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/tracceEsterne.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/dischiEsterni.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/collezioniEsterne.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/collezionistiEsterni.css" type="text/css"/>
+        <link rel="stylesheet" href="stili/setCondivisioniCollezione.css" type="text/css"/>
+        <script src="script/resetInput.js"></script>
+        <script src="script/inserimentoArtistiScript.js"></script>
+        <script src="script/inputAdvice.js"></script>
+        <script src="script/completamentoScript.js"></script>
+        <script src="script/dischi.json"></script>
+        <script src="script/artistiSingoli.json"></script>
+        <script src="script/gruppi.json"></script>
+    </head>
+    <body style="display: flex;flex-direction: column;align-items: flex-start;background-color:#303841;">
+        <#include "headBar.ftl.html">
+        <div style="width: 100%;display:flex;flex-direction: row;justify-content:flex-start;background-color:#303841 ">
+            <#include "sideMenu.ftl.html">
+            <#if (numero==0)>
+             <#include "collezioniCondivise.ftl.html">
+            <#elseif (numero==1)>
+             <#include "creaCollezione.ftl.html">
+            <#elseif (numero==2)>
+             <#include "inserisciDisco.ftl.html"> 
+            <#elseif (numero==3)>
+             <#include "vistaCollezione.ftl.html">
+            <#elseif (numero==4)>
+             <#include "cercaIMieiDischi.ftl.html">
+            <#elseif (numero==5)>
+             <#include "profilo.ftl.html">
+            <#elseif (numero==6)>
+             <#include "homeLogged.ftl.html">
+            <#elseif (numero==7)>
+             <#include "inserisciDiscoImmagine.ftl.html">
+            <#elseif (numero==8)>
+             <#include "inserisciArtista.ftl.html">
+            <#elseif (numero==9)>
+             <#include "setCopieStatoFromAdv.ftl.html">
+            <#elseif (numero==10)>
+             <#include "modificaDisco.ftl.html">
+            <#elseif (numero==11)>
+             <#include "inserisciTraccia.ftl.html">
+            <#elseif (numero==12)>
+             <#include "tracceEsterne.ftl.html">
+            <#elseif (numero==13)>
+             <#include "dischiEsterni.ftl.html">
+            <#elseif (numero==14)>
+             <#include "collezioniEsterne.ftl.html">
+            <#elseif (numero==15)>
+             <#include "collezionistiEsterni.ftl.html">
+            <#elseif (numero==16)>
+             <#include "setCondivisioniCollezione.ftl.html">
+            </#if>
+        </div>
+    </body>
+</html>

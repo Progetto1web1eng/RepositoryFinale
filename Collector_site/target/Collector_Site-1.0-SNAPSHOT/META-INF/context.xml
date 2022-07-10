@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/Collector_Site">
+    <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" maxActive="10" maxIdle="5" maxWait="10000" name="jdbc/collector_site" password="1234" type="javax.sql.DataSource" url="jdbc:mysql://localhost/collector_site?serverTimezone=UTC" username="collector"/>
+</Context>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="inserisciDiscoDiv">
+    <h1 id="inserisciDiscoH1">inserisci un nuovo disco</h1>
+    <div id="inserisciDiscoLinea1" class="inserisciDiscoLinea"></div>
+    <div id="inserisciDiscoLinea2" class="inserisciDiscoLinea"></div>
+    <div id="inserisciDiscoLinea3" class="inserisciDiscoLinea"></div>
+    <div id="inserisciDiscoLinea4" class="inserisciDiscoLinea"></div>
+    <div id="inserisciDiscoLinea5" class="inserisciDiscoLinea"></div>
+    <div id="inserisciDiscoLinea6" class="inserisciDiscoLinea"></div>
+    <div id="inserisciDiscoLinea7" class="inserisciDiscoLinea"></div>
+    <div id="inserisciDiscoLinea8" class="inserisciDiscoLinea"></div>
+    <span style="position: absolute;top: 380px;left: 9%;font-style: italic;font-size: 23px;color: #303841;z-index: 5;" id="inserisciDiscoSpanHidden">Anno</span>
+    <#if error==1>
+        <label style="position: absolute;color: red;top: 700px;left: 43%;">I dati inseriti non sono corretti</label>
+    </#if>
+    <form method="get" action="servletDiProvaInserisciDisco"> 
+        <!-- inizio inserimento caratteristiche disco -->
+        <input type="text" value="Nome disco" name="nomeDiscoPar" id="inserisciDiscoNomeDisco" onkeyup="completamento()" onclick="resetInserisciNomeDiscoInput()">
+        <input type="text" value="barcode" name="barcodePar" id="inserisciDiscoBarcode">
+        <select name="tipoDiscoPar" id="inserisciDiscoSelectTipo">
+            <option value="CD">CD</option>
+            <option value="vinile">Vinile</option>
+            <option value="MP3">MP3</option>
+            <option value="audiocassetta">Audiocassetta</option>
+        </select>
+        <input type="number" name="dataPar" id="inserisciDiscoData" onclick="hideDataSpan1()">
+        <input type="text" value="etichetta" name="etichettaPar" id="inserisciDiscoEtichetta">
+        <select name="genereDiscoPar" id="inserisciDiscoSelectGenere">
+            <option value="Blues">Blues</option>
+            <option value="Classico">Classico</option>
+            <option value="Country">Country</option>
+            <option value="Folk">Folk</option>
+            <option value="Rock">Rock</option>
+            <option value="House">House</option>
+            <option value="Indie">Indie</option>
+            <option value="Jazz">Jazz</option>
+            <option value="Latino">Latino</option>
+            <option value="Metal">Metal</option>
+            <option value="Pop">Pop</option>
+        </select>
+        <input type="number" name="numeroDiCopiePar" min="1" id="inserisciDiscoNumeroCopie">
+        <span style="position: absolute;top: 589px;font-size: 22px;color: #303841;left: 57%;">numero copie:</span>
+        <select name="statoDiscoPar" id="inserisciDiscoSelectStato">
+            <option value="NUOVO">Nuovo</option>
+            <option value="USATO">Usato</option>
+        </select>
+        <input type="submit" value="continua" id="inserisciDiscoSubmit">
+        <!-- fine inserimento caratteristiche disco -->       
+    </form>
+    <div id="inserisciDiscoHidden" style="visibility: hidden;">
+        <span id="inserisciDiscoHiddenSpan">
+            Forse cercavi:
+        </span>
+        <div id="inserisciDiscoHiddenDivContainer">
+            <!-- ciclo di ripetizione per ogni risultato-->
+            <a  class="inserisciDiscoHiddenDivSuggerimento" id="inserisciDiscoHDSJS1">
+                <span style="font-style: italic;font-size: 20px;color: #303841;" id="inserisciDiscoHDSJSpan1">Disco: something</span>
+                <span style="font-style: italic;font-size: 20px;color: #303841;">Artista: something</span>
+            </a>
+            <a  class="inserisciDiscoHiddenDivSuggerimento" id="inserisciDiscoHDSJS2">
+                <span style="font-style: italic;font-size: 20px;color: #303841;" id="inserisciDiscoHDSJSpan2">Disco: something</span>
+                <span style="font-style: italic;font-size: 20px;color: #303841;">Artista: something</span>
+            </a>
+        </div>
+    </div>
+</div>

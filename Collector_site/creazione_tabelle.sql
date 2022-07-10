@@ -192,9 +192,9 @@ insert into artista values (5,"Queen",null,null,null);
 insert into artista values (6,"Freddy Mercury",1, "Voce",5);
 #ID,nomeDarte,IDruolo,ruolo,IDgruppoMusicale
 
-insert into collezionista values (1, "Stefano", "stefano@gmail.com", "stefa", "stefa", "3880581680");
-insert into collezionista values (2, "Fabrizio", "fabrizio@gmail.com", "fabri", "fabri", "3880581670");
-insert into collezionista values (3, "Maurizio", "maurizio@gmail.com", "mauri", "mauri", "3880581660");
+insert into collezionista values (1, "stefa", "stefano@gmail.com", "", "stefa", "3880581680");
+insert into collezionista values (2, "fabri", "fabrizio@gmail.com", "", "fabri", "3880581670");
+insert into collezionista values (3, "mauri", "maurizio@gmail.com", "", "mauri", "3880581660");
 
 insert into collezione values (1, "anni 80", 1, true); 
 insert into collezione values (2, "euro disco", 1, true);

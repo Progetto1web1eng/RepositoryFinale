@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="cercaIMieiDischiDiv">
+    <div  id="cercaIMieiDischiDivDiRicerca">
+        <img class="cercaIMieiDischiImg" id="cercaIMieiDischiImg1" alt="cerca"/>
+        <form action="servletDiProvaCercaIMieiDischi" method="get">
+            <input id="cercaIMieiDischiInput" type="text" value="cerca" name="cercaIMieiDischi" onclick="resetCercaIMieiDischiInput()" onkeydown="adviceCercaIMieiDischiVisible()" onkeyup="adviceCercaIMieiDischi()">
+            <button type="submit" id="cercaIMieiDischiButton"><img class="cercaIMieiDischiImg" alt="cerca" id="cercaIMieiDischiImg2"></button>
+        </form>
+    </div>
+    <div id="cercaIMieiDischiSuggerimenti">
+        <div  style="background-color: white;height: 40px;">
+        </div>
+        <div class="cercaIMieiDischiDivSuggerimenti" onclick="adviceCercaIMieiDischiTitolo()">
+            <span class="cercaIMieiDischiSuggerimentiSpan" id="cIMDSS1">
+            </span>
+            <span class="cercaIMieiDischiSuggerimentiSpan">Titolo</span>
+        </div>
+        <div class="cercaIMieiDischiDivSuggerimenti" onclick="adviceCercaIMieiDischiArtista()">
+            <span class="cercaIMieiDischiSuggerimentiSpan" id="cIMDSS2">
+            </span>
+            <span class="cercaIMieiDischiSuggerimentiSpan">Artista</span>
+        </div>
+        <div class="cercaIMieiDischiDivSuggerimenti" style="margin-bottom: 10px;" onclick="adviceCercaIMieiDischiGenere()">
+            <span class="cercaIMieiDischiSuggerimentiSpan" id="cIMDSS3">
+            </span>
+            <span class="cercaIMieiDischiSuggerimentiSpan">Genere</span>
+        </div>
+    </div>
+    <#if (hidden==1)>
+    <div id="cercaIMieiDischiDiv2">
+        <!-- ciclo di ripetizione per ogni disco della collezione -->
+        <#list dischiList as d>
+        <div class="cercaIMieiDischiDivDischi">
+            <div>
+                <img src="immaginiDischi/giggino.PNG"  alt="immagine disco" class="cercaIMieiDischiImmagineDisco">
+            </div>
+            <div>
+                <h3 style="color: white">${d.nomeDisco}</h3>
+            </div>
+            <div>
+                <a href="servletDiProvaRicercaGlobale?discoK=${d.key}"><img id="cercaIMieiDischiModificaImg" alt="info" style="margin-right: 20px;"></a>
+            </div>   
+        </div>
+        </#list>
+    </div>
+    </#if>
+    <#if (hidden==2)>
+        <div id="cercaIMieiDischiDiv2">
+            <span id="cercaIMieiDischiSpanNonTrovato">
+                nessun disco trovato
+            </span>
+        </div>
+    </#if>
+</div>
+    

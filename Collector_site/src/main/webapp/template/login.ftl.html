@@ -19,10 +19,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <#if (numero==0)> 
                 <div id="loginFormDiv">
                     <form id="loginForm" action="servletDiProvaLogin" method="get">
-                        <input type="text" id="loginUsernameInput" name="fname" value="Username" onclick="resetLoginUsernameInput()">
+                        <input type="text" id="loginUsernameInput" name="fname" value="Nickname" onclick="resetLoginUsernameInput()">
                         <input type="text" id="loginPasswordInput" name="lname" value="Password" onclick="resetLoginPasswordInput()">
                         <#if (errore==1)>
-                            <label style="color: red;position: absolute;top: 65%;"> username e/o password errata</label>
+                            <label style="color: red;position: absolute;top: 65%;"> Nickname e/o password errata</label>
                         </#if>
                         <div id="loginDivBottoni">
                             <a id="loginAncora" href="servletDiProvaRegistrazione"> Registrati </a>

@@ -36,47 +36,28 @@ import javax.servlet.http.HttpSession;
 public class ServletDiProvaLogin extends ServletDiProvaCollector_siteBaseController {
     
     
-    private void login_action(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String username = request.getParameter("fname");
+    private void login_action(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DataException{
+        String nickname = request.getParameter("fname");
         String password = request.getParameter("lname");
-        Integer IDutente = 0;
-        if (!username.isEmpty() && !password.isEmpty()) {
+        Integer IDutente = null;
+        
+        IDutente = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().login(nickname,password);
+        
+       
+           
+        if (IDutente != null && IDutente >= 1) { // se l'autenticazione è andata a buon fine
+            // creazione della sessione utente
+            HttpSession s = request.getSession(true);
+            s.setAttribute("id", IDutente);
+            ProvaConfig pcg = new ProvaConfig(getServletContext());
+            Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
+            Map<String,Object> dataM = new HashMap();
             try {
-                // connessione al DB
-                String url = "jdbc:mysql://localhost:3306/collector_site?serverTimezone=Europe/Rome";
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(url, "collector", "1234");
-                // creazione ed esecuzione QUERY
-                PreparedStatement controlloCredenziali = connection.prepareStatement("SELECT c.ID FROM collezionista c WHERE c.username =? and c.password =?;");
-                // aggiunta parametri alla query
-                controlloCredenziali.setString(1, username);
-                controlloCredenziali.setString(2, password);
-                ResultSet risultato = controlloCredenziali.executeQuery();
-                // controllo che la "username" e la "password" inseriti siano presenti nel DB
-                if (risultato.next()) {
-                    IDutente = risultato.getInt(1);
-                }
-                risultato.close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            if (IDutente != null && IDutente >= 1) {                      // se l'autenticazione è andata a buon fine
-                // creazione della sessione utente
-                HttpSession s = request.getSession(true);
-                s.setAttribute("id", IDutente);
-                ProvaConfig pcg = new ProvaConfig(getServletContext());
-                Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
-                Map<String,Object> dataM = new HashMap();
-                try {
-                
-                    // estraggo le collezioni dal collezionista che ha effettuato il login
-                    
-                    Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById((int)s.getAttribute("id"));
-                    ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO();
-                    List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
-                    dataM.put("collezioni",collezioni);
+                // estraggo le collezioni dal collezionista che ha effettuato il login
+                Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById((int)s.getAttribute("id"));
+                ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO();
+                List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                dataM.put("collezioni",collezioni);
                 
                 } catch (DataException ex) {
                     Logger.getLogger(ServletDiProvaLogin.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,7 +82,6 @@ public class ServletDiProvaLogin extends ServletDiProvaCollector_siteBaseControl
                     Logger.getLogger(ServletDiProvaLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }   
-        }
     }
    
     @Override
@@ -129,6 +109,8 @@ public class ServletDiProvaLogin extends ServletDiProvaCollector_siteBaseControl
             try {
                 login_action(request,response);
             } catch (IOException ex) {
+                Logger.getLogger(ServletDiProvaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DataException ex) {
                 Logger.getLogger(ServletDiProvaLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

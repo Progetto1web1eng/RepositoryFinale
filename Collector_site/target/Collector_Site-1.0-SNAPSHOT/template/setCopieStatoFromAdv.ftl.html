@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="setCopieStatoFromAdv">
+    <div id="setCopieStatoFromAdvLinea1"></div>
+    <div id="setCopieStatoFromAdvLinea2"></div>
+    <div id="setCopieStatoFromAdvLinea3"></div>
+    <form method="get" action="servletDiProvaSettingCopieStato">
+        <select id="setCopieStatoSelect" name="sCSSPar">
+            <option value="NUOVO">Nuovo</option>
+            <option value="USATO">Usato</option>
+        </select>
+        <select name="tipoDiscoPar" id="setCopieStatoSelectTipo">
+            <option value="CD">CD</option>
+            <option value="vinile">Vinile</option>
+            <option value="MP3">MP3</option>
+            <option value="audiocassetta">Audiocassetta</option>
+        </select>
+        <span style="font-style: italic;font-size: 20px;position: absolute;top: 444px;left: 32%;"> numero copie: </span>
+        <input type="number" id="setCopieStatoFromAdvInput1" name="sCSSI1Par">
+        <input type="submit" id="setCopieStatoFromAdvInput2" name="sCSSI2Par">
+    </form>
+</div>

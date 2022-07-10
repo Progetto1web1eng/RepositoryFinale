@@ -50,7 +50,7 @@ function resetHeadBarInput(){
 }
 function resetLoginUsernameInput(){
     const loginUsernameInput = document.getElementById("loginUsernameInput");
-    if(loginUsernameInput.value==="Username"){
+    if(loginUsernameInput.value==="Nickname"){
         loginUsernameInput.value="";
     }
 }
@@ -75,7 +75,7 @@ function resetRegistrazioneEmailInput(){
 }
 function resetRegistrazioneUsernameInput(){
     const registrazioneUsernameInput = document.getElementById("registrazioneUsernameInput");
-    if(registrazioneUsernameInput.value==="Username"){
+    if(registrazioneUsernameInput.value==="Nickname"){
         registrazioneUsernameInput.value="";
     }
 }

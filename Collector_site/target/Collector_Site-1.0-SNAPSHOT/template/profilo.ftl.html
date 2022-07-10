@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="profiloDiv">
+    <div id="profiloCarDiv">
+        <!-- caratteristiche profilo -->
+        <span class="profiloSpan1">Nickname:&nbsp;&nbsp;&nbsp;${collezionista.nickname}</span>
+        <span class="profiloSpan1">Email:&nbsp;&nbsp;&nbsp;${collezionista.email}</span>
+        <span class="profiloSpan1">Numero di telefono:&nbsp;&nbsp;&nbsp;${collezionista.cellulare}</span>
+    </div>
+    <div id="profiloDivC">
+        <#if hidden==0>
+            <div id="profiloContainerArtistiStat">
+                <h1 style="padding-left: 15%;"> TOP 3 ARTISTI PREFERITI</h1>
+                <div id="profiloDivPrimoPosto">
+                    <span class="profiloSpan2">${artistaPref1.nomeDarte}</span>
+                </div>
+                <div id="profiloDivSecondoPosto">
+                    <span class="profiloSpan2">${artistaPref2.nomeDarte}</span>
+                </div>
+                <div id="profiloDivTerzoPosto">
+                    <span class="profiloSpan2">${artistaPref3.nomeDarte}</span>
+                </div>
+            </div>
+        </#if>
+        <#if hidden==1>
+            <div id="profiloContainerArtistiStat">
+                <h1 style="padding-left: 15%;"> TOP 2 ARTISTI PREFERITI</h1>
+                <div id="profiloDivPrimoPosto">
+                    <span class="profiloSpan2">${artistaPref1.nomeDarte}</span>
+                </div>
+                <div id="profiloDivSecondoPosto">
+                    <span class="profiloSpan2">${artistaPref2.nomeDarte}</span>
+                </div>
+            </div>
+        </#if>
+        <#if hidden==2>
+            <div id="profiloContainerArtistiStat">
+                <h1 style="padding-left: 15%;"> ARTISTA PREFERITO</h1>
+                <div id="profiloDivPrimoPosto">
+                    <span class="profiloSpan2">${artistaPref1.nomeDarte}</span>
+                </div>
+            </div>
+        </#if>
+        <#if hidden==3>
+            <div id="profiloContainerArtistiStat">
+                <h1 style="padding-left: 15%;"> NON HAI ARTISTI PREFERITI</h1>
+            </div>
+        </#if>
+        <#if h==0>
+            <div id="profiloContainerGeneriStat">
+                <h1 style="padding-left: 15%;"> TOP 3 GENERI PREFERITI</h1>
+                <div id="profiloDivPPosto">
+                    <span class="profiloSpan2">${gPref1}</span>
+                </div>
+                <div id="profiloDivSPosto">
+                    <span class="profiloSpan2">${gPref2}</span>
+                </div>
+                <div id="profiloDivTPosto">
+                    <span class="profiloSpan2">${gPref3}</span>
+                </div>
+            </div>
+        </#if>
+        <#if h==1>
+            <div id="profiloContainerGeneriStat">
+                <h1 style="padding-left: 15%;"> TOP 2 GENERI PREFERITI</h1>
+                <div id="profiloDivPPosto">
+                    <span class="profiloSpan2">${gPref1}</span>
+                </div>
+                <div id="profiloDivSPosto">
+                    <span class="profiloSpan2">${gPref2}</span>
+                </div>
+            </div>
+        </#if>
+        <#if h==2>
+            <div id="profiloContainerGeneriStat">
+                <h1 style="padding-left: 15%;">GENERE PREFERITO</h1>
+                <div id="profiloDivPPosto">
+                    <span class="profiloSpan2">${gPref1}</span>
+                </div>
+            </div>
+        </#if>
+        <#if h==3>
+            <div id="profiloContainerGeneriStat">
+                <h1 style="padding-left: 15%;"> NON HAI GENERI PREFERITI</h1>
+            </div>
+        </#if>
+    </div>
+    
+</div>

@@ -1,0 +1,90 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 1 lug 2022, 17:52:08
+    Author     : fabri
+*/
+
+#inserisciTracciaDiv{
+    width: 86%;
+    height:985px;
+    border: 3px solid #979C98;
+    margin-top:8px;
+    background-color: #ACACBB;
+    border-top-left-radius: 38px;
+    border-bottom-left-radius:38px;
+    margin-left: 20px; 
+    position:relative; 
+}
+#inserisciTracciaSpan{
+    color: #303841;
+    font-size: 50px;
+    position: absolute;
+    top: 50px;
+    left: 39%;
+}
+#inserisciTracciaInput1{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+   left: 19%;
+    top: 430px;
+    width: 18%;
+    border: none;
+}
+#inserisciTracciaInput2{
+    height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 63%;
+    top: 430px;
+    width: 18%;
+    border: none;
+}
+#inserisciTracciaInput3{
+    position: absolute;
+    top: 725px;
+    left: 45%;
+    width: 140px;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+}
+#inserisciTracciaInput3:hover{
+    color: white;
+    background-color: #303841;
+    border-color: #303841;
+}
+#inserisciTracciaInput1:focus-visible{
+    outline: none;
+}
+#inserisciTracciaInput2:focus-visible{
+    outline: none;
+}
+#inserisciTracciaLinea1{
+   height: 1px;
+    background-color: white;
+    width: 17%;
+    position: absolute;
+    top: 473px;
+    left: 18%;
+}
+#inserisciTracciaLinea2{
+   height: 1px;
+    background-color: white;
+    width: 25%;
+    position: absolute;
+    top: 473px;
+    left: 62%;
+}

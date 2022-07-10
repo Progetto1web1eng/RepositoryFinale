@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<div id="collezioniCondiviseDiv">
+    <!--lista di collezioni altrui condivise a te -->
+    <div>
+        <#if collezioniList?size != 0>
+            <#list collezioniList as c>
+                <div class="collezioniCondiviseContainer">
+                    <h1> ${c.nomeCollezione}</h1>
+                     <a class="collezioniCondiviseA" href="servletDiProvaRicercaGlobale?collezioneK=${c.key}"><img class="collezioniCondiviseImgInfo" ></a>
+                </div>
+            </#list>
+        <#else>
+            <h1> non ci sono collezioni private condivise con te</h1>
+        </#if>
+    </div>
+</div>

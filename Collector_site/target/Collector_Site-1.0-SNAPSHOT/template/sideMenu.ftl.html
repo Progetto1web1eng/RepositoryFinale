@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+    <div id="sideMenuDiv">
+        <div id="sideMenuDiv1">
+            <div class="sideMenuDiv1_1" id="sideMenuDivHome">               
+                <img class="sideMenuImgProfilo" alt="profilo" />
+                <a class="sideMenuDiv1_1Ancora" href="servletDiProvaProfilo">Profilo</a>
+            </div>
+            <div class="sideMenuDiv1_1" id="sideMenuDivDischi">                
+                <img class="sideMenuImgDischi" alt="cerca" />
+                <a class="sideMenuDiv1_1Ancora" href="servletDiProvaCercaIMieiDischi">i miei dischi</a>
+            </div>
+            <div class="sideMenuDiv1_1" id="sideMenuDivCondivisioni">               
+                <img class="sideMenuImgCondivisioni" alt="condivisioni"/>
+                <a class="sideMenuDiv1_1Ancora" href="servletDiProvaCollezioniCondivise">Condivisioni</a>
+            </div>
+            
+        </div>
+        <div id="sideMenuDiv2">
+            <div>
+                <h1 style="font-size: 25px; color:#303841">Le mie collezioni</h1>
+            </div>
+            <div id="sideMenuDiv2_1">
+                  <ul style="list-style-type: none">
+                    
+                    
+                    <#if collezioni??>
+                        <#list collezioni as c>
+                            <li style="padding-bottom: 18px;">
+                                <a class="sideMenuAnchorCollezioni" href="servletDiProvaVistaCollezione?k=${c.key}">${c.nomeCollezione}</a>
+                            </li>
+                        </#list>
+                    </#if>    
+                    
+                    </ul>
+   
+                <a href="servletDiProvaCreaCollezione?crea=0"><img id="sideMenuAggiungiImg"></a>
+            </div>
+        </div>
+    </div>
+   

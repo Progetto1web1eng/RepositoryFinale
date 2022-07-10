@@ -51,6 +51,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
     private PreparedStatement getCollezionistaByNickname;
     private PreparedStatement getGenerePreferito;
     private PreparedStatement getCondivisioniByCollezione;
+    private PreparedStatement login;
    
     public CollezionistaDAO_MySQL(DataLayer d) {
         super(d);
@@ -71,6 +72,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionistaByNickname = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=?");
             getGenerePreferito = connection.prepareStatement("SELECT count(d.IDgenere), d.IDgenere FROM colleziona c join disco d on(c.IDdisco = d.ID) WHERE (c.IDcollezionista =?) GROUP BY d.IDgenere ORDER BY count(d.IDgenere) desc;");
             getCondivisioniByCollezione = connection.prepareStatement("SELECT IDcollezionista FROM condivide WHERE IDcollezione =?");
+            login = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=? and password=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezionista data layer", ex);
         }
@@ -89,6 +91,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getCollezionistaByNickname.close();
             getGenerePreferito.close();
             getCondivisioniByCollezione.close();
+            login.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -335,6 +338,28 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             throw new DataException("Unable to load condivisioni by Collezione", ex);
         }
         return result;
+    }
+
+    @Override
+    public Integer login(String nickname, String password) throws DataException {
+        Integer id = null;
+        
+        try {
+            login.setString(1, nickname);
+            login.setString(2, password);
+
+            try (ResultSet rs = login.executeQuery()) {
+                if (rs.next()) {
+                    // caso in cui l'autenticazione ha avuto successo
+                    id = rs.getInt("ID");
+                    return id;
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to process the login", ex);
+        }
+        
+        return id; // caso in cui l'autenticazione non ha avuto successo   
     }
 }
 

@@ -1,0 +1,110 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 22 mag 2022, 12:32:30
+    Author     : fabri
+*/
+#loginBody{
+    background-color: #ACACBB;
+}
+#loginLogo{
+    content: url("../immagini/logo_transparent.png");
+    height: 800px;
+}
+#loginDiv1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#loginFormDiv{
+    width: 50%;
+    height: 40%;
+    position: absolute;
+    top: 56%;
+    border-radius: 25px;
+    border: 3px solid #303841;
+} 
+    
+#loginForm{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+#loginDivBottoni{
+    position: absolute;
+    top: 75%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 20%;
+}
+#loginPasswordInput{
+    position: absolute;
+    top: 50%;
+    height: 10%;
+    width: 42%;
+    font-size: 23px;
+    padding-left: 15px;
+    border: none;
+    color: #303841;
+    background-color: #ACACBB;
+    font-style: italic;
+}
+#loginUsernameInput{
+    position: absolute;
+    top: 15%;
+    height: 10%;
+    width: 42%;
+    font-size: 23px;
+    padding-left: 15px;
+    border: none;
+    color: #303841;
+    background-color: #ACACBB;
+    font-style: italic;
+}
+
+#loginLinea1{
+    background-color: #303841;
+    position: absolute;
+    top: 24%;
+    width: 50%;
+    height: 2px;
+}
+#loginLinea2{
+    background-color: white;
+    position: absolute;
+    top: 59%;
+    width: 50%;
+    height: 2px;
+}
+#loginAncora{
+    font-size: 23px;
+    color:#303841;
+}
+#loginSubmitInput{
+    width:30%;
+    border-radius: 16px;
+    border: 2px solid #303841;
+    height: 32%;
+    color:#303841;
+    background-color: white;
+    font-size: 16px;
+    font-weight: bolder;
+}
+#loginSubmitInput:hover{
+    background-color: #303841;
+    color:white;
+}
+#loginUsernameInput:focus-visible{
+    outline: none;
+}
+#loginPasswordInput:focus-visible{
+    outline: none;
+}
+#loginAncora:hover{
+    color: white;
+    text-decoration: underline;
+}

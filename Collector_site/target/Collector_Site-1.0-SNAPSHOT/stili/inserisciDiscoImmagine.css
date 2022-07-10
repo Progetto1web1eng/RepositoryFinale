@@ -1,0 +1,59 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 6 giu 2022, 17:12:08
+    Author     : fabri
+*/
+#inserisciDiscoImmagineDiv{
+     width: 86%;
+    height:985px;
+    border: 3px solid #979C98;
+    margin-top:8px;
+    background-color: #ACACBB;
+    border-top-left-radius: 38px;
+    border-bottom-left-radius:38px;
+     margin-left: 20px;
+}
+#inserisciDiscoImmagineDivImgContainer{
+    overflow-x: auto;
+    height: 200px;
+    width: 95%;
+    margin-top: 20px;
+    margin-left: 3%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 37px;
+    border: 3px dashed #303841;
+}
+
+.provaListaImmagini{
+  height: 170px;
+    width: 300px;
+    border: 3px solid #303841;
+    margin-left: 20px;
+    border-radius: 37px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-around;  
+}
+
+#inserisciDiscoImmagineLabel1{
+    font-size: 20px;
+    color:#303841;
+}
+.inserisciImmagine {
+    height: 170px;
+    width: 300px;
+    margin-top: 14px;
+    margin-left: 50px;
+    border-radius: 37px;
+}
+
+#inserisciDiscoImmagineInputImg:hover{
+    
+}

@@ -1,0 +1,90 @@
+#setCopieStatoFromAdv{
+    width: 86%;
+    height:985px;
+    border: 3px solid #979C98;
+    margin-top:8px;
+    background-color: #ACACBB;
+    border-top-left-radius: 38px;
+    border-bottom-left-radius:38px;
+    margin-left: 20px;
+}
+#setCopieStatoSelect{
+   height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 66%;
+    top: 430px;
+    width: 15%;
+    border: none;
+}
+
+#setCopieStatoFromAdvInput1{
+   height: 40px;
+    font-style: italic;
+    font-size: 20px;
+    background-color: #ACACBB;
+    color: #303841;
+    position: absolute;
+    left: 39%;
+    top: 430px;
+    width: 3%;
+    border: none;
+}
+#setCopieStatoFromAdvInput2{
+  width: 140px;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid #303841;
+    background-color: white;
+    font-weight: bolder;
+    color: #303841;
+    position: absolute;
+    top: 850px;
+    left: 53%;
+}
+#setCopieStatoFromAdvInput2:hover{
+    color:white;
+    background-color: #303841;
+    border-color:#303841;
+    
+}
+
+#setCopieStatoFromAdvLinea1{
+   height: 1px;
+    background-color: white;
+    width: 17%;
+    position: absolute;
+    top: 473px;
+    left: 29%;
+    z-index: 5;
+}
+#setCopieStatoFromAdvLinea2{
+   height: 1px;
+    background-color: white;
+    width: 17%;
+    position: absolute;
+    top: 473px;
+    left: 65%;
+}
+#setCopieStatoFromAdvLinea3{
+   height: 1px;
+    background-color: white;
+    width: 17%;
+    position: absolute;
+    top: 673px;
+    left: 48%;
+}
+#setCopieStatoSelectTipo{
+  position: absolute;
+    top: 631px;
+    background-color: #ACACBB;
+    color: #303841;
+    height: 40px;
+    width: 15%;
+    font-size: 20px;
+    left: 49%;
+    border: none;
+}

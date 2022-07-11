@@ -245,21 +245,40 @@ insert into racchiude values (2, 11);
 # dischi di Stefano
 #numCopeDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco
 insert into colleziona values (1, 1, "Nuovo", 1, 1);
-insert into colleziona values (2, 2, "Usato", 1, 2);
-insert into colleziona values (5, 1, "Nuovo", 1, 5);
-insert into colleziona values (1, 1, "Nuovo", 1, 3);
-insert into colleziona values (1, 1, "Nuovo", 1, 6);
-insert into colleziona values (1, 1, "Nuovo", 1, 7);
-insert into colleziona values (1, 1, "Nuovo", 1, 8);
-insert into colleziona values (1, 1, "Nuovo", 1, 9);
-insert into colleziona values (1, 1, "Nuovo", 1, 10);
-insert into colleziona values (1, 1, "Nuovo", 1, 11);
+insert into colleziona values (0, 2, "Usato", 1, 1);
 
+insert into colleziona values (5, 1, "Nuovo", 1, 2);
+insert into colleziona values (2, 2, "Usato", 1, 2);
+
+insert into colleziona values (5, 1, "Nuovo", 1, 5);
+insert into colleziona values (8, 2, "Usato", 1, 5);
+
+insert into colleziona values (1, 1, "Nuovo", 1, 3);
+insert into colleziona values (0, 2, "Usato", 1, 3);
+
+insert into colleziona values (1, 1, "Nuovo", 1, 6);
+insert into colleziona values (0, 2, "Usato", 1, 6);
+
+
+insert into colleziona values (0, 1, "Nuovo", 1, 7);
+insert into colleziona values (1, 2, "Usato", 1, 7);
+
+insert into colleziona values (5, 1, "Nuovo", 1, 8);
+insert into colleziona values (0, 2, "Usato", 1, 8);
+
+insert into colleziona values (0, 1, "Nuovo", 1, 9);
+insert into colleziona values (4, 2, "Usato", 1, 9);
+
+insert into colleziona values (2, 1, "Nuovo", 1, 10);
+insert into colleziona values (0, 2, "Usato", 1, 10);
+
+insert into colleziona values (1, 1, "Nuovo", 1, 11);
+insert into colleziona values (1, 2, "Usato", 1, 11);
 
 # insert into colleziona values (1, 1, "Nuovo", 1, 4);
+insert into colleziona values (2, 1, "Nuovo", 2, 3); 
 insert into colleziona values (2, 2, "Usato", 2, 3); 
 # dischi recenti di Stefano
-
 
 
 insert into crea values (1, 1);

@@ -17,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-bottom-left-radius:38px;
     margin-left: 20px;
 }
-#setCCdivContainer{
+#setCCDivContainer{
     width: 350px;
     height: 400px;
     display: flex;
@@ -54,6 +54,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     left: 34%;
     top: 600px;
     width: 18%;
+    border: none;
 }
 .setCCDivItem{
     width: 80%;
@@ -63,4 +64,25 @@ background-color: white;
 margin-top: 10px;
 height: 7%;
 text-align: center;
+}
+.setCCRemoveImg{
+     content: url("../immagini/icons8-elimina-black-32.png");
+     height: 16px;
+     width: 16px;
+}
+#setCCLinea{
+    height: 1px;
+    width: 18%;
+    position: absolute;
+    background-color: white;
+    top: 642px;
+    left: 31%;  
+}
+#setCCSubmit:hover{
+    background-color: #303841;
+    border-color: #303841;
+    color: white;
+}
+#setCCInput:focus-visible{
+    outline: none;
 }

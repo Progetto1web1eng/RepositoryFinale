@@ -41,9 +41,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
                
                 <div style="display: flex;flex-direction: row;justify-content: space-between">
-                    <h3 style="color: white">copie:6</h3>
-                    <a><img class="vistaCollezioneIANC"></a>
-                    <a><img class="vistaCollezioneIDNC"></a>
+                    <#list csList[d?index] as cs>
+                        <h3 style="color: white">stato:${cs.stato.toString()}&nbsp;&nbsp;copie:${cs.numCopieDisco}</h3>
+                        <a href="servletDiProvaSetCopie?st=${cs.stato.toString()}&dK=${d.key}&incr=1"><img class="vistaCollezioneIANC"></a>
+                        <a href="servletDiProvaSetCopie?st=${cs.stato.toString()}&dK=${d.key}&incr=0"><img class="vistaCollezioneIDNC"></a>
+                    </#list>
                 </div>
                 <div>
                     <a href="servletDiProvaDelete?dK=${d.key}"><img class="vistaCollezioneCestinoImg" alt="cancella" style="margin-right: 20px;"></a>

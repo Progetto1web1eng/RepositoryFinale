@@ -78,4 +78,5 @@ collector_site\data\impl\CollezionistaImpl.class
 collector_site\framework\result\DataModelFiller.class
 prova\pac\ServletDiProvaInserisciImmagine.class
 collector_site\data\DAO\TracciaDAO.class
+prova\pac\ServletDiProvaSetCopie.class
 collector_site\data\proxy\ArtistaProxy.class

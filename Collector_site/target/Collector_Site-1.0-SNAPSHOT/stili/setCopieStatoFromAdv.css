@@ -33,6 +33,10 @@
     width: 3%;
     border: none;
 }
+#setCopieStatoFromAdvInput1:focus-visible{
+    outline: none;
+}
+
 #setCopieStatoFromAdvInput2{
   width: 140px;
     height: 50px;

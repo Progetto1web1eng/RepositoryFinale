@@ -6,8 +6,8 @@
         <param-value>C:\Users\fabri</param-value>
     </context-param>
     <context-param>
-    	<param-name>pathProgetto</param-name>
-    	<!-- mettere il path in cui è presente la cartella root del progetto (ovvero la cartella "CollectorSite")
+        <param-name>pathProgetto</param-name>
+        <!-- mettere il path in cui è presente la cartella root del progetto (ovvero la cartella "CollectorSite")
         come valore del tag successivo-->
         <param-value>C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site</param-value>
     </context-param>
@@ -91,10 +91,13 @@
         <servlet-name>ServletDiProvaDelete</servlet-name>
         <servlet-class>prova.pac.ServletDiProvaDelete</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>JsonServlet</servlet-name>
         <servlet-class>prova.pac.JsonServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletDiProvaSetCopie</servlet-name>
+        <servlet-class>prova.pac.ServletDiProvaSetCopie</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletDiProvaInserisciImmagine</servlet-name>
@@ -176,10 +179,13 @@
         <servlet-name>ServletDiProvaDelete</servlet-name>
         <url-pattern>/servletDiProvaDelete</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>JsonServlet</servlet-name>
         <url-pattern>/jsonServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDiProvaSetCopie</servlet-name>
+        <url-pattern>/servletDiProvaSetCopie</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

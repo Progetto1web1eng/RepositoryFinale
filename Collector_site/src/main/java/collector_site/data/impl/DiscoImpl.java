@@ -44,6 +44,17 @@ public class DiscoImpl extends DataItemImpl<Integer> implements Disco{
             immagini = null;
             tracce = null;
             tipo = null;
+            
+            copieStati = new ArrayList();
+            
+            CopieStato nuovo = new CopieStato();
+            nuovo.setStato(StatoDisco.NUOVO);
+            
+            CopieStato usato = new CopieStato();
+            usato.setStato(StatoDisco.USATO);
+            
+            copieStati.add(nuovo);
+            copieStati.add(usato);
         }
         
         @Override

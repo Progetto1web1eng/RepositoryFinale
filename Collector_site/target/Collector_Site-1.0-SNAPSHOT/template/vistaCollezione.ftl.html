@@ -42,7 +42,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                
                 <div style="display: flex;flex-direction: row;justify-content: space-between">
                     <#list csList[d?index] as cs>
-                        <h3 style="color: white">stato:${cs.stato.toString()}&nbsp;&nbsp;copie:${cs.numCopieDisco}</h3>
+                        <h3 style="color: white">stato:${cs.stato.toString()?lower_case}&nbsp;&nbsp;copie:${cs.numCopieDisco}</h3>
                         <a href="servletDiProvaSetCopie?st=${cs.stato.toString()}&dK=${d.key}&incr=1"><img class="vistaCollezioneIANC"></a>
                         <a href="servletDiProvaSetCopie?st=${cs.stato.toString()}&dK=${d.key}&incr=0"><img class="vistaCollezioneIDNC"></a>
                     </#list>

@@ -535,15 +535,20 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     }
 
     @Override
-    public List<Collezione> getCollezioniAccessibiliByNome(Collezione collezione, Collezionista collezionista) throws DataException {
+    public List<Collezione> getCollezioniAccessibiliByNome(String nomeCollezione, Collezionista collezionista) throws DataException {
         List<Collezione> result = new ArrayList();
+        // per eseguire una ricerca case insensitive
+        nomeCollezione = nomeCollezione.toUpperCase();
         
         try {
             
             try (ResultSet rs = getCollezioniPubbliche.executeQuery()) {
                 while (rs.next()) {
                     // si aggiungono nella lista soltanto le collezioni pubbliche presenti nella webapp
-                    result.add(getCollezioneById(rs.getInt("ID")));
+                    // che hanno il nome indicato
+                    if(nomeCollezione.equals(rs.getString("nomeCollezione").toUpperCase())) {
+                        result.add(getCollezioneById(rs.getInt("ID")));
+                    }
                 }
             }
         } catch (SQLException ex) {
@@ -557,8 +562,12 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
         }
         
         // nella lista si aggiungono solo le collezioni private che sono state condivise al collezionista in
-        // questione
-        result.addAll(getCollezioniCondiviseToCollezionista(collezionista));
+        // questione che hanno il nome indicato
+        for(Collezione c : getCollezioniCondiviseToCollezionista(collezionista)) {
+            if(nomeCollezione.equals(c.getNomeCollezione().toUpperCase())) {
+                result.add(c);
+            }
+        }
         
         return result;
     }

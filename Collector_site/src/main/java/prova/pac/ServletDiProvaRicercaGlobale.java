@@ -5,6 +5,7 @@
 package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
+import collector_site.data.impl.CopieStato;
 import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
@@ -62,8 +63,27 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
             
             if(request.getParameter("collezioneK")!=null){
                 // per visualizzare dischi esterni
+               
                 Collezione collezione = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(Integer.parseInt(request.getParameter("collezioneK")));
+                Collezionista coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByCollezione(collezione);
                 List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDiscoByCollezione(collezione);
+                 // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
+                List<Artista> artistiList = new ArrayList();
+                for(Disco d : dischiList){
+                    artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                }
+                
+                // trovo le copie per ogni disco per poi aggiungere una lista al data model
+               
+                List<List<CopieStato>> csList = new ArrayList();
+                List<CopieStato> tempList = new ArrayList();
+                for (Disco d : dischiList){
+                    tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, coll);
+                    csList.add(tempList);
+                }
+               
+                dataM.put("csList",csList);
+                dataM.put("artistiList", artistiList);
                 dataM.put("dischiList",dischiList);
                 dataM.put("numero",13);
                 t.process(dataM,response.getWriter());
@@ -107,12 +127,10 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                      dataM.put("cPar", collez);
                      t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":C")){
-                     
-                     //List<Collezione> collezioniList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().get
-                     //manca un getCollezioniByNomeCollezione
-                     //dataM.put("numero",14);
-                     //dataM.put("collezioniList",collezioniList);
-                     // t.process(dataM,response.getWriter());
+                    List<Collezione> collezioniList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniAccessibiliByNome(inputSenzaPlaceH, collezionista);
+                     dataM.put("numero",14);
+                     dataM.put("collezioniList",collezioniList);
+                      t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
                      List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH);
                      dataM.put("numero",13);

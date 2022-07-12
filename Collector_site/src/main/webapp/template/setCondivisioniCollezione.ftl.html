@@ -29,7 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <#list collezionistiList as c>
                         <div class="setCCDivItem">
                             ${c.nickname}
-                            <a href="servletDiProvaCollezioniCondivise?kCollezionista=${c.key}"><img src="immagini/icons8-elimina-black-32.png"  style="height: 20px;width: 20px;margin-left: 18%"></a>
+                            <a href="servletDiProvaCollezioniCondivise?kCollezionista=${c.key}"><img class="setCCRemoveImg" src="immagini/icons8-elimina-black-32.png"></a>
                         </div>
                     </#list>
                 <#else>

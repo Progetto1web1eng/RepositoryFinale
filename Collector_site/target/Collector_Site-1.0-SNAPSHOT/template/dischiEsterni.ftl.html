@@ -8,11 +8,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <#if dischiList?size != 0>
             <#list dischiList as d>
                 <div class="dischiEsterniContainer">
-                    <h1> ${d.nomeDisco}</h1>
-                </div>
-                <div >
-                    <a href="servletDiProvaRicercaGlobale?discoK=${d.key}"><img class="dischiEsterniImgInfo" ></a>
-                </div>
+                    <h1 style="color: #303841"> ${d.tipo.toString()}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${artistiList[d?index].nomeDarte}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.nomeDisco} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.anno}</h1>
+                    <div style="display: flex;flex-direction: row">
+                        <#list csList[d?index] as cs>
+                            <h2 style="color:#303841 ">stato:${cs.stato.toString()?lower_case}&nbsp;&nbsp;copie:${cs.numCopieDisco}&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+                        </#list>
+                    </div>
+                    <div>
+                        <a href="servletDiProvaRicercaGlobale?discoK=${d.key}"><img class="dischiEsterniImgInfo" ></a>
+                    </div>
+                </div> 
             </#list>
         <#else>
             <#if errorA??>
@@ -21,7 +26,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </h1>
             <#else>
                 <h1 style="margin-left: 38%;color: #303841">
-                Non esistono dischi con questo nome
+                 Collezione priva di dischi
                 </h1>
             </#if>
         </#if>

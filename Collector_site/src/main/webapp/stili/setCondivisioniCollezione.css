@@ -57,18 +57,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border: none;
 }
 .setCCDivItem{
-    width: 80%;
-border-radius: 10px;
-border: 3px solid #303841;
-background-color: white;
-margin-top: 10px;
-height: 7%;
-text-align: center;
+   width: 80%;
+    border-radius: 10px;
+    border: 3px solid #303841;
+    background-color: white;
+    margin-top: 10px;
+    height: 6%;
+    text-align: center;
+    position: relative;
 }
 .setCCRemoveImg{
      content: url("../immagini/icons8-elimina-black-32.png");
-     height: 16px;
-     width: 16px;
+     height: 20px;
+     width: 20px;
+     position: absolute;
+     left: 88%;
 }
 #setCCLinea{
     height: 1px;

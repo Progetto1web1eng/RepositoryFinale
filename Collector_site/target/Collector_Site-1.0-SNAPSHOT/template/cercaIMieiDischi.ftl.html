@@ -39,8 +39,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <img src="immaginiDischi/giggino.PNG"  alt="immagine disco" class="cercaIMieiDischiImmagineDisco">
             </div>
             <div>
-                <h3 style="color: white">${artistiList[d?index].nomeDarte}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.nomeDisco} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.anno}</h3>
+                <h3 style="color: white">${d.tipo.toString()}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${artistiList[d?index].nomeDarte}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.nomeDisco} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.anno}</h3>
             </div>
+             <div style="display: flex;flex-direction: row">
+                    <#list csList[d?index] as cs>
+                        <h3 style="color: white">stato:${cs.stato.toString()?lower_case}&nbsp;&nbsp;copie:${cs.numCopieDisco}&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+                    </#list>
+             </div> 
             <div>
                 <a href="servletDiProvaRicercaGlobale?discoK=${d.key}"><img id="cercaIMieiDischiModificaImg" alt="info" style="margin-right: 20px;"></a>
             </div>   

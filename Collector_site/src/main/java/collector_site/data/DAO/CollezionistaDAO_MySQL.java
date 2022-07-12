@@ -208,7 +208,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             // nulli
             if ("".equals(collezionista.getNickname()) ||
                     "".equals(collezionista.getEmail()) ||
-                    "".equals(collezionista.getUsername()) ||
+                    // "".equals(collezionista.getUsername()) ||
                     "".equals(collezionista.getPassword())) {
                 return;
             }
@@ -233,7 +233,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             
             storeCollezionista.setString(1, collezionista.getNickname());
             storeCollezionista.setString(2, collezionista.getEmail());
-            storeCollezionista.setString(3, collezionista.getUsername());
+            storeCollezionista.setString(3, "");
             storeCollezionista.setString(4, collezionista.getPassword());
             
             if ("".equals(collezionista.getCellulare())) {

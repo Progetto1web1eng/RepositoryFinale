@@ -133,11 +133,12 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
     @Override
     public void deleteCollezione(Collezione collezione) {
         
-        if (collezione.getKey() == null || collezione.getKey() >= 0) {
+        if (collezione.getKey() == null || collezione.getKey() <= 0) {
             return;
         }
         
         try {
+            deleteCollezione.setInt(1, collezione.getKey());
             if (deleteCollezione.executeUpdate() == 0) {
                 // qui si deve sollevare eccezione
             }

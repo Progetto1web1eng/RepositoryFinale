@@ -417,14 +417,13 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         }
         
          try {
-        
             updateQuantitaDisco.setInt(1, nuovaQuantita);
             
             updateQuantitaDisco.setInt(2, collezionista.getKey());
             updateQuantitaDisco.setInt(3, disco.getKey());
             updateQuantitaDisco.setInt(4, StatoDisco.valueOf(statoDisco.toString()).ordinal() + 1);
            
-            if (storeQuantitaDisco.executeUpdate() != 1) {
+            if (updateQuantitaDisco.executeUpdate() != 1) {
                 // solleva eccezione
             }
 

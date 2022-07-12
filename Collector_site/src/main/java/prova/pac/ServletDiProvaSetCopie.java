@@ -6,6 +6,7 @@ package prova.pac;
 
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.impl.CopieStato;
+import collector_site.data.impl.StatoDisco;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.framework.data.DataException;
@@ -44,18 +45,23 @@ public class ServletDiProvaSetCopie extends ServletDiProvaCollector_siteBaseCont
                     cs = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                     int temp = cs.get(0).getNumCopieDisco();
                     temp++;
-                    cs.get(0).setNumCopieDisco(temp);
-                    //qui devo fare l'update delle copie stato
+                    ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().updateQuantitaDisco(d, collezionista, StatoDisco.NUOVO, temp);
                     response.sendRedirect("servletDiProvaVistaCollezione?k="+idColl); 
                
                 }else{
                     // vogliamo decrementare
                     cs = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                     int temp = cs.get(0).getNumCopieDisco();
-                    temp--;
-                    cs.get(0).setNumCopieDisco(temp);
-                    //qui devo fare l'update delle copie stato
-                    response.sendRedirect("servletDiProvaVistaCollezione?k="+idColl); 
+                    if(temp==1 && ((cs.get(1).getNumCopieDisco())==0) ){
+                        //caso in cui non rimangono più copie del disco chiamo la delete
+                        response.sendRedirect("servletDiProvaDelete?dK="+idDisc);
+                    }else{
+                        if(temp!=0){
+                            temp--;
+                        }
+                        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().updateQuantitaDisco(d, collezionista, StatoDisco.NUOVO, temp);
+                        response.sendRedirect("servletDiProvaVistaCollezione?k="+idColl); 
+                    }
                     
                 }
             }else{
@@ -65,8 +71,7 @@ public class ServletDiProvaSetCopie extends ServletDiProvaCollector_siteBaseCont
                     cs = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                     int temp = cs.get(1).getNumCopieDisco();
                     temp++;
-                    cs.get(1).setNumCopieDisco(temp);
-                    //qui devo fare l'update delle copie stato
+                    ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().updateQuantitaDisco(d, collezionista, StatoDisco.USATO, temp);
                     response.sendRedirect("servletDiProvaVistaCollezione?k="+idColl); 
                     
                     
@@ -74,10 +79,17 @@ public class ServletDiProvaSetCopie extends ServletDiProvaCollector_siteBaseCont
                     // vogliamo decrementare
                      cs = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                     int temp = cs.get(1).getNumCopieDisco();
-                    temp--;
-                    cs.get(1).setNumCopieDisco(temp);
-                    //qui devo fare l'update delle copie stato
-                    response.sendRedirect("servletDiProvaVistaCollezione?k="+idColl); 
+                    
+                     if(temp==1 && ((cs.get(0).getNumCopieDisco())==0) ){
+                        //caso in cui non rimangono più copie del disco chiamo la delete
+                        response.sendRedirect("servletDiProvaDelete?dK="+idDisc);
+                    }else{
+                        if(temp!=0){
+                            temp--;
+                        }
+                        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().updateQuantitaDisco(d, collezionista, StatoDisco.USATO, temp);
+                        response.sendRedirect("servletDiProvaVistaCollezione?k="+idColl); 
+                    } 
                     
                 }
             }

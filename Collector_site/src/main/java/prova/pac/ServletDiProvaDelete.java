@@ -45,6 +45,17 @@ public class ServletDiProvaDelete extends  ServletDiProvaCollector_siteBaseContr
            } catch (IOException ex) {
                Logger.getLogger(ServletDiProvaDelete.class.getName()).log(Level.SEVERE, null, ex);
            }
+       }else{
+           try {
+               int idColl = Integer.parseInt(request.getParameter("cK"));
+               Collezione c = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(idColl);
+               ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().deleteCollezione(c);
+               response.sendRedirect("servletDiProvaHome");
+           } catch (DataException ex) {
+               Logger.getLogger(ServletDiProvaDelete.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (IOException ex) {
+               Logger.getLogger(ServletDiProvaDelete.class.getName()).log(Level.SEVERE, null, ex);
+           }
        }
           
        

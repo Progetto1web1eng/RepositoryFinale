@@ -4,5 +4,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
 <div id="UnDischiEsterniDiv">
-    
+     <div>
+        <#if dischiList?size != 0>
+            <#list dischiList as d>
+                <div class="UnDischiEsterniContainer">
+                    <h1> ${d.nomeDisco}</h1>
+                </div>
+                <div >
+                    <a href="servletDiProvaRicercaGlobale?discoK=${d.key}"><img class="UnDischiEsterniImgInfo" ></a>
+                </div>
+            </#list>
+        <#else>
+            <#if errorA??>
+                <h1 style="margin-left: 38%;color: #303841">
+                Non esistono dischi incisi da questo artista
+                </h1>
+            <#else>
+                <h1 style="margin-left: 38%;color: #303841">
+                Non esistono dischi con questo nome
+                </h1>
+            </#if>
+        </#if>
+    </div>
 </div>

@@ -18,6 +18,7 @@ import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,17 +38,26 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        
+        HttpSession s = request.getSession(false);
+        
+        
+        //caso in cui stiamo svolgendo la ricerca da un utente loggato
+        if(s!=null){
         try {
-            HttpSession s = request.getSession(false);
             int IDcollezionista = (int)s.getAttribute("id");
             ProvaConfig pcg = new ProvaConfig(getServletContext());
             Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
             Map<String,Object> dataM = new HashMap();
             
-            //caricamento sideBar
-            Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
-            List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
-            dataM.put("collezioni",collezioni);
+           
+                //caricamento sideBar nel caso in cui l'utente abbia effettuato il login
+                Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
+                List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                dataM.put("collezioni",collezioni);
+                
+            
+            
             
             
             if(request.getParameter("collezioneK")!=null){
@@ -97,8 +107,12 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                      dataM.put("cPar", collez);
                      t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":C")){
+                     
                      //List<Collezione> collezioniList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().get
                      //manca un getCollezioniByNomeCollezione
+                     //dataM.put("numero",14);
+                     //dataM.put("collezioniList",collezioniList);
+                     // t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
                      List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH);
                      dataM.put("numero",13);
@@ -106,10 +120,17 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                       t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){
                      Artista art = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
-                     List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(art);
-                     dataM.put("numero",13);
-                     dataM.put("dischiList",dischiList);
-                      t.process(dataM,response.getWriter());
+                     if(art!=null){
+                         List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(art);
+                         dataM.put("dischiList",dischiList);
+                     }
+                     else{
+                         List<Disco> emptyList = new ArrayList();
+                         dataM.put("dischiList",emptyList);
+                         dataM.put("errorA",1);
+                     }
+                    dataM.put("numero",13);
+                    t.process(dataM,response.getWriter());
                  }
             }
         } catch (ParseException ex) {
@@ -120,6 +141,14 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
             Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TemplateException ex) {
             Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        
+        
+        
+         //caso in cui stiamo svolgendo la ricerca da un utente loggato
+        else{
+            
         }
     }
 

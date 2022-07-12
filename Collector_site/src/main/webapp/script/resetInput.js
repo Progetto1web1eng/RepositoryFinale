@@ -66,6 +66,7 @@ function resetRegistrazionetelefonoInput(){
     if(registrazionetelefonoInput.value==="Numero cellulare"){
         registrazionetelefonoInput.value="";
     }
+    registrazionetelefonoInput.type="number";
 }
 function resetRegistrazioneEmailInput(){
     const registrazioneEmailInput = document.getElementById("registrazioneEmailInput");
@@ -84,7 +85,16 @@ function resetRegistrazionePasswordInput(){
     if(registrazionePasswordInput.value==="Password"){
         registrazionePasswordInput.value="";
     }
+    registrazionePasswordInput.type="password"
 }
+function resetRegistrazioneConfermaInput(){
+    const registrazioneConfermaInput = document.getElementById("registrazioneConfermaInput");
+        if(registrazioneConfermaInput.value==="Conferma Password"){
+            registrazioneConfermaInput.value="";
+        }
+        registrazioneConfermaInput.type="password"
+}
+
 function resetInserisciNomeDiscoInput(){
     const nomeDiscoInput = document.getElementById("inserisciDiscoNomeDisco");
     if(nomeDiscoInput.value==="Nome disco"){

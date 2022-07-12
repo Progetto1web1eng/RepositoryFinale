@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 #registrazioneFormDiv{
     width: 50%;
-    height: 70%;
+    height: 80%;
     position: absolute;
     top: 56%;
     border-radius: 25px;
@@ -36,7 +36,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 #registrazionetelefonoInput{
     position: absolute;
-    top: 10%;
+    top: 5%;
     height: 10%;
     width: 42%;
     font-size: 23px;
@@ -48,7 +48,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 #registrazioneEmailInput{
     position: absolute;
-    top: 30%;
+    top: 20%;
     height: 10%;
     width: 42%;
     font-size: 23px;
@@ -60,7 +60,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 #registrazioneUsernameInput{
     position: absolute;
-    top: 50%;
+    top: 35%;
     height: 10%;
     width: 42%;
     font-size: 23px;
@@ -72,7 +72,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 #registrazionePasswordInput{
     position: absolute;
-    top: 70%;
+    top: 50%;
+    height: 10%;
+    width: 42%;
+    font-size: 23px;
+    padding-left: 15px;
+    border: none;
+    color: #303841;
+    background-color: white;
+    font-style: italic;
+}
+#registrazioneConfermaInput{
+    position: absolute;
+    top: 65%;
     height: 10%;
     width: 42%;
     font-size: 23px;
@@ -86,30 +98,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #registrazioneLinea1{
     background-color: #303841;
     position: absolute;
-    top: 18%;
+    top: 13%;
     width: 50%;
-    height: 2px;
+    height: 1px;
 }
 #registrazioneLinea2{
     background-color: #303841;
     position: absolute;
-    top: 38%;
+    top: 28%;
     width: 50%;
-    height: 2px;
+    height: 1px;
 }
 #registrazioneLinea3{
     background-color: #303841;
     position: absolute;
-    top: 58%;
+    top: 43%;
     width: 50%;
-    height: 2px;
+    height: 1px;
 }
 #registrazioneLinea4{
     background-color: #303841;
     position: absolute;
-    top: 78%;
+    top: 58%;
     width: 50%;
-    height: 2px;
+    height: 1px;
+}#registrazioneLinea5{
+     background-color: #303841;
+    position: absolute;
+    top: 73%;
+    width: 50%;
+    height: 1px;
 }
 #registrazioneAncora{
     font-size: 23px;
@@ -139,6 +157,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     outline: none;
 }
 #registrazioneEmailInput:focus-visible{
+    outline: none;
+}
+#registrazioneConfermaInput:focus-visible{
     outline: none;
 }
 #registrazioneAncora:hover{

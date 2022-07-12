@@ -39,6 +39,7 @@ collector_site\framework\data\DataItem.class
 collector_site\data\DAO\CollezioneDAO_MySQL.class
 collector_site\data\DAO\TracciaDAO_MySQL.class
 prova\pac\ServletDiProvaDelete.class
+collector_site\framework\utils\Service.class
 collector_site\data\DAO\CollezioneDAO.class
 collector_site\data\DAO\ImmagineDAO.class
 collector_site\framework\result\StreamResult.class

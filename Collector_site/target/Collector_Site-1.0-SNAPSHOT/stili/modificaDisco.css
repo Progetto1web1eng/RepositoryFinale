@@ -134,3 +134,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #303841;
     border-color: #303841;
 }
+#modificaDiscoNomeDisco:focus-visible{
+    outline: none;
+}
+#modificaDiscoBarcode:focus-visible{
+    outline: none;
+}
+#modificaDiscoData:focus-visible{
+    outline: none;
+}
+#modificaDiscoEtichetta:focus-visible{
+    outline: none;
+}

@@ -5,10 +5,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
             <div id="registrazioneFormDiv">
                 <form id="registrazioneForm">
-                    <input type="text" id="registrazionetelefonoInput"  value="Numero cellulare" onclick="resetRegistrazionetelefonoInput()">
-                    <input type="text" id="registrazioneEmailInput"  value="Email" onclick="resetRegistrazioneEmailInput()">
-                    <input type="text" id="registrazioneUsernameInput"  value="Username" onclick="resetRegistrazioneUsernameInput()">
-                    <input type="text" id="registrazionePasswordInput"  value="Password" onclick="resetRegistrazionePasswordInput()">
+                    <input type="text" id="registrazionetelefonoInput" name="telefonoInput"  value="Numero cellulare" onclick="resetRegistrazionetelefonoInput()">
+                    <input type="text" id="registrazioneEmailInput"  name="emailInput" value="Email" onclick="resetRegistrazioneEmailInput()">
+                    <input type="text" id="registrazioneUsernameInput"  name="nicknameInput" value="Nickname" onclick="resetRegistrazioneUsernameInput()">
+                    <input type="text" id="registrazionePasswordInput"  name="passwordInput" value="Password" onclick="resetRegistrazionePasswordInput()">
+                    <input type="text" id="registrazioneConfermaInput"  name="confermaInput" value="Conferma Password" onclick="resetRegistrazioneConfermaInput()">
                     <div id="registrazioneDivBottoni">
                         <a id="registrazioneAncora" href="servletDiProvaLogin"> indietro </a>
                         <input id="registrazioneSubmitInput" type="submit" value="Registrati">
@@ -17,5 +18,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div id="registrazioneLinea2"></div>
                     <div id="registrazioneLinea3"></div>
                     <div id="registrazioneLinea4"></div>
+                    <div id="registrazioneLinea5"></div>
                 </form>
+                <#if error??>
+                    <label style="color: red;position: absolute;top: 710px;left: 52%"> esiste gia&#768; un utente con questo nickname</label>
+                </#if>
+                <#if errore??>
+                    <label  style="color: red;position: absolute;top: 710px;left: 58%;">parametri inseriti non corretti</label>
+                </#if>
             </div>

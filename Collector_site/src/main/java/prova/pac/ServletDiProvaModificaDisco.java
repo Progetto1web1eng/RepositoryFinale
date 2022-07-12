@@ -37,25 +37,35 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBaseController {
 
-    private void add_T(HttpServletRequest request,HttpServletResponse response,int IDdisco) throws DataException, IOException, java.text.ParseException{
+    private void add_T(HttpServletRequest request,HttpServletResponse response,int IDdisco,Template t,Map<String,Object> dataM,int IDcollezionista,HttpSession s) throws DataException, IOException, java.text.ParseException{
         
         String nomeTracciaPar = request.getParameter("nomeTracciaPar");
         String timeParS = request.getParameter("timePar");
-         SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-         long ms = sdf.parse(timeParS).getTime();
-         Time timePar = new Time(ms);
-        Traccia traccia = new TracciaImpl();
-        traccia.setDurata(timePar);
-        traccia.setTitolo(nomeTracciaPar);
-        Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
-        traccia.setDisco(disco);
-        ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().storeTraccia(traccia);
-        out.println("prima della response");
-        out.println("prima della response");
-        out.println("prima della response");
-        out.println("prima della response");
-        out.println("prima della response");
-        response.sendRedirect("servletDiProvaModificaDisco?discoKey="+IDdisco);
+        if(nomeTracciaPar.length()==0||timeParS.length()==0){
+            try {
+                Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
+                List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
+                dataM.put("collezioni",collezioni);
+               
+                dataM.put("numero", 11);
+                dataM.put("error",1);
+                t.process(dataM, response.getWriter());
+            } catch (TemplateException ex) {
+                Logger.getLogger(ServletDiProvaModificaDisco.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+           SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+           long ms = sdf.parse(timeParS).getTime();
+           Time timePar = new Time(ms);
+           Traccia traccia = new TracciaImpl();
+           traccia.setDurata(timePar);
+           traccia.setTitolo(nomeTracciaPar);
+           Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
+           traccia.setDisco(disco);
+           ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().storeTraccia(traccia);
+           response.sendRedirect("servletDiProvaModificaDisco?discoKey="+IDdisco);
+        }
+         
            
     }
     
@@ -113,7 +123,7 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
             }else if(request.getParameter("aggiungiTraccia")!=null){
                 schermata_traccia(request,response,t,dataM,IDcollezionista,s);
             }else if(request.getParameter("timePar")!=null){
-                add_T(request,response, (int) s.getAttribute("idDiscoS"));
+                add_T(request,response, (int) s.getAttribute("idDiscoS"),t,dataM,IDcollezionista,s);
             }
             else { 
                 update_disco(request,response, (int) s.getAttribute("discoID"),(int) s.getAttribute("collK"));

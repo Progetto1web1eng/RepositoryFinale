@@ -12,6 +12,7 @@ import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
+import collector_site.framework.utils.Service;
 import freemarker.core.HTMLOutputFormat;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -69,7 +70,7 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     dataM.put("hidden", 2);
                 }else{
                     // caso in cui abbiamo un riscontro
-                    
+                    listD = Service.deleteSame(listD);
                     // trovo tutti gli artisti di ogni disco 
                     List<Artista> artistiList = new ArrayList();
                     for(Disco d : listD){
@@ -97,7 +98,7 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     dataM.put("hidden", 2);
                 }else{
                      // caso in cui abbiamo un riscontro
-                    
+                    listD = Service.deleteSame(listD);
                     List<Artista> artistiList = new ArrayList();
                     for ( Disco d : listD){
                         artistiList.add(artista);
@@ -136,6 +137,7 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     dataM.put("hidden", 2);
                 }else{
                         // caso in cui abbiamo un riscontro
+                        listD = Service.deleteSame(listD);
                     // trovo tutti gli artisti di ogni disco 
                     List<Artista> artistiList = new ArrayList();
                     for(Disco d : listD){

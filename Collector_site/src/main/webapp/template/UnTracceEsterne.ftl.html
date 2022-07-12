@@ -4,5 +4,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
 <div id="UnTracceEsterneDiv">
-    
+    <#if tracceList?size !=0>
+        <#list tracceList as t>
+            <div class="UnTracceEsterneContainer">
+                <h3> ${t.titolo}</h3>
+                <h3> ${t.durata}</h3>
+                <!-- qui va passato il compositore -->
+            </div>
+        </#list>
+    <#else>
+        <h1 style="margin-left: 43%;color: #303841">
+            disco privo di tracce
+        </h1>
+    </#if>
 </div>

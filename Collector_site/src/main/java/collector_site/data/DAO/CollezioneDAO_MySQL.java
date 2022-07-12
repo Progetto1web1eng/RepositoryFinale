@@ -494,7 +494,6 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
     @Override
     public List<Collezione> getCollezioniAccessibili(Collezionista collezionista_target, Collezionista collezionista_loggato) throws DataException {
-        // questo metodo restituisce tutte le collezioni create dal Collezionista in questione
         List<Collezione> result = new ArrayList();
         
         try {
@@ -502,6 +501,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             
             try (ResultSet rs = getCollezioniPubblicheByCollezionista.executeQuery()) {
                 while (rs.next()) {
+                    // si aggiungono nella lista soltanto le collezioni pubbliche create dal collezionista_target
                     result.add(getCollezioneById(rs.getInt("c.ID")));
                 }
             }
@@ -522,12 +522,43 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
 
             try (ResultSet rs = getCollezioniAccessibiliLoggato.executeQuery()) {
                 while (rs.next()) {
+                    // nella lista si aggiungono solo le collezioni private create dal collezionista_target 
+                    // che sono state condivise al collezionista_loggato
                     result.add(getCollezioneById(rs.getInt("IDcollezione")));
                 }
             }
         } catch (SQLException ex) {
             throw new DataException("Unable to load Collezioni by Collezionista", ex);
         }
+        
+        return result;
+    }
+
+    @Override
+    public List<Collezione> getCollezioniAccessibiliByNome(Collezione collezione, Collezionista collezionista) throws DataException {
+        List<Collezione> result = new ArrayList();
+        
+        try {
+            
+            try (ResultSet rs = getCollezioniPubbliche.executeQuery()) {
+                while (rs.next()) {
+                    // si aggiungono nella lista soltanto le collezioni pubbliche presenti nella webapp
+                    result.add(getCollezioneById(rs.getInt("ID")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezioni pubbliche in getCollezioniAccessibiliByNome", ex);
+        }
+        
+        if(collezionista == null) {
+            // caso in cui l'utente non è LOGGATO ==> l'utente potrà visualizzare soltanto le collezioni 
+            // pubbliche presenti nella webapp 
+            return result;
+        }
+        
+        // nella lista si aggiungono solo le collezioni private che sono state condivise al collezionista in
+        // questione
+        result.addAll(getCollezioniCondiviseToCollezionista(collezionista));
         
         return result;
     }

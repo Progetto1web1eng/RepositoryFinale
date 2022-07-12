@@ -66,7 +66,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             deleteCollezionista = connection.prepareStatement("DELETE FROM collezionista WHERE ID=?"); 
             updateCollezionista = connection.prepareStatement("UPDATE collezionista SET nickname=?,email=?,username=?,password=?,cellulare=? WHERE ID=?");
             getCollezionistaById = connection.prepareStatement("SELECT * FROM collezionista WHERE ID=?");
-            getCollezionistaByCollezione = connection.prepareStatement("SELECT ca.ID, ca.nickname, ca.email, ca.username, ca.`password`, ca.cellulare FROM collezionista ca join collezione ce on(ca.ID = ce.IDcollezionista) WHERE (ce.ID = ?)");
+            getCollezionistaByCollezione = connection.prepareStatement("SELECT c.IDcollezionista FROM collezione c WHERE (c.ID = ?);");
             getCollezionistaByUandP = connection.prepareStatement("SELECT * FROM collezionista WHERE username=? AND password=?");
             getCollezionisti = connection.prepareStatement("SELECT ID FROM collezionista");
             getCollezionistaByNickname = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=?");
@@ -160,6 +160,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
         
         try {
             getCollezionistaByCollezione.setInt(1, collezione.getKey());
+            
             try (ResultSet rs = getCollezionistaByCollezione.executeQuery()) {
                 if (rs.next()) {
                     collezionista = getCollezionistaById(rs.getInt("c.IDcollezionista")); 
@@ -168,6 +169,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
         } catch (SQLException ex) {
             throw new DataException("Unable to load Collezionista by Collezione", ex);
         }
+        
         return collezionista;
     }     
     

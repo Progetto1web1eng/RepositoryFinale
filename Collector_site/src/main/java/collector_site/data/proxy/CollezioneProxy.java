@@ -118,5 +118,4 @@ public class CollezioneProxy extends CollezioneImpl implements DataItemProxy {
         super.setCreatore(null);
     }
     
-    
 }

@@ -20,7 +20,5 @@ public interface ImmagineDAO {
     Immagine getImmagineById(int id)throws DataException;
     List<Immagine> getImmaginiByDisco(Disco disco)throws DataException;
     List<Immagine> getImmagini() throws DataException;
-    
-    
-    
+    void storeImmagine(Immagine immagine) throws DataException;
 }

@@ -30,7 +30,6 @@ prova\pac\Upload.class
 collector_site\data\impl\DiscoMinimale.class
 collector_site\data\model\Artista.class
 prova\pac\ServletDiProvaCercaIMieiDischi.class
-prova\pac\ServletDiProvaLoggedRicercaGlobale.class
 prova\pac\ServletDiProvaProfilo.class
 collector_site\framework\result\HTMLResult$HTML_Version.class
 collector_site\data\impl\StatoDisco.class

@@ -282,7 +282,7 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         List<Disco> result = new ArrayList();
         
         try{
-            getDischiByArtista.setInt(2, artista.getKey());
+            getDischiByArtista.setInt(1, artista.getKey());
             try(ResultSet rs = getDischiByArtista.executeQuery()){
                 while (rs.next()){
                     result.add(getDisco(rs.getInt("IDdisco")));

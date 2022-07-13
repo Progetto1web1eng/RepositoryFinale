@@ -128,14 +128,54 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                       t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
                      List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH);
+                      // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
+                        List<Artista> artistiList = new ArrayList();
+                        for(Disco d : dischiList){
+                            artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                        }
+
+                        // trovo le copie per ogni disco per poi aggiungere una lista al data model
+
+                        List<List<CopieStato>> csList = new ArrayList();
+                        List<CopieStato> tempList = new ArrayList();
+                        for (Disco d : dischiList){
+                            // metodo dao mancante che trova un collezionista dato un disco
+                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);//ci va coll e non null
+                            csList.add(tempList);
+                        }
+
+                     dataM.put("csList",csList);
+                     dataM.put("artistiList", artistiList);
                      dataM.put("numero",13);
                      dataM.put("dischiList",dischiList);
                       t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){
                      Artista art = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
                      if(art!=null){
+                         out.println("prima di getDischiByArtista");
                          List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(art);
+                         out.println("dopo di getDischiByArtista");
                          dataM.put("dischiList",dischiList);
+                          // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
+                        List<Artista> artistiList = new ArrayList();
+                        for(Disco d : dischiList){
+                            artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                        }
+
+                        // trovo le copie per ogni disco per poi aggiungere una lista al data model
+
+                        List<List<CopieStato>> csList = new ArrayList();
+                        List<CopieStato> tempList = new ArrayList();
+                        for (Disco d : dischiList){
+                            // metodo dao mancante che trova un collezionista dato un disco
+                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);//ci va coll e non null
+                            csList.add(tempList);
+                        }
+
+                        dataM.put("csList",csList);
+                        dataM.put("artistiList", artistiList);
+                         
+                         
                      }
                      else{
                          List<Disco> emptyList = new ArrayList();
@@ -235,14 +275,50 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                           t.process(dataM,response.getWriter());
                      }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
                          List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH);
-                         dataM.put("numero",3);
-                         dataM.put("dischiList",dischiList);
+                         // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
+                        List<Artista> artistiList = new ArrayList();
+                        for(Disco d : dischiList){
+                            artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                        }
+
+                        // trovo le copie per ogni disco per poi aggiungere una lista al data model
+
+                        List<List<CopieStato>> csList = new ArrayList();
+                        List<CopieStato> tempList = new ArrayList();
+                        for (Disco d : dischiList){
+                            // metodo dao mancante che trova un collezionista dato un disco
+                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);// ci va coll e non null
+                            csList.add(tempList);
+                        }
+
+                        dataM.put("csList",csList);
+                        dataM.put("artistiList", artistiList);
+                        dataM.put("numero",3);
+                        dataM.put("dischiList",dischiList);
                           t.process(dataM,response.getWriter());
                      }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){
                          Artista art = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
                          if(art!=null){
                              List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(art);
                              dataM.put("dischiList",dischiList);
+                              // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
+                        List<Artista> artistiList = new ArrayList();
+                        for(Disco d : dischiList){
+                            artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                        }
+
+                        // trovo le copie per ogni disco per poi aggiungere una lista al data model
+
+                        List<List<CopieStato>> csList = new ArrayList();
+                        List<CopieStato> tempList = new ArrayList();
+                        for (Disco d : dischiList){
+                            // metodo dao mancante che trova un collezionista dato un disco
+                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);//ci va coll e non null
+                            csList.add(tempList);
+                        }
+
+                        dataM.put("csList",csList);
+                        dataM.put("artistiList", artistiList);
                          }
                          else{
                              List<Disco> emptyList = new ArrayList();

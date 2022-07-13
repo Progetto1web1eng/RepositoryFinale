@@ -220,7 +220,7 @@ insert into disco values (9, "DiscoPop1", "3286", 12, "Pop", 1970, "Pop Studio",
 insert into disco values (10, "DiscoPop2", "3287", 12, "Pop", 1970, "Blues Studio", 2, "vinile"); 
 insert into disco values (11, "DiscoBlues", "3288", 1, "Blues", 1970, "Rock Studio", 2, "vinile"); 
 
-insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
+# insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
 insert into traccia values (1, "Enter Sandman", 0251, 1);  
 insert into traccia values (2, "Sad butTrue",0 , 1);

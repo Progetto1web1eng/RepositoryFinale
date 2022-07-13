@@ -5,6 +5,7 @@
 package collector_site.data.proxy;
 
 import collector_site.data.impl.ImmagineImpl;
+import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
 
@@ -16,12 +17,15 @@ public class ImmagineProxy extends ImmagineImpl implements DataItemProxy{
    
     protected boolean modified;
     protected DataLayer dataLayer;
+    protected int disco_key = 0;
     
     public ImmagineProxy(DataLayer d){
         super();
         this.dataLayer = d;
         this.modified = false;
+        this.disco_key = 0;
     }
+    
     @Override
     public void setNomeImmagine(String nomeImmagine){
         super.setNomeImmagine(nomeImmagine);
@@ -50,5 +54,11 @@ public class ImmagineProxy extends ImmagineImpl implements DataItemProxy{
     @Override
     public boolean isModified() {
         return modified;
+    }
+    
+    public void setDiscoKey(int disco_key) throws DataException{
+        this.disco_key = disco_key;
+        //resettiamo cache collezionista
+        super.setDiscoImg(null);
     }
 }

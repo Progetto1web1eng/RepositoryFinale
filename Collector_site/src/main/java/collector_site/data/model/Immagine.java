@@ -4,6 +4,7 @@
  */
 package collector_site.data.model;
 import collector_site.framework.data.DataItem;
+import java.sql.Timestamp;
 import java.util.List;
 /**
  *
@@ -25,5 +26,14 @@ public interface Immagine extends DataItem<Integer> {
     
     Disco getDiscoImg();
     void setDiscoImg(Disco discoImg);
+    public String getDigest();
+    public void setDigest(String digest);
+    public Timestamp getUpdated();
+    public void setUpdated(Timestamp updated);
+
+
+
+
+
     
 }

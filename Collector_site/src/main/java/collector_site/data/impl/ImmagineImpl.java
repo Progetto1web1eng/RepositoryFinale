@@ -8,6 +8,7 @@ package collector_site.data.impl;
 import collector_site.framework.data.DataItemImpl;
 import collector_site.data.model.Disco;
 import collector_site.data.model.Immagine;
+import java.sql.Timestamp;
 
 /**
  *
@@ -20,6 +21,8 @@ public class ImmagineImpl extends DataItemImpl<Integer> implements Immagine{
 	private String imgtype;
 	private long dimensioneImmagine;
 	private Disco discoImg;
+        private String digest;
+        private Timestamp updated;
         
         public ImmagineImpl() {
             super();
@@ -28,7 +31,32 @@ public class ImmagineImpl extends DataItemImpl<Integer> implements Immagine{
             imgtype = "";
             dimensioneImmagine = 0;
             discoImg = null;
+            digest = "";
+            updated = null;
         }
+
+   
+
+   
+    @Override
+    public String getDigest() {
+        return digest;
+    }
+
+    @Override
+    public void setDigest(String digest) {
+        this.digest = digest;
+    }
+
+    @Override
+    public Timestamp getUpdated() {
+        return updated;
+    }
+
+    @Override
+    public void setUpdated(Timestamp updated) {
+        this.updated = updated;
+    }
         
 	@Override
 	public String getNomeImmagine() {

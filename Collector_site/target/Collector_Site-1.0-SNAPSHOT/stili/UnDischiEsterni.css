@@ -14,6 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top:8px;
     background-color: #ACACBB;
     position: relative;
+     overflow-y: auto;
 }
 .UnDischiEsterniContainer{
     background-color: #DBDBDB;
@@ -23,13 +24,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top: 2%;
     border: 3px solid #979C98;
     margin-left: 5%;
+      display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
     
 }
-#UnDischiEsterniImgInfo{
+.UnDischiEsterniImgInfo{
      content: url(../immagini/icons8-modifica-white-24.png);
     height: 32px;
     width: 32px;
 }
-#UnDischiEsterniImgInfo:hover{
+.UnDischiEsterniImgInfo:hover{
      content: url(../immagini/icons8-modifica-black-24.png);
 }

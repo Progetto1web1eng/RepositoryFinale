@@ -13,6 +13,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top:8px;
     background-color: #ACACBB;
     position: relative;
+     overflow-y: auto;
 }
 #UnCollezionistiEsterniDivContainer{
     background-color: #DBDBDB;

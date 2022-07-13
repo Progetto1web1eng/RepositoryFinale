@@ -50,17 +50,12 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
             ProvaConfig pcg = new ProvaConfig(getServletContext());
             Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
             Map<String,Object> dataM = new HashMap();
-            
-           
                 //caricamento sideBar nel caso in cui l'utente abbia effettuato il login
                 Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
                 List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
                 dataM.put("collezioni",collezioni);
                 
-            
-            
-            
-            
+
             if(request.getParameter("collezioneK")!=null){
                 // per visualizzare dischi esterni
                
@@ -149,23 +144,127 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                      }
                     dataM.put("numero",13);
                     t.process(dataM,response.getWriter());
-                 }
+                    }
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DataException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TemplateException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (ParseException ex) {
-            Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DataException ex) {
-            Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TemplateException ex) {
-            Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
-        }
         }
         
         
         
          //caso in cui stiamo svolgendo la ricerca da un utente loggato
         else{
+            try {
+                ProvaConfig pcg = new ProvaConfig(getServletContext());
+                Template t = pcg.getTemplate("dispatcherUnlogged.ftl.html");
+                Map<String,Object> dataM = new HashMap();
+            
+                if(request.getParameter("collezioneK")!=null){
+                    // per visualizzare dischi esterni
+
+                    Collezione collezione = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById(Integer.parseInt(request.getParameter("collezioneK")));
+                    Collezionista coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByCollezione(collezione);
+                    List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDiscoByCollezione(collezione);
+                     // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
+                    List<Artista> artistiList = new ArrayList();
+                    for(Disco d : dischiList){
+                        artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
+                    }
+
+                    // trovo le copie per ogni disco per poi aggiungere una lista al data model
+
+                    List<List<CopieStato>> csList = new ArrayList();
+                    List<CopieStato> tempList = new ArrayList();
+                    for (Disco d : dischiList){
+                        tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, coll);
+                        csList.add(tempList);
+                    }
+
+                    dataM.put("csList",csList);
+                    dataM.put("artistiList", artistiList);
+                    dataM.put("dischiList",dischiList);
+                    dataM.put("numero",3);
+                    t.process(dataM,response.getWriter());
+                    }else if(request.getParameter("discoK")!=null){
+                    // per visualizzare tracce esterne
+
+                    Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(Integer.parseInt(request.getParameter("discoK")));
+                    List<Traccia> tracceList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getTracciaDAO().getTracceByDisco(disco);
+                    dataM.put("tracceList",tracceList);
+                    dataM.put("numero",4);
+                    t.process(dataM,response.getWriter());
+                    }else if(request.getParameter("cPar")!=null){
+                    //per visualizzare collezioni esterne
+                    Collezionista collezioN = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(Integer.parseInt(request.getParameter("cPar")));
+                    List<Collezione> collezioniList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniAccessibili(collezioN,null);
+                    dataM.put("collezionista",collezioN);
+                    dataM.put("numero",1);
+                    dataM.put("collezioniList",collezioniList);
+                    t.process(dataM,response.getWriter());
+                }else{
+                    //caso in cui l'utente effettua una ricerca globale
+
+                     String inputDaCercare = request.getParameter("inputDiRicerca");
+
+                    if(  !(inputDaCercare.substring(inputDaCercare.length()-2).equals(":U"))&&
+                        !(inputDaCercare.substring(inputDaCercare.length()-2).equals(":C"))&&
+                        !(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D"))&&
+                            !(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A"))
+                        ){
+                        // assegno un tipo di ricerca di default nel caso in cui l'utente non abbia scelto i suggerimenti 
+                        inputDaCercare = inputDaCercare+":C";
+                    }
+                     String inputSenzaPlaceH = inputDaCercare.substring(0,inputDaCercare.length()-2);
+
+                     if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":U")){
+                         Collezionista collez = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByNickname(inputSenzaPlaceH);
+                         dataM.put("numero", 2);
+                         dataM.put("cPar", collez);
+                         t.process(dataM,response.getWriter());
+                     }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":C")){
+                        List<Collezione> collezioniList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniAccessibiliByNome(inputSenzaPlaceH, null);
+                         dataM.put("numero",1);
+                         dataM.put("collezioniList",collezioniList);
+                          t.process(dataM,response.getWriter());
+                     }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
+                         List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH);
+                         dataM.put("numero",3);
+                         dataM.put("dischiList",dischiList);
+                          t.process(dataM,response.getWriter());
+                     }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){
+                         Artista art = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
+                         if(art!=null){
+                             List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(art);
+                             dataM.put("dischiList",dischiList);
+                         }
+                         else{
+                             List<Disco> emptyList = new ArrayList();
+                             dataM.put("dischiList",emptyList);
+                             dataM.put("errorA",1);
+                         }
+                        dataM.put("numero",3);
+                        t.process(dataM,response.getWriter());
+                     }
+                }
+            
+
+            } catch (ParseException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DataException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TemplateException ex) {
+                Logger.getLogger(ServletDiProvaRicercaGlobale.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             
         }
     }

@@ -9,6 +9,7 @@ import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
+import collector_site.framework.utils.SendEmail;
 import freemarker.core.HTMLOutputFormat;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +44,7 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
         response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")));
     }
     
-    private void aggiungi_condivisione(HttpServletRequest request, HttpServletResponse response,HttpSession s) throws DataException, IOException{
+    private void aggiungi_condivisione(HttpServletRequest request, HttpServletResponse response,HttpSession s) throws DataException, IOException, MessagingException{
         int e=0;
         String nicknamePar = request.getParameter("nicknamePar");
         Collezione coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneById((int) s.getAttribute("collezioneSelezionata"));
@@ -52,6 +54,10 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
         }else{
             e=1;
         }
+        // metodo per inviare una mail, questa è solo una simulazione
+        SendEmail.sendEmail("37d5cb32ad4102");
+        
+        
         response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")+"&e="+e));
 
     }
@@ -107,6 +113,8 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
         } catch (TemplateException ex) {
             Logger.getLogger(ServletDiProvaCollezioniCondivise.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataException ex) {
+            Logger.getLogger(ServletDiProvaCollezioniCondivise.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
             Logger.getLogger(ServletDiProvaCollezioniCondivise.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

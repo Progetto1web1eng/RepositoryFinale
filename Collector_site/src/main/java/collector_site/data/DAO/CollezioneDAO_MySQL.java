@@ -563,7 +563,7 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
         
         // nella lista si aggiungono solo le collezioni private che sono state condivise al collezionista in
         // questione che hanno il nome indicato
-        for(Collezione c : getCollezioniCondiviseToCollezionista(collezionista)) {
+        for(Collezione c : getCollezioniPrivateCondiviseToCollezionista(collezionista)) {
             if(nomeCollezione.equals(c.getNomeCollezione().toUpperCase())) {
                 result.add(c);
             }

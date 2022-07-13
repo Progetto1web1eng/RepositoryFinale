@@ -89,9 +89,10 @@ public class ImmagineDAO_MySQL extends DAO implements ImmagineDAO {
         try {
             immagine.setKey(rs.getInt("ID"));
             immagine.setNomeImmagine(rs.getString("nomeImmagine"));
-            immagine.setDimensioneImmagine(rs.getLong("dimensioneImmagine"));
+            immagine.setDimensioneImmagine((long) rs.getInt("dimensioneImmagine"));
             immagine.setFilename(rs.getString("filename"));
             immagine.setImgType(rs.getString("imgType"));
+            immagine.setDiscoKey(rs.getInt("IDdisco"));
             immagine.setDigest(rs.getString("digest"));
             immagine.setUpdated(rs.getTimestamp("updated"));
         } catch (SQLException ex) {
@@ -109,19 +110,18 @@ public class ImmagineDAO_MySQL extends DAO implements ImmagineDAO {
     public Immagine getImmagineById(int id) throws collector_site.framework.data.DataException {
         Immagine immagine = null;
         //prima vediamo se l'oggetto è già stato caricato
-        //first look for this object in the cache
         if (dataLayer.getCache().has(Immagine.class, id)) {
             immagine = dataLayer.getCache().get(Immagine.class, id);
         } else {
             //altrimenti lo carichiamo dal database
-            //otherwise load it from database
             try {
                 getImmagineById.setInt(1, id);
+                
                 try (ResultSet rs = getImmagineById.executeQuery()) {
                     if (rs.next()) {
                         immagine = createImmagine(rs);
+                        
                         //e lo mettiamo anche nella cache
-                        //and put it also in the cache
                         dataLayer.getCache().add(Immagine.class, immagine);
                     }
                 }
@@ -129,22 +129,26 @@ public class ImmagineDAO_MySQL extends DAO implements ImmagineDAO {
                 throw new DataException("Unable to load Immagine by ID", ex);
             }
         }
+        
         return immagine;
     }
 
     @Override
     public List<Immagine> getImmaginiByDisco(Disco disco) throws collector_site.framework.data.DataException {
         List<Immagine> result = new ArrayList();
+        
         try {
             getImmagineByDisco.setInt(1, disco.getKey());
+            
             try (ResultSet rs = getImmagineByDisco.executeQuery()) {
                 while (rs.next()) {
-                    result.add(getImmagineById(rs.getInt("IDdisco")));
+                    result.add(getImmagineById(rs.getInt("ID")));
                 }
             }
         } catch (SQLException ex) {
             throw new DataException("Unable to load Immagine by Disco", ex);
         }
+        
         return result;
     }
 

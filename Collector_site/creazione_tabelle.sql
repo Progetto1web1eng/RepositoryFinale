@@ -114,12 +114,13 @@ create table colleziona (
     IDstatoDisco smallint not null,
     statoDisco varchar(50) not null,
     IDcollezionista smallint not null,
-    # è UNIQUE perché l'istanza di di un Disco è personale
-    IDdisco smallint not null unique,
+    IDdisco smallint not null,
     primary key (IDcollezionista, IDdisco, statoDisco),
     foreign key (IDcollezionista) references collezionista(ID) on delete cascade,
     foreign key (IDdisco) references disco(ID) on delete cascade,
 	foreign key (IDstatoDisco) references statoDisco(ID)
+	# è UNIQUE perché l'istanza di di un Disco è personale
+	# constraint unicoDisco unique (IDdisco,IDstatoDisco)
 ); 
 
 create table incide (

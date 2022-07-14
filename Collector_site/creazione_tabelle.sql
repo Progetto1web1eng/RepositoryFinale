@@ -114,7 +114,8 @@ create table colleziona (
     IDstatoDisco smallint not null,
     statoDisco varchar(50) not null,
     IDcollezionista smallint not null,
-    IDdisco smallint not null,
+    # è UNIQUE perché l'istanza di di un Disco è personale
+    IDdisco smallint not null unique,
     primary key (IDcollezionista, IDdisco, statoDisco),
     foreign key (IDcollezionista) references collezionista(ID) on delete cascade,
     foreign key (IDdisco) references disco(ID) on delete cascade,
@@ -218,7 +219,9 @@ insert into disco values (7, "DiscoRock2", "3284", 6, "Rock", 1973, "Rock Studio
 insert into disco values (8, "DiscoRock3", "3285", 6, "Rock", 1970, "Rock Studio", 2, "vinile"); 
 insert into disco values (9, "DiscoPop1", "3286", 12, "Pop", 1970, "Pop Studio", 2, "vinile"); 
 insert into disco values (10, "DiscoPop2", "3287", 12, "Pop", 1970, "Blues Studio", 2, "vinile"); 
-insert into disco values (11, "DiscoBlues", "3288", 1, "Blues", 1970, "Rock Studio", 2, "vinile"); 
+insert into disco values (11, "DiscoBlues", "3288", 1, "Blues", 1970, "Blues Studio", 2, "vinile"); 
+insert into disco values (12, "DiscoBlues1", "3289", 1, "Blues", 1970, "Blues Studio", 2, "vinile"); 
+
 
 # insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
@@ -246,8 +249,8 @@ insert into racchiude values (2, 11);
 #numCopeDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco
 insert into colleziona values (1, 1, "Nuovo", 1, 1);
 insert into colleziona values (2, 2, "Usato", 1, 2);
-insert into colleziona values (5, 1, "Nuovo", 1, 5);
 insert into colleziona values (1, 1, "Nuovo", 1, 3);
+insert into colleziona values (5, 1, "Nuovo", 1, 5);
 insert into colleziona values (1, 1, "Nuovo", 1, 6);
 insert into colleziona values (1, 1, "Nuovo", 1, 7);
 insert into colleziona values (1, 1, "Nuovo", 1, 8);
@@ -257,7 +260,7 @@ insert into colleziona values (1, 1, "Nuovo", 1, 11);
 
 
 # insert into colleziona values (1, 1, "Nuovo", 1, 4);
-insert into colleziona values (2, 2, "Usato", 2, 3); 
+insert into colleziona values (2, 2, "Usato", 2, 12); 
 # dischi recenti di Stefano
 
 

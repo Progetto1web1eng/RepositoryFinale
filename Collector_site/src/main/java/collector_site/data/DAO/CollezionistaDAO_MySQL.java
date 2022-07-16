@@ -52,6 +52,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
     private PreparedStatement getGenerePreferito;
     private PreparedStatement getCondivisioniByCollezione;
     private PreparedStatement login;
+    private PreparedStatement getCollezionistaByDisco;
    
     public CollezionistaDAO_MySQL(DataLayer d) {
         super(d);
@@ -73,6 +74,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getGenerePreferito = connection.prepareStatement("SELECT count(d.IDgenere), d.IDgenere FROM colleziona c join disco d on(c.IDdisco = d.ID) WHERE (c.IDcollezionista =?) GROUP BY d.IDgenere ORDER BY count(d.IDgenere) desc;");
             getCondivisioniByCollezione = connection.prepareStatement("SELECT IDcollezionista FROM condivide WHERE IDcollezione =?");
             login = connection.prepareStatement("SELECT ID FROM collezionista WHERE nickname=? and password=?");
+            getCollezionistaByDisco = connection.prepareStatement("select c.IDcollezionista from colleziona c where c.IDdisco=? limit 1;");
         } catch (SQLException ex) {
             throw new DataException("Error initializing Collezionista data layer", ex);
         }
@@ -92,6 +94,7 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
             getGenerePreferito.close();
             getCondivisioniByCollezione.close();
             login.close();
+            getCollezionistaByDisco.close();
         } catch (SQLException ex) {
         }
         super.destroy();
@@ -362,6 +365,25 @@ public class CollezionistaDAO_MySQL extends DAO implements CollezionistaDAO {
         }
         
         return id; // caso in cui l'autenticazione non ha avuto successo   
+    }
+
+    @Override
+    public Collezionista getCollezionistaByDisco(Disco disco) throws DataException {
+        Collezionista collezionista = null;
+        
+        try {
+            getCollezionistaByDisco.setInt(1, disco.getKey());
+            
+            try (ResultSet rs = getCollezionistaByDisco.executeQuery()) {
+                if (rs.next()) {
+                    collezionista = getCollezionistaById(rs.getInt("c.IDcollezionista")); 
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Collezionista by Disco", ex);
+        }
+        
+        return collezionista;
     }
 }
 

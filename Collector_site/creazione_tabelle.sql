@@ -119,6 +119,8 @@ create table colleziona (
     foreign key (IDcollezionista) references collezionista(ID) on delete cascade,
     foreign key (IDdisco) references disco(ID) on delete cascade,
 	foreign key (IDstatoDisco) references statoDisco(ID)
+	# è UNIQUE perché l'istanza di di un Disco è personale
+	# constraint unicoDisco unique (IDdisco,IDstatoDisco)
 ); 
 
 create table incide (
@@ -218,7 +220,9 @@ insert into disco values (7, "DiscoRock2", "3284", 6, "Rock", 1973, "Rock Studio
 insert into disco values (8, "DiscoRock3", "3285", 6, "Rock", 1970, "Rock Studio", 2, "vinile"); 
 insert into disco values (9, "DiscoPop1", "3286", 12, "Pop", 1970, "Pop Studio", 2, "vinile"); 
 insert into disco values (10, "DiscoPop2", "3287", 12, "Pop", 1970, "Blues Studio", 2, "vinile"); 
-insert into disco values (11, "DiscoBlues", "3288", 1, "Blues", 1970, "Rock Studio", 2, "vinile"); 
+insert into disco values (11, "DiscoBlues", "3288", 1, "Blues", 1970, "Blues Studio", 2, "vinile"); 
+insert into disco values (12, "DiscoBlues1", "3289", 1, "Blues", 1970, "Blues Studio", 2, "vinile"); 
+
 
 # insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
@@ -246,8 +250,8 @@ insert into racchiude values (2, 11);
 #numCopeDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco
 insert into colleziona values (1, 1, "Nuovo", 1, 1);
 insert into colleziona values (2, 2, "Usato", 1, 2);
-insert into colleziona values (5, 1, "Nuovo", 1, 5);
 insert into colleziona values (1, 1, "Nuovo", 1, 3);
+insert into colleziona values (5, 1, "Nuovo", 1, 5);
 insert into colleziona values (1, 1, "Nuovo", 1, 6);
 insert into colleziona values (1, 1, "Nuovo", 1, 7);
 insert into colleziona values (1, 1, "Nuovo", 1, 8);
@@ -257,7 +261,7 @@ insert into colleziona values (1, 1, "Nuovo", 1, 11);
 
 
 # insert into colleziona values (1, 1, "Nuovo", 1, 4);
-insert into colleziona values (2, 2, "Usato", 2, 3); 
+insert into colleziona values (2, 2, "Usato", 2, 12); 
 # dischi recenti di Stefano
 
 

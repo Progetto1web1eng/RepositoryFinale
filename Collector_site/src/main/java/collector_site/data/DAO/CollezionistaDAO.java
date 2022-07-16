@@ -9,6 +9,7 @@ import collector_site.data.model.Artista;
 import collector_site.framework.data.DataException;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
+import collector_site.data.model.Disco;
 import java.util.List;
 
 /**
@@ -37,4 +38,5 @@ public interface CollezionistaDAO {
     List<Genere> getGeneriPreferiti(Collezionista collezionista) throws DataException;
     public List<Collezionista> getCondivisioniByCollezione(Collezione collezione) throws DataException;
     Integer login(String nickname,String password) throws DataException;
+    Collezionista getCollezionistaByDisco(Disco disco) throws DataException;
 }

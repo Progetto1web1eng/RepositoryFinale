@@ -67,30 +67,9 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
             dataM.put("collezioni",collezioni);
             
-            //inserimento immagini
+            // CARICAMENTO DELLE IMMAGINI NELLA PAGINA WEB
             Disco disco =((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco((int) s.getAttribute("discoID"));  
-            
-            System.out.println("dioporcone");
             List<Immagine> immagini = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(disco);
-            
-           
-            for(int i=0;i<immagini.size();i++) {
-                System.out.println(immagini.get(i).getFilename());
-            }
-            
-            //System.out.println("dioporcone1");
-            
-            /*
-            Iterator<Immagine> it = immagini.listIterator();
-            while(it.hasNext()) {
-                Immagine immagine = it.next();
-                String oldFilename = immagine.getFilename();
-                immagine.setFilename(getServletContext().getInitParameter("uploads.directory") + "\\" + oldFilename);
-                // REMOVE
-                System.out.println(immagine.getFilename());
-            }*/
-
-            
             
             if(immagini.isEmpty()){
                 immagini=null;
@@ -99,12 +78,13 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
             dataM.put("immagini",immagini);
             t.process(dataM, response.getWriter());
             
-            // controllo sul file che il client intende caricare nel server
+            // UPLOAD DELL'IMMAGINE
+            // controllo sul file che il client intende caricare nel server non sia nullo
             try {
             if (request.getPart("filetoupload") != null) {
                 action_upload(request, response, disco);
             } else {
-                ServletHelpers.handleError("Nothing to upload!", request, response, getServletContext());
+                ServletHelpers.handleError("Nessuna immagine da caricare!", request, response, getServletContext());
             }
             
         } catch (NamingException | SQLException | IOException | NoSuchAlgorithmException ex) {
@@ -121,29 +101,17 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
         }
     }
     
-    private void action_upload(HttpServletRequest request, HttpServletResponse response, Disco disco) throws SQLException, IOException, NamingException, NoSuchAlgorithmException, ServletException, DataException {
-        Part fileTemp = request.getPart("filetoupload");
-        
-        // controlla che i file caricati siano effettivamente delle immagini
-        if (!fileTemp.getContentType().equals("image/png") && !fileTemp.getContentType().equals("image/jpeg")) {
-            return; // solleva eccezione
-        }
-        
-        // controlla che una singola immagine caricata non pesi più di 10MB
-        if (fileTemp.getSize() > 10240000) {
-            return;
-        }
-        
-        Immagine img = new ImmagineImpl();
-        int fileID = 0;
-        // generazione del digest del file tramite algoritmo sha-1
+      private void action_upload(HttpServletRequest request, HttpServletResponse response, Disco disco) throws SQLException, IOException, NamingException, NoSuchAlgorithmException, ServletException, DataException {
+
+        Part file_to_upload = request.getPart("filetoupload");
+
+        //vogliamo creare il digest sha-1 del file
         MessageDigest md = MessageDigest.getInstance("SHA-1");
-        
-        //creiamo un nuovo file (con nome univoco) e copiamoci il file scaricato
-        File fileDefinitivo = File.createTempFile("img_", "", new File(getServletContext().getInitParameter("uploads.directory")));
-        
-        try (InputStream is = fileTemp.getInputStream();
-            OutputStream os = new FileOutputStream(fileDefinitivo)) {
+        //creiamo un nuovo file con nome univoco 
+        File uploaded_file = File.createTempFile("img_", "", new File(getServletContext().getInitParameter("uploads.directory")));
+        // copiamo nel file "uploaded_file" il contenuto del file "file_to_upload"
+        try (InputStream is = file_to_upload.getInputStream();
+            OutputStream os = new FileOutputStream(uploaded_file)) {
             byte[] buffer = new byte[1024];
             int read;
             while ((read = is.read(buffer)) > 0) {
@@ -153,42 +121,19 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
             }
         }
 
-        //covertiamo il digest in una stringa
-        
-        img.setNomeImmagine(fileTemp.getSubmittedFileName());
-        img.setDimensioneImmagine(fileTemp.getSize());
-        img.setFilename(fileDefinitivo.getName());
-        img.setImgType(fileTemp.getContentType());
+        //adesso inseriamo tutte le informazioni sul file nel database
+        Immagine img = new ImmagineImpl();
+        img.setNomeImmagine(file_to_upload.getSubmittedFileName());
+        img.setDimensioneImmagine((long) file_to_upload.getSize());
+        img.setFilename(uploaded_file.getName());
+        img.setImgType(file_to_upload.getContentType());
         img.setDiscoImg(disco);
-        //covertiamo il digest in una stringa
+        //convertiamo il digest in una stringa
         String digest = bytesToHexString(md.digest());
         img.setDigest(digest);
         // il timestamp viene settato direttamente dal DB
-        
-        // aggiunge un record nella tabella Immagine
-        // REMOVE
-        System.out.println("ciao");
         ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().storeImmagine(img);
-        
-        // REMOVE
-        System.out.println(fileTemp.getContentType());
-        
-        // aggiunge al nome del file l'estensione corretta
-        if (fileTemp.getContentType().equals("image/png")) {
-            // REMOVE
-            System.out.println("in modifica nome");
-            // caso in cui l'immagine caricata ha formato "png"
-            File f = new File(fileDefinitivo.getName() + ".png");
-            fileDefinitivo.renameTo(f);
-        } else {
-            System.out.println("in modifica nome");
-            // caso in cui l'immagine caricata ha formato "jpg"
-            File f = new File(fileDefinitivo.getName() + ".jpg");
-            fileDefinitivo.renameTo(f);
-        }
     }
-
-   
 
     private String humanReadableFileSize(long size) {
         final String[] units = new String[]{"bytes", "KB", "MB", "GB", "TB", "PB", "EB"};
@@ -199,8 +144,6 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
         return new DecimalFormat("#,##0.##").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
     
-    
-    // metodo necessario
     private String bytesToHexString(byte[] byteArray) {
         StringBuilder hexStringBuffer = new StringBuilder();
         for (int i = 0; i < byteArray.length; i++) {
@@ -211,6 +154,5 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
         }
         return hexStringBuffer.toString();
     }
-
 }
         

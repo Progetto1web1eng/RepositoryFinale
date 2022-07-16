@@ -59,7 +59,7 @@ public class ImmagineDAO_MySQL extends DAO implements ImmagineDAO {
             deleteImmagine = connection.prepareStatement("DELETE FROM immagine WHERE ID=?"); 
             getImmagineById = connection.prepareStatement("SELECT * FROM immagine WHERE ID=?");
             getImmagineByDisco = connection.prepareStatement("SELECT * FROM immagine WHERE IDdisco=?");
-            storeImmagine = connection.prepareStatement("insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP);", new String[]{"ID"}); 
+            storeImmagine = connection.prepareStatement("insert into immagine(nomeImmagine,dimensioneImmagine,filename,imgType,IDdisco,digest,updated) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP);", new String[]{"ID"}); 
         } catch (SQLException ex) {
             throw new DataException("Error initializing Immagine data layer", ex);
         }
@@ -170,7 +170,6 @@ public class ImmagineDAO_MySQL extends DAO implements ImmagineDAO {
             storeImmagine.setString(4, immagine.getImgType());
             storeImmagine.setInt(5, immagine.getDiscoImg().getKey());
             storeImmagine.setString(6, immagine.getDigest());
-            storeImmagine.setTimestamp(7, immagine.getUpdated());
             
             if (storeImmagine.executeUpdate() == 1) {
                 try ( //estrae l'ID dell'immagine caricata

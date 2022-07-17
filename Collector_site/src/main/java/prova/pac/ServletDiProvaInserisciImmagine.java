@@ -105,6 +105,20 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
 
         Part file_to_upload = request.getPart("filetoupload");
 
+        // controlli sul tipo di file_to_upload
+        if (!file_to_upload.getContentType().equals("image/jpeg") && 
+            !file_to_upload.getContentType().equals("image/png")) {
+            // caso in cui file_to_upload non è un immagine oppure lo è ma ha un formato non consenstito
+            // dalla webapp
+            return;
+        }
+        
+        // controllo sulle dimensioni di file_to_upload
+        if (file_to_upload.getSize() > 10240000) {
+            // caso in cui file_to_upload supera le dimensioni massime consentite (10MB) 
+            return;
+        }
+        
         //vogliamo creare il digest sha-1 del file
         MessageDigest md = MessageDigest.getInstance("SHA-1");
         //creiamo un nuovo file con nome univoco 
@@ -155,4 +169,3 @@ public class ServletDiProvaInserisciImmagine extends ServletDiProvaCollector_sit
         return hexStringBuffer.toString();
     }
 }
-        

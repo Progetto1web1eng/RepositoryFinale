@@ -55,7 +55,7 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
             e=1;
         }
         // metodo per inviare una mail, questa è solo una simulazione
-        //SendEmail.sendEmail("37d5cb32ad4102");
+        SendEmail.sendEmail("37d5cb32ad4102");
         
         
         response.sendRedirect("servletDiProvaCollezioniCondivise?AggCond="+((int) s.getAttribute("collezioneSelezionata")+"&e="+e));

@@ -29,16 +29,21 @@ public class ServletDiProvaLogout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession s=request.getSession(false);
-        s.invalidate();
         ProvaConfig pcg = new ProvaConfig(getServletContext());
         Template t = pcg.getTemplate("dispatcherUnlogged.ftl.html");
-         Map<String,Object> dataM = new HashMap();
-         dataM.put("numero", 0);
-        try {
-            t.process(dataM,response.getWriter());
-        } catch (TemplateException ex) {
-            Logger.getLogger(ServletDiProvaLogout.class.getName()).log(Level.SEVERE, null, ex);
+        Map<String,Object> dataM = new HashMap();
+        if(s!=null){
+            s.invalidate();
+            dataM.put("numero", 0);
+            try {
+                t.process(dataM,response.getWriter());
+            } catch (TemplateException ex) {
+                Logger.getLogger(ServletDiProvaLogout.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            response.sendRedirect("servletDiProvaHome");
         }
+         
     }
 
 }

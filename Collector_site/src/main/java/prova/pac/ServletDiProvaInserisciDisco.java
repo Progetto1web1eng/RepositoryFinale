@@ -86,8 +86,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
         
         
         try {
-            int idCollezione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
-            Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco); 
+            Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
             s.setAttribute("discoSessione", disco);
             Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
@@ -96,7 +95,7 @@ public class ServletDiProvaInserisciDisco extends ServletDiProvaCollector_siteBa
             dataM.put("numero",9);
             t.process(dataM, response.getWriter());
             
-            //response.sendRedirect("servletDiProvaVistaCollezione?k="+idCollezione);
+           
         } catch (TemplateException ex) {
             Logger.getLogger(ServletDiProvaInserisciDisco.class.getName()).log(Level.SEVERE, null, ex);
         }

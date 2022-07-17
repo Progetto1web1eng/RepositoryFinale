@@ -40,7 +40,6 @@ public class ServletDiProvaSettingCopieStato extends ServletDiProvaCollector_sit
             
             HttpSession s = request.getSession(false);
            
-           
             Disco disk = (Disco) s.getAttribute("discoSessione");
             Artista artista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(disk);
             Disco disco = new DiscoImpl();
@@ -50,10 +49,19 @@ public class ServletDiProvaSettingCopieStato extends ServletDiProvaCollector_sit
             disco.setGenere(disk.getGenere());
             disco.setNomeDisco(disk.getNomeDisco());
             
+            
             int IDCollezioneSessione = Integer.parseInt((String) s.getAttribute("IDCollezioneSessione"));
             Collezionista collezionista = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById((int) s.getAttribute("id"));
             String[] parStato=request.getParameterValues("sCSSPar");
-            int parCopie=Integer.parseInt(request.getParameter("sCSSI1Par"));
+            
+            int parCopie;
+            if(request.getParameter("sCSSI1Par").length()==0){
+                 parCopie=1;
+            }else{
+                 parCopie=Integer.parseInt(request.getParameter("sCSSI1Par"));
+            }
+            
+            
             String[] parTipo=request.getParameterValues("tipoDiscoPar");
             
             CopieStato cp = new CopieStato();
@@ -71,6 +79,7 @@ public class ServletDiProvaSettingCopieStato extends ServletDiProvaCollector_sit
             listcp.add(np);
             disco.setCopieStati(listcp);
             disco.setTipo(Tipo.valueOf(parTipo[0]));
+            
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().storeDisco(disco);
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().addDiscoToCollezionista(disco, collezionista);
             ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().setArtistaOfDisco(disco, artista);

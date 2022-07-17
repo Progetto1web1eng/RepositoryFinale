@@ -3,7 +3,7 @@
     <context-param>
         <!-- aggiungo questo parametro per definire in quale directory salvare le IMMAGINI che vengono UPLOADATE dai COLLEZIONISTI -->
         <param-name>uploads.directory</param-name>
-        <param-value>C:\Users\fabri</param-value>
+        <param-value>C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\webapp\immaginiDischi</param-value>
     </context-param>
     <context-param>
         <param-name>pathProgetto</param-name>

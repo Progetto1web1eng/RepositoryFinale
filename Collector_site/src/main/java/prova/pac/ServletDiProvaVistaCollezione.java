@@ -75,11 +75,41 @@ public class ServletDiProvaVistaCollezione extends ServletDiProvaCollector_siteB
                
                 List<List<CopieStato>> csList = new ArrayList();
                 List<CopieStato> tempList = new ArrayList();
+                
+                 List<String> immaginiList = new ArrayList();
+                 List<Immagine> tempImmList = new ArrayList();
+                 
+                 //per l'immagine della collezione
+                 String collezioneImm = "";
+                 if(dischiList==null || dischiList.size()==0){
+                      collezioneImm = "defaultIMG.png";
+                 }else{
+                     //collezioneImm è uguale all'immagine del primo disco
+                    if( ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(dischiList.get(0)).size()==0 ){
+                          collezioneImm = "defaultIMG.png";
+                    }else{
+                          collezioneImm = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(dischiList.get(0)).get(0).getFilename();
+                    } 
+                 }
+                 /////////////////////////////////
+                 
+                 
+                 
                 for (Disco d : dischiList){
                     tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                     csList.add(tempList);
+                    
+                    tempImmList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(d);
+                    if(tempImmList == null || tempImmList.size()==0){
+                        immaginiList.add("defaultIMG.png");
+                    }else{
+                        immaginiList.add(tempImmList.get(0).getFilename());
+                    }
                 }
-               
+                
+                
+                dataM.put("collezioneImm",collezioneImm);
+                dataM.put("immaginiList",immaginiList);
                 dataM.put("csList",csList);
                 dataM.put("artistiList", artistiList);
                 dataM.put("collezioneSelezionata",collezioneSelezionata);

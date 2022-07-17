@@ -123,7 +123,10 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                      t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":C")){
                     List<Collezione> collezioniList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniAccessibiliByNome(inputSenzaPlaceH, collezionista);
-                     dataM.put("numero",14);
+                    if(collezioniList.size()==0){
+                        dataM.put("error",1);
+                    }
+                    dataM.put("numero",14);
                      dataM.put("collezioniList",collezioniList);
                       t.process(dataM,response.getWriter());
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
@@ -135,15 +138,17 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                         }
 
                         // trovo le copie per ogni disco per poi aggiungere una lista al data model
-
+                        List<Collezionista> ownersList = new ArrayList();
                         List<List<CopieStato>> csList = new ArrayList();
                         List<CopieStato> tempList = new ArrayList();
                         for (Disco d : dischiList){
-                            // metodo dao mancante che trova un collezionista dato un disco
-                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);//ci va coll e non null
+                            Collezionista coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByDisco(d);
+                            ownersList.add(coll);
+                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, coll);//ci va coll e non null
                             csList.add(tempList);
                         }
-
+                        
+                     dataM.put("ownersList",ownersList);   
                      dataM.put("csList",csList);
                      dataM.put("artistiList", artistiList);
                      dataM.put("numero",13);
@@ -163,15 +168,17 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                         }
 
                         // trovo le copie per ogni disco per poi aggiungere una lista al data model
-
+                         List<Collezionista> ownersList = new ArrayList();
                         List<List<CopieStato>> csList = new ArrayList();
                         List<CopieStato> tempList = new ArrayList();
                         for (Disco d : dischiList){
-                            // metodo dao mancante che trova un collezionista dato un disco
-                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);//ci va coll e non null
+                           Collezionista coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByDisco(d);
+                           ownersList.add(coll); 
+                           tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, coll);
                             csList.add(tempList);
                         }
-
+                        
+                        dataM.put("ownersList",ownersList);
                         dataM.put("csList",csList);
                         dataM.put("artistiList", artistiList);
                          
@@ -270,7 +277,10 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                          t.process(dataM,response.getWriter());
                      }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":C")){
                         List<Collezione> collezioniList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioniAccessibiliByNome(inputSenzaPlaceH, null);
-                         dataM.put("numero",1);
+                        if(collezioniList.size()==0){
+                            dataM.put("error",1);
+                         } 
+                        dataM.put("numero",1);
                          dataM.put("collezioniList",collezioniList);
                           t.process(dataM,response.getWriter());
                      }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
@@ -282,15 +292,16 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                         }
 
                         // trovo le copie per ogni disco per poi aggiungere una lista al data model
-
+                         List<Collezionista> ownersList = new ArrayList();
                         List<List<CopieStato>> csList = new ArrayList();
                         List<CopieStato> tempList = new ArrayList();
                         for (Disco d : dischiList){
-                            // metodo dao mancante che trova un collezionista dato un disco
-                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);// ci va coll e non null
+                            Collezionista coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByDisco(d);
+                            ownersList.add(coll);
+                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, coll);
                             csList.add(tempList);
                         }
-
+                        dataM.put("ownersList",ownersList);
                         dataM.put("csList",csList);
                         dataM.put("artistiList", artistiList);
                         dataM.put("numero",3);
@@ -308,15 +319,16 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                         }
 
                         // trovo le copie per ogni disco per poi aggiungere una lista al data model
-
+                        List<Collezionista> ownersList = new ArrayList();
                         List<List<CopieStato>> csList = new ArrayList();
                         List<CopieStato> tempList = new ArrayList();
                         for (Disco d : dischiList){
-                            // metodo dao mancante che trova un collezionista dato un disco
-                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, null);//ci va coll e non null
+                            Collezionista coll = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaByDisco(d);
+                             ownersList.add(coll);
+                            tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, coll);
                             csList.add(tempList);
                         }
-
+                        dataM.put("ownersList", ownersList);
                         dataM.put("csList",csList);
                         dataM.put("artistiList", artistiList);
                          }

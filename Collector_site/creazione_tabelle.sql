@@ -186,13 +186,16 @@ insert into tipo values(4,"audiocassetta");
 
 
 # INSERIMENTO DATI DI PROVA
+# gruppo musicale 1
 insert into artista values (1, "Metallica", null, null, null);
 insert into artista values (2,"James Hetfield", 1, "Voce", 1);
 insert into artista values (3,"Lars Ulrich", 5, "Percussioni",1);
-insert into artista values (4,"axl rose", null, null, null);
-insert into artista values (5,"Queen",null,null,null);
-insert into artista values (6,"Freddy Mercury",1, "Voce",5);
-#ID,nomeDarte,IDruolo,ruolo,IDgruppoMusicale
+# gruppo musicale 2
+insert into artista values (4,"Queen",null,null,null);
+insert into artista values (5,"Freddy Mercury",1, "Voce",4);
+# singoli artisti
+insert into artista values (6,"Richard Benson",null, null, null);
+insert into artista values (7,"Axl Rose", null, null, null);
 
 insert into collezionista values (1, "stefa", "stefano@gmail.com", "", "stefa", "3880581680");
 insert into collezionista values (2, "fabri", "fabrizio@gmail.com", "", "fabri", "3880581670");
@@ -205,7 +208,7 @@ insert into collezione values (4, "chill music", 1, true);
 insert into collezione values (5, "heavy", 2, true);
 # collezioni recenti
 insert into collezione values (6, "newCollection", 2, false);
-insert into collezione values (7, "sci-fi", 2, false);
+insert into collezione values (7, "HI-FI Rock", 2, false);
 
 
 
@@ -259,11 +262,8 @@ insert into colleziona values (1, 1, "Nuovo", 1, 9);
 insert into colleziona values (1, 1, "Nuovo", 1, 10);
 insert into colleziona values (1, 1, "Nuovo", 1, 11);
 
-
 # insert into colleziona values (1, 1, "Nuovo", 1, 4);
 insert into colleziona values (2, 2, "Usato", 2, 12); 
-# dischi recenti di Stefano
-
 
 
 insert into crea values (1, 1);

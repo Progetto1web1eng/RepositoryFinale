@@ -8,7 +8,6 @@ collector_site\data\model\Collezione.class
 collector_site\data\proxy\CollezionistaProxy.class
 prova\pac\ServletDiProvaVistaCollezione.class
 collector_site\data\model\Immagine.class
-prova\pac\ServletDiProvaUploader.class
 collector_site\data\model\Collezionista.class
 collector_site\data\impl\Ruolo.class
 collector_site\data\impl\ArtistaMinimale.class
@@ -26,7 +25,6 @@ prova\pac\ServletDiProvaCollezioniCondivise.class
 collector_site\data\DAO\ImmagineDAO_MySQL.class
 collector_site\data\impl\Genere.class
 collector_site\data\impl\ImmagineImpl.class
-prova\pac\Upload.class
 collector_site\data\impl\DiscoMinimale.class
 collector_site\data\model\Artista.class
 prova\pac\ServletDiProvaCercaIMieiDischi.class
@@ -51,14 +49,12 @@ collector_site\framework\utils\SendEmail.class
 collector_site\data\proxy\TracciaProxy.class
 collector_site\framework\result\HTMLResult$1.class
 collector_site\data\proxy\DiscoProxy.class
-prova\pac\SelezionaImmaginiDisco.class
 collector_site\data\impl\CopieStato.class
 collector_site\framework\data\DataItemProxyImpl.class
 prova\pac\ServletDiProvaLogout.class
 collector_site\framework\data\DataItemImpl.class
 collector_site\data\DAO\DiscoDao.class
 collector_site\data\proxy\CollezioneProxy.class
-prova\pac\ServletDiProvaUpload.class
 collector_site\data\DAO\DiscoDAO_MySQL.class
 collector_site\data\model\Disco.class
 collector_site\data\DAO\CollezionistaDAO_MySQL.class

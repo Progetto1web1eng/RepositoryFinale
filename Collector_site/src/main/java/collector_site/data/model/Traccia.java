@@ -6,7 +6,6 @@ package collector_site.data.model;
 
 import collector_site.framework.data.DataItem;
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.List;
 
 

@@ -13,23 +13,17 @@ package collector_site.data.DAO;
 // AGGIUNGERE IMPORT: PROXY
 
 import collector_site.data.impl.ArtistaMinimale;
-import collector_site.data.impl.DiscoMinimale;
-import collector_site.data.impl.Genere;
 import collector_site.data.impl.Ruolo;
-import collector_site.data.impl.Tipo;
 import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataLayer;
 import collector_site.data.model.Artista;
-import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.data.proxy.ArtistaProxy;
-import collector_site.data.proxy.DiscoProxy;
 
 // import riguardanti il framework
 import collector_site.framework.data.DataItemProxy;
-import collector_site.framework.data.OptimisticLockException;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -115,8 +109,6 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         try {
             artista.setKey(rs.getInt("ID"));
             artista.setNomeDarte(rs.getString("nomeDarte"));
-            System.out.println(rs.getInt("ID"));
-            System.out.println(rs.getString("nomeDarte"));
             // Ruolo è un enumerazione
             // CHECK
             // artista.setRuolo(Ruolo.values()[rs.getInt("IDruolo") - 1]);
@@ -155,7 +147,6 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
                         
                         //e lo mettiamo anche nella cache
                         dataLayer.getCache().add(Artista.class, artista);
-                        //out.println(artista.getComponenti().get(0).getNomeDarte());
                     }
                 }
             
@@ -357,9 +348,6 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
             // nel record che si sta creando
             storeArtista.setInt(4, idGruppoMusicale);
             
-            //REMOVE 
-            System.out.println(artista.getComponenti().get(0).getKey());
-            
             if (storeArtista.executeUpdate() == 1) {
                 //per leggere la chiave generata dal database per il record appena inserito
                 try (ResultSet keys = storeArtista.getGeneratedKeys()) {
@@ -440,9 +428,6 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         
         jsonContent = serializer.toJson(artisti);
         
-        // REMOVE
-        System.out.println(jsonContent);
-        
         // controlla se il file json già esiste: se NO lo crea; altrimenti, se dovesse già contenere del 
         // testo, lo elimina dal file
         Files.writeString(path, "");
@@ -478,9 +463,6 @@ public class ArtistaDAO_MySQL extends DAO implements ArtistaDao {
         Gson serializer = new Gson();
         
         jsonContent = serializer.toJson(gruppiMusicali);
-        
-        // REMOVE
-        System.out.println(jsonContent);
         
         // controlla se il file json già esiste: se NO lo crea; altrimenti, se dovesse già contenere del 
         // testo, lo elimina dal file

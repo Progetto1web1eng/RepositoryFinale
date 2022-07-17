@@ -9,7 +9,6 @@ import collector_site.data.model.Artista;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.data.proxy.ArtistaProxy;
-import collector_site.data.proxy.DiscoProxy;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.List;

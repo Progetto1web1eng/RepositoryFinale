@@ -17,8 +17,6 @@ import freemarker.core.ParseException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +24,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -157,9 +154,7 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                  }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":A")){
                      Artista art = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaNomeDarte(inputSenzaPlaceH);
                      if(art!=null){
-                         out.println("prima di getDischiByArtista");
                          List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByArtista(art);
-                         out.println("dopo di getDischiByArtista");
                          dataM.put("dischiList",dischiList);
                           // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
                         List<Artista> artistiList = new ArrayList();

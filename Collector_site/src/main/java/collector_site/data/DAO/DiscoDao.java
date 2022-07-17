@@ -11,13 +11,11 @@ import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
-import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.DiscoProxy;
 import collector_site.data.impl.StatoDisco;
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.util.Date;
 import java.util.List;
 
 /**

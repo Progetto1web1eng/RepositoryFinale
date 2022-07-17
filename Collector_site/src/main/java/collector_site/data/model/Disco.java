@@ -6,12 +6,9 @@ package collector_site.data.model;
 
 import collector_site.data.impl.CopieStato;
 import collector_site.data.impl.Genere;
-import collector_site.data.impl.StatoDisco;
 import collector_site.data.impl.Tipo;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItem;
-import java.awt.Image;
-import java.util.Date;
 import java.util.List;
 
 /**

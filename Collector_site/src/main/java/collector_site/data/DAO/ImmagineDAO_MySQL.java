@@ -8,13 +8,8 @@ package collector_site.data.DAO;
  *
  * @author stefa
  */
-import collector_site.data.impl.Genere;
-import collector_site.data.impl.Tipo;
-import collector_site.data.model.Collezione;
 import collector_site.data.model.Disco;
 import collector_site.data.model.Immagine;
-import collector_site.data.proxy.CollezionistaProxy;
-import collector_site.data.proxy.DiscoProxy;
 import collector_site.data.proxy.ImmagineProxy;
 
 // import riguardanti il framework
@@ -22,7 +17,6 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
-import collector_site.framework.data.OptimisticLockException;
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -190,8 +184,5 @@ public class ImmagineDAO_MySQL extends DAO implements ImmagineDAO {
         } catch (SQLException ex) {
             throw new DataException("Unable to store Immagine", ex);
         } 
-            
-        // REMOVE 
-        System.out.println("ultima riga storeImmagine");
     }
 }

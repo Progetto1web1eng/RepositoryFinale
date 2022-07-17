@@ -10,25 +10,19 @@ package collector_site.data.DAO;
  */
 import collector_site.data.impl.CopieStato;
 import collector_site.data.impl.StatoDisco;
-import collector_site.data.model.Collezione;
-import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 
 // import riguardanti il framework
 import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
-import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
-import collector_site.framework.data.OptimisticLockException;
 
 // import SQL
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 // import Java
-import java.util.ArrayList;
 import java.util.List;
 
 /**

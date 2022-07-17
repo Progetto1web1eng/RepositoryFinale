@@ -20,8 +20,6 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
-import collector_site.framework.data.OptimisticLockException;
-import static java.lang.System.out;
 
 // import SQL
 import java.sql.PreparedStatement;

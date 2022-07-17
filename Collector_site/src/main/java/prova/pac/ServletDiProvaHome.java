@@ -10,33 +10,19 @@ import collector_site.data.model.Collezionista;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import freemarker.core.ParseException;
-import freemarker.core.XMLOutputFormat;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
-import freemarker.template.TemplateDateModel;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
-import java.io.PrintStream;
-import static java.lang.System.console;
-import static java.lang.System.out;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
-import static javax.servlet.jsp.tagext.TagAttributeInfo.ID;
 
 /**
  *

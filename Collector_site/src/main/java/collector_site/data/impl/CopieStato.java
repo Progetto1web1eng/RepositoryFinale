@@ -5,7 +5,6 @@
 package collector_site.data.impl;
 
 import static collector_site.data.impl.StatoDisco.NUOVO;
-import static collector_site.data.impl.StatoDisco.USATO;
 
 /**
  *

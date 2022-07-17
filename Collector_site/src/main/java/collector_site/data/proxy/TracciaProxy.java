@@ -4,18 +4,14 @@
  */
 package collector_site.data.proxy;
 
-import collector_site.data.DAO.ArtistaDao;
 import collector_site.data.DAO.DiscoDao;
 import collector_site.data.impl.TracciaImpl;
 import collector_site.data.model.Artista;
 import collector_site.data.model.Disco;
-import collector_site.data.model.Traccia;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

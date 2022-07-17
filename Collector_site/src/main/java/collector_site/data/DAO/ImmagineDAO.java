@@ -5,7 +5,6 @@
 package collector_site.data.DAO;
 
 import collector_site.framework.data.DataException;
-import collector_site.data.model.Collezione;
 import collector_site.data.model.Disco;
 import collector_site.data.model.Immagine;
 import java.util.List;

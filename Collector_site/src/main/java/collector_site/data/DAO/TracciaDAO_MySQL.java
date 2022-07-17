@@ -9,7 +9,6 @@ package collector_site.data.DAO;
  * @author stefa
  */
 import collector_site.data.model.Artista;
-import collector_site.data.model.Collezione;
 import collector_site.data.model.Disco;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.TracciaProxy;
@@ -19,7 +18,6 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
-import collector_site.framework.data.OptimisticLockException;
 
 // import SQL
 import java.sql.PreparedStatement;
@@ -172,8 +170,6 @@ public class TracciaDAO_MySQL extends DAO implements TracciaDAO {
             // CHANGED
             //storeTraccia.setTime(2, traccia.getDurata());
             storeTraccia.setTime(2, new java.sql.Time(traccia.getDurata().getTime()));
-            
-                System.out.println("arrivato");
             storeTraccia.setInt(3, traccia.getDisco().getKey());
             
             if (storeTraccia.executeUpdate() == 1) {

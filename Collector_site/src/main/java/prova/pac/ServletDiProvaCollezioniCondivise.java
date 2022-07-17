@@ -10,16 +10,10 @@ import collector_site.data.model.Collezionista;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
 import collector_site.framework.utils.SendEmail;
-import freemarker.core.HTMLOutputFormat;
 import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -94,7 +87,6 @@ public class ServletDiProvaCollezioniCondivise extends ServletDiProvaCollector_s
                  t.process(dataM, response.getWriter());
                 // devo ricavare una lista di condivisioni
             }else if(request.getParameter("nicknamePar")!=null){
-                out.println("prima di aggiungi condivisione");
                 aggiungi_condivisione(request,response,s);
             }else if(request.getParameter("kCollezionista")!=null){
                 Collezionista co = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(Integer.parseInt(request.getParameter("kCollezionista")));

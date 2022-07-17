@@ -11,7 +11,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                      <a class="UnCollezioniEsterneA" href="servletDiProvaRicercaGlobale?collezioneK=${c.key}"><img class="UnCollezioniEsterneImgInfo" ></a>
                 </div>
             </#list>
-        <#else>
-            <h1> questo utente non ha collezioni</h1>
-        </#if>
+     <#else>
+            <#if error??>
+                 <h1 style="color: #303841;margin-left: 38%;"> non esiste la collezione cercata</h1>
+            <#else>
+                 <h1 style="color: #303841;margin-left: 38%;"> questo utente non ha collezioni</h1>
+            </#if>
+     </#if>
+        
+        
+        
+        
+        
 </div>

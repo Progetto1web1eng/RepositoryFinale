@@ -4,7 +4,6 @@
  */
 package prova.pac;
 
-import java.io.*;
 import collector_site.data.DAO.Collector_siteDataLayer;
 import collector_site.data.impl.ArtistaImpl;
 import collector_site.data.impl.CopieStato;
@@ -19,19 +18,12 @@ import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
-import freemarker.core.HTMLOutputFormat;
 import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import static java.lang.System.out;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +33,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 /**
  *

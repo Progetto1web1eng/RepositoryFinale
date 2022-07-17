@@ -9,13 +9,11 @@ package collector_site.data.DAO;
  * @author stefa
  */
 import collector_site.data.impl.Genere;
-import collector_site.data.impl.Ruolo;
 import collector_site.data.impl.Tipo;
 import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
-import collector_site.data.model.Immagine;
 import collector_site.data.model.Traccia;
 import collector_site.data.proxy.DiscoProxy;
 import collector_site.data.impl.CopieStato;
@@ -29,9 +27,7 @@ import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
 import com.google.gson.Gson;
-import java.io.File;
 import java.io.IOException;
-import static java.lang.System.out;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,7 +41,6 @@ import java.sql.Statement;
 
 // import Java
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,8 +160,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
             disco.setTipo(Tipo.values()[rs.getInt("IDtipo")-1]);
             disco.setAnno(rs.getInt("anno"));
             disco.setEtichetta(rs.getString("etichetta"));
-            // TO REMOVE
-            System.out.println("in creazione disco");
         } catch (SQLException ex) {
             throw new DataException("Unable to create Disco object form ResultSet", ex);
         }
@@ -203,19 +196,13 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         //prima vediamo se l'oggetto è già stato caricato
         if (dataLayer.getCache().has(Disco.class, id)) {
             disco = dataLayer.getCache().get(Disco.class, id);  
-            // REMOVE
-            System.out.println("disco preso dalla cache " + disco.getNomeDisco());
         } else{    
-            // REMOVE
-            System.out.println("disco preso dal DB");
             try {
                 getDisco.setInt(1, id);
                 try (ResultSet rs = getDisco.executeQuery()) {
                     if (rs.next()) {
                         disco = createDisco(rs);
                         
-                        // REMOVE
-                        System.out.println(disco.getNomeDisco());
                         //e lo mettiamo anche nella cache
                         dataLayer.getCache().add(Disco.class, disco);
                     }
@@ -662,9 +649,6 @@ public class DiscoDAO_MySQL extends DAO implements DiscoDao {
         Gson serializer = new Gson();
         
         jsonContent = serializer.toJson(dischi);
-        
-        // REMOVE
-        System.out.println(jsonContent);
         
         // controlla se il file json già esiste: se NO lo crea; altrimenti, se dovesse già contenere del 
         // testo, lo elimina dal file

@@ -4,9 +4,7 @@
  */
 package collector_site.framework.utils;
 
-import collector_site.data.model.Collezionista;
 import java.util.Properties;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.Authenticator;
@@ -25,7 +23,6 @@ public class SendEmail {
     public static void sendEmail(String recepient) throws MessagingException {
         boolean test = false;
 
-        System.out.println("preparazione");
         //qui va inserita la nostra email (quella sulla quale vogliamo ricevere il messaggio)
         final String fromEmail = "37d5cb32ad4102";
         //qui va inserita la password dell'account sul quale vogliamo ricevere il messaggio
@@ -50,7 +47,6 @@ public class SendEmail {
             
             Message message = prepareMessage(session, fromEmail, recepient);
             Transport.send(message);
-            System.out.println("mail mandata");
 /*
             //parte la sessione
             Message mess = new MimeMessage(session);

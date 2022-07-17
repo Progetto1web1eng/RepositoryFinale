@@ -16,8 +16,6 @@ import freemarker.core.ParseException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -25,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -71,7 +67,6 @@ public class ServletDiProvaModificaDisco extends ServletDiProvaCollector_siteBas
     
     
     private void update_disco(HttpServletRequest request,HttpServletResponse response,int IDdisco,int collK) throws DataException, IOException{
-        //out.println(collK);
         Disco disco = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDisco(IDdisco);
         disco.setNomeDisco(request.getParameter("nomeDiscoPar"));
         if(request.getParameter("dataPar").length()!=0){

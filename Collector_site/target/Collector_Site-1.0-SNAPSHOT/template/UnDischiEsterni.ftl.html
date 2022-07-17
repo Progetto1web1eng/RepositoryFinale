@@ -7,7 +7,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
      <div>
         <#if dischiList?size != 0>
             <#list dischiList as d>
-                <div class="UnDischiEsterniContainer">
+                <div class="UnDischiEsterniContainer" style="position: relative">
                     <h1 style="color: #303841"> ${d.tipo.toString()}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${artistiList[d?index].nomeDarte}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.nomeDisco} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.anno}</h1>
                     <div style="display: flex;flex-direction: row">
                         <#list csList[d?index] as cs>
@@ -17,6 +17,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div >
                         <a href="servletDiProvaRicercaGlobale?discoK=${d.key}"><img class="UnDischiEsterniImgInfo" ></a>
                     </div>
+                    <#if ownersList??>
+                        <h1 style="position: absolute;top: -11px;left: 43%;color: #303841;">Proprietario:${ownersList[d?index].nickname}</h1>
+                    </#if>
                 </div>
             </#list>
         <#else>

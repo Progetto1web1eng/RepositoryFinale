@@ -1,81 +1,77 @@
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaInserisciDisco.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Immagine.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Disco.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\TracciaImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Collezionista.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItemProxy.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\Collector_siteDataLayer.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\CopieStato.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\OptimisticLockException.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\SplitSlashesFmkExt.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ImmagineDAO_MySQL.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DAO.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaSettingCopieStato.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\DataModelFiller.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\DiscoDao.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaProfilo.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\TemplateManagerException.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\CollezionistaProxy.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCercaIMieiDischi.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\StreamResult.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\Upload.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\DiscoImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezionistaDAO_MySQL.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\CollezionistaImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\Ruolo.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItemProxyImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ArtistaDao.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCollector_siteBaseController.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\DiscoDAO_MySQL.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaRegistrazione.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaUploader.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\StatoDisco.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\ImmagineProxy.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezionistaDAO.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\TracciaProxy.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezioneDAO_MySQL.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\TracciaDAO_MySQL.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\CollezioneProxy.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\DiscoProxy.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\TracciaDAO.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\HTMLResult.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaModificaDisco.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ImmagineDAO.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataException.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCreaCollezione.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CopieStatoDAO.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaSetCopie.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\JsonServlet.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaRicercaGlobale.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItemImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\ImmagineImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\ArtistaProxy.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CopieStatoDAO_MySQL.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaLogout.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\SelezionaImmaginiDisco.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaVistaCollezione.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Collezione.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataLayer.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaDelete.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItem.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaInserisciImmagine.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaUpload.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Artista.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezioneDAO.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\CollezioneImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataCache.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\ArtistaImpl.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\utils\Service.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\utils\ServletHelpers.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\DiscoMinimale.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\Tipo.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ArtistaDAO_MySQL.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaHome.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\ArtistaMinimale.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\security\SecurityHelpers.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaLogin.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\ProvaConfig.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCollezioniCondivise.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\Genere.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Traccia.java
-C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\utils\SendEmail.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\TracciaImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Traccia.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaRegistrazione.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\DiscoMinimale.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\utils\ServletHelpers.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\SplitSlashesFmkExt.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\ImmagineImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\DiscoProxy.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaHome.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaRicercaGlobale.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItem.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItemProxyImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezioneDAO.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\DiscoImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\security\SecurityHelpers.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataCache.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezioneDAO_MySQL.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\TracciaDAO.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CopieStatoDAO.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\ImmagineProxy.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ImmagineDAO_MySQL.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\HTMLResult.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataLayer.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCercaIMieiDischi.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ArtistaDao.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Artista.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\ArtistaProxy.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Collezione.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\utils\Service.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Disco.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezionistaDAO.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItemProxy.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaModificaDisco.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Collezionista.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\CollezioneProxy.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataItemImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaProfilo.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCollector_siteBaseController.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaInserisciDisco.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\DataModelFiller.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\DiscoDAO_MySQL.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\TracciaDAO_MySQL.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\model\Immagine.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\CollezionistaProxy.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ArtistaDAO_MySQL.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CollezionistaDAO_MySQL.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\CollezionistaImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\ArtistaMinimale.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\Tipo.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaInserisciImmagine.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\DiscoDao.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\ProvaConfig.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaLogin.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\Ruolo.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\CollezioneImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\Genere.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCollezioniCondivise.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaSettingCopieStato.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DataException.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\TemplateManagerException.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\ArtistaImpl.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\utils\SendEmail.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaDelete.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaVistaCollezione.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaLogout.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\DAO.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\result\StreamResult.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\ImmagineDAO.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\framework\data\OptimisticLockException.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaSetCopie.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\CopieStato.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\JsonServlet.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\CopieStatoDAO_MySQL.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\DAO\Collector_siteDataLayer.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\impl\StatoDisco.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\collector_site\data\proxy\TracciaProxy.java
+C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\java\prova\pac\ServletDiProvaCreaCollezione.java

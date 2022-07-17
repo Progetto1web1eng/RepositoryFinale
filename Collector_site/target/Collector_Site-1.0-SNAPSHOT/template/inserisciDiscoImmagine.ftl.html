@@ -6,16 +6,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 <div id="inserisciDiscoImmagineDiv">
     <div id="inserisciDiscoImmagineDivImgContainer">
         <div id="inserisciDiscoImmagineNuovaImg">
-            
-            <form method="post" action="selezionaImmaginiDisco" enctype="multipart/form-data">
-                        <input type="image" name="image" src="immagini/icons8-add-white-24.png" width="50"> 
+            <form method='post' action='servletDiProvaInserisciImmagine' enctype='multipart/form-data'>
+                <input type='file' name='filetoupload' accept="image/*"/>
+                <input type='submit' name='submit' value='upload'/>
             </form>
         </div>
         <#if immagini??>
             <#list immagini as i>
             <div id="provaListaImmagini">
                 <!<!--lo style dell'immagine è fissato qui e non nelle classi css perchè altrimenti entra in conflitto con quello del bordo -->
-                <img class="inserisciDiscoImmagineNuovaImg" src="immaginiDischi/${i.filename}" style="height: 170px;width: 300px;border-radius: 37px;">
+                <img class="inserisciDiscoImmagineNuovaImg" src="immaginiDischi/${i.filename}" alt="immaginiDischi/${i.filename}" style="height: 170px;width: 300px;border-radius: 37px;">
             </div>
             </#list>
             <#else>

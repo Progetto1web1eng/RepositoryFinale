@@ -3,13 +3,13 @@
     <context-param>
         <!-- aggiungo questo parametro per definire in quale directory salvare le IMMAGINI che vengono UPLOADATE dai COLLEZIONISTI -->
         <param-name>uploads.directory</param-name>
-        <param-value>C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site\src\main\webapp\immaginiDischi</param-value>
+        <param-value>C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site\src\main\webapp\immaginiDischi</param-value>
     </context-param>
     <context-param>
         <param-name>pathProgetto</param-name>
         <!-- mettere il path in cui è presente la cartella root del progetto (ovvero la cartella "CollectorSite")
         come valore del tag successivo-->
-        <param-value>C:\Users\fabri\Desktop\WEB ENG. WORKSPACE\netbeans project\RepositoryFinale\Collector_site</param-value>
+        <param-value>C:\Users\stefa\OneDrive\Desktop\web_engineering\workspace\DEFINITIVO\RepositoryFinale\Collector_site</param-value>
     </context-param>
     <servlet>
         <servlet-name>ServletDiProvaHome</servlet-name>

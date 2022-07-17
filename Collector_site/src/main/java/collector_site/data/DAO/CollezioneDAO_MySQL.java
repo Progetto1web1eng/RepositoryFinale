@@ -7,7 +7,6 @@ package collector_site.data.DAO;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
-import collector_site.data.model.Immagine;
 import collector_site.data.proxy.CollezioneProxy;
 
 // import riguardanti il framework
@@ -15,8 +14,6 @@ import collector_site.framework.data.DAO;
 import collector_site.framework.data.DataException;
 import collector_site.framework.data.DataItemProxy;
 import collector_site.framework.data.DataLayer;
-import collector_site.framework.data.OptimisticLockException;
-import static java.lang.System.out;
 
 // import SQL
 import java.sql.PreparedStatement;

@@ -9,10 +9,7 @@ import collector_site.data.impl.CollezionistaImpl;
 import collector_site.data.model.Collezionista;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
-import freemarker.core.HTMLOutputFormat;
 import freemarker.core.ParseException;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
@@ -22,7 +19,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

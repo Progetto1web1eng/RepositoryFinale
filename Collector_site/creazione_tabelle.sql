@@ -196,20 +196,23 @@ insert into artista values (5,"Freddy Mercury",1, "Voce",4);
 # singoli artisti
 insert into artista values (6,"Richard Benson",null, null, null);
 insert into artista values (7,"Axl Rose", null, null, null);
+insert into artista values (8,"Davide Guetta", null, null, null);
+
 
 insert into collezionista values (1, "stefa", "stefano@gmail.com", "", "stefa", "3880581680");
 insert into collezionista values (2, "fabri", "fabrizio@gmail.com", "", "fabri", "3880581670");
 insert into collezionista values (3, "mauri", "maurizio@gmail.com", "", "mauri", "3880581660");
 
+# collezioni create da Stefano
 insert into collezione values (1, "anni 80", 1, true); 
 insert into collezione values (2, "euro disco", 1, true);
 insert into collezione values (3, "anni 90", 1, true);
-insert into collezione values (4, "chill music", 1, true);
+insert into collezione values (4, "chill music", 1, false);
+
+# collezioni create da Fabrizio
 insert into collezione values (5, "heavy", 2, true);
-# collezioni recenti
 insert into collezione values (6, "newCollection", 2, false);
 insert into collezione values (7, "HI-FI Rock", 2, false);
-
 
 
 insert into disco values (1, "Black Album", "47957", 11, "Metal", 1857, "Metal Studio", 1, "CD");
@@ -225,7 +228,6 @@ insert into disco values (9, "DiscoPop1", "3286", 12, "Pop", 1970, "Pop Studio",
 insert into disco values (10, "DiscoPop2", "3287", 12, "Pop", 1970, "Blues Studio", 2, "vinile"); 
 insert into disco values (11, "DiscoBlues", "3288", 1, "Blues", 1970, "Blues Studio", 2, "vinile"); 
 insert into disco values (12, "DiscoBlues1", "3289", 1, "Blues", 1970, "Blues Studio", 2, "vinile"); 
-
 
 # insert into immagine(nomeImmagine,imgType,IDdisco,dimensioneImmagine,filename,digest,updated) VALUES("foto_black_album", "jpg", 1,200,"c:/", "jgfjjvhvhvh5456", CURRENT_TIMESTAMP);
 
@@ -248,6 +250,7 @@ insert into racchiude values (3, 8);
 insert into racchiude values (4, 9);
 insert into racchiude values (1, 10);
 insert into racchiude values (2, 11);
+
 
 # dischi di Stefano
 #numCopeDisco,IDstatoDisco,statoDisco,IDcollezionista,IDdisco
@@ -273,19 +276,17 @@ insert into incide values(1, 1);
 insert into incide values(2, 1);
 insert into incide values(3, 4);
 # insert into incide values(4, 1);
-insert into incide values(5, 4);
-insert into incide values(6, 5);
-insert into incide values(7, 5);
-insert into incide values(8, 5);
-insert into incide values(9, 5);
-insert into incide values(10, 5);
-insert into incide values(11, 5);
-
-
+insert into incide values(5, 7);
+insert into incide values(6, 7);
+insert into incide values(7, 7);
+insert into incide values(8, 7);
+insert into incide values(9, 7);
+insert into incide values(10, 7);
+insert into incide values(11, 7);
+insert into incide values(12, 8);
 
 
 insert into condivide values(1, 7);
-
 
 
 

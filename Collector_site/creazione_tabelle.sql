@@ -240,7 +240,7 @@ insert into racchiude values (1, 5);
 insert into racchiude values (1, 1);
 insert into racchiude values (3, 1);
 insert into racchiude values (2, 2);
-insert into racchiude values (5, 2);
+# insert into racchiude values (5, 2);
 # tuple recenti della tabella "racchiude"
 insert into racchiude values (1, 6);
 insert into racchiude values (2, 7);
@@ -281,8 +281,8 @@ insert into colleziona values (0, 2, "Usato", 1, 10);
 insert into colleziona values (1, 1, "Nuovo", 1, 11);
 insert into colleziona values (1, 2, "Usato", 1, 11);
 
-insert into colleziona values (2, 1, "Nuovo", 2, 2); 
-insert into colleziona values (5, 2, "Usato", 2, 2); 
+# insert into colleziona values (2, 1, "Nuovo", 2, 2); 
+# insert into colleziona values (5, 2, "Usato", 2, 2); 
 # insert into colleziona values (1, 1, "Nuovo", 1, 4);
 
 

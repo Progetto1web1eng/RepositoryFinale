@@ -15,7 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
     <div id="inserisciAristaDivSingolo">
         <form method="get" action="servletDiProvaInserisciDisco">
-            <input type="text" value="Nome Artista" name="singoloAPar" id="inserisciArtistaDivSingoloInput1" onkeyup="completamentoArtistaSingolo()" onclick="resetInserisciArtistaSingoloInput()">
+            <input type="text" value="Nome Artista" name="singoloAPar" id="inserisciArtistaDivSingoloInput1" onkeyup="completamentoArtistaSingolo()" onclick="resetInserisciArtistaSingoloInput()" autocomplete="off">
             <input type="submit" value="fine" id="inserisciArtistaDivSingoloSubmit">
         </form>
     </div>
@@ -24,7 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <form method="get" action="servletDiProvaInserisciDisco">
             <input type="text" value="Nome gruppo" id="inserisciArtistaDivGruppoInput1" name="nomeGruppoPar" onkeyup="completamentoGruppo()" onclick="resetInserisciGruppoInput()">
             <div >
-                <input type="text" value="Nome Artista" id="inserisciArtistaDivGruppoInput2" name="nomeArtistaPar">
+                <input type="text" value="Nome Artista" id="inserisciArtistaDivGruppoInput2" name="nomeArtistaPar" autocomplete="off">
                 <select id="inserisciArtistaDivGruppoSelect" name="ruoloPar">
                     <option value="Voce">Voce</option>
                     <option value="Chitarra">Chitarra</option>

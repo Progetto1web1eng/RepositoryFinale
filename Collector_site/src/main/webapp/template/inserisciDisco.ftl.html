@@ -19,7 +19,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </#if>
     <form method="get" action="servletDiProvaInserisciDisco"> 
         <!-- inizio inserimento caratteristiche disco -->
-        <input type="text" value="Nome disco" name="nomeDiscoPar" id="inserisciDiscoNomeDisco" onkeyup="completamento()" onclick="resetInserisciNomeDiscoInput()">
+        <input type="text" value="Nome disco" name="nomeDiscoPar" id="inserisciDiscoNomeDisco" onkeyup="completamento()" onclick="resetInserisciNomeDiscoInput()" autocomplete="off">
         <input type="text" value="barcode" name="barcodePar" id="inserisciDiscoBarcode">
         <select name="tipoDiscoPar" id="inserisciDiscoSelectTipo">
             <option value="CD">CD</option>

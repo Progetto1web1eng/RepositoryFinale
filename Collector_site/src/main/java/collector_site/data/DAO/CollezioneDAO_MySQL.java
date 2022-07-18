@@ -566,6 +566,16 @@ public class CollezioneDAO_MySQL extends DAO implements CollezioneDAO {
             }
         }
         
+        // si aggiungono nella lista le collezioni private personali
+        for(Collezione c : getCollezioneByCollezionista(collezionista)) {
+            if(nomeCollezione.equals(c.getNomeCollezione().toUpperCase()) &&
+               c.getPubblico() == false &&
+               !result.contains(c)) {
+               
+                result.add(c);
+            }
+        }
+        
         return result;
     }
     

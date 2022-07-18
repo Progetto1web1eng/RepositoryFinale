@@ -11,6 +11,7 @@ import collector_site.data.model.Artista;
 import collector_site.data.model.Collezione;
 import collector_site.data.model.Collezionista;
 import collector_site.data.model.Disco;
+import collector_site.data.model.Immagine;
 import collector_site.framework.data.DataException;
 import collector_site.framework.result.ProvaConfig;
 import collector_site.framework.utils.Service;
@@ -35,7 +36,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_siteBaseController {
    
-    private void cerca_InputAction(HttpServletRequest request, HttpServletResponse response,Map<String,Object> dataM, int IDcollezionista) throws DataException{
+    private void cerca_InputAction(HttpServletRequest request, HttpServletResponse response,Map<String,Object> dataM, int IDcollezionista) throws DataException, IOException, TemplateException{
         try {
             ProvaConfig pcg = new ProvaConfig(getServletContext());
             Template t = pcg.getTemplate("dispatcherDiProva.ftl.html");
@@ -43,6 +44,10 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
             Collezionista collezionista =((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezionistaDAO().getCollezionistaById(IDcollezionista);
             List<Collezione> collezioni = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getCollezioneDAO().getCollezioneByCollezionista(collezionista);
             dataM.put("collezioni",collezioni);
+            
+            //queste due liste servono per il caricamento delle immagini dei dischi
+            List<String> immaginiList = new ArrayList();
+            List<Immagine> tempImmList = new ArrayList();
             
             String inputDaCercare = request.getParameter("cercaIMieiDischi");
             
@@ -74,17 +79,26 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                         artistiList.add(((Collector_siteDataLayer) request.getAttribute("datalayer")).getArtistaDAO().getArtistaByDisco(d));
                     }
                      
-
+                    
+                 
                     // trovo le copie per ogni disco per poi aggiungere una lista al data model
                     List<List<CopieStato>> csList = new ArrayList();
                     List<CopieStato> tempList = new ArrayList();
                     for (Disco d : listD){
                         tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                         csList.add(tempList);
+                        
+                        tempImmList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(d);
+                        if(tempImmList == null || tempImmList.size()==0){
+                            immaginiList.add("defaultIMG.png");
+                        }else{
+                            immaginiList.add(tempImmList.get(0).getFilename());
+                        }
+                        
                     }
                
                     
-                    
+                    dataM.put("immaginiList",immaginiList);
                     dataM.put("csList",csList);
                     dataM.put("artistiList", artistiList);
                     dataM.put("hidden", 1);
@@ -119,10 +133,17 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     for (Disco d : listD){
                         tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                         csList.add(tempList);
+                        
+                        tempImmList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(d);
+                        if(tempImmList == null || tempImmList.size()==0){
+                            immaginiList.add("defaultIMG.png");
+                        }else{
+                            immaginiList.add(tempImmList.get(0).getFilename());
+                        }
                     }
                
                     
-                    
+                    dataM.put("immaginiList",immaginiList);
                     dataM.put("csList",csList);
                     dataM.put("artistiList", artistiList);  
                     dataM.put("hidden", 1);
@@ -171,10 +192,18 @@ public class ServletDiProvaCercaIMieiDischi extends ServletDiProvaCollector_site
                     for (Disco d : listD){
                         tempList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getCopieStati(d, collezionista);
                         csList.add(tempList);
+                        
+                         tempImmList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getImmagineDAO().getImmaginiByDisco(d);
+                        if(tempImmList == null || tempImmList.size()==0){
+                            immaginiList.add("defaultIMG.png");
+                        }else{
+                            immaginiList.add(tempImmList.get(0).getFilename());
+                        }
+                        
                     }
                
                     
-                    
+                    dataM.put("immaginiList",immaginiList);
                     dataM.put("csList",csList);
                     dataM.put("artistiList", artistiList);  
                     dataM.put("hidden", 1);

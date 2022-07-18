@@ -36,7 +36,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <#list dischiList as d>
         <div class="cercaIMieiDischiDivDischi">
             <div>
-                <img src="immaginiDischi/giggino.PNG"  alt="immagine disco" class="cercaIMieiDischiImmagineDisco">
+                <img src="immaginiDischi/${immaginiList[d?index]}"  alt="immagine disco" class="cercaIMieiDischiImmagineDisco">
             </div>
             <div>
                 <h3 style="color: white">${d.tipo.toString()}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${artistiList[d?index].nomeDarte}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.nomeDisco} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${d.anno}</h3>

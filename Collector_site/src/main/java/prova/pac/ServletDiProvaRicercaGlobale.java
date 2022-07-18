@@ -17,6 +17,7 @@ import freemarker.core.ParseException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
+import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -280,6 +281,7 @@ public class ServletDiProvaRicercaGlobale extends  ServletDiProvaCollector_siteB
                           t.process(dataM,response.getWriter());
                      }else if(inputDaCercare.substring(inputDaCercare.length()-2).equals(":D")){
                          List<Disco> dischiList = ((Collector_siteDataLayer) request.getAttribute("datalayer")).getDiscoDAO().getDischiByNome(inputSenzaPlaceH);
+                         out.println(dischiList.size());                        
                          // trovo gli artisti per ogni disco  per poi aggiungere una lista al data model
                         List<Artista> artistiList = new ArrayList();
                         for(Disco d : dischiList){

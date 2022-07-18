@@ -154,7 +154,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #registrazionePasswordInput:focus-visible{
     outline: none;
 }
-#registrazioneTelefonoInput:focus-visible{
+#registrazionetelefonoInput:focus-visible{
     outline: none;
 }
 #registrazioneEmailInput:focus-visible{
